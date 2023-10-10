@@ -1,0 +1,9 @@
+addAssignees: author
+addReviewers: true
+numberOfReviewers: 4
+reviewers:
+  - arikhativa
+  - dVaGaymer
+  - llanahp
+  - Flamiing
+  - YAQ256
