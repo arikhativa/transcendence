@@ -3,7 +3,8 @@ name: Auto Assign
 on:
   pull_request:
     branches: [ main ]
-  workflow_dispatch:
+    types:
+      - opened
 
 jobs:
   auto-assign:
