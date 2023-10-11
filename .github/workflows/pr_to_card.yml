@@ -5,6 +5,7 @@ on:
     branches: [ main ]
     types:
       - opened
+      - synchronize
       - closed
 
 jobs:
@@ -13,7 +14,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: dalezak/github-commit-to-trello-card@main
+      - uses: arikhativa/github-commit-to-trello-card@main
         with:
           trello-api-key: ${{ secrets.TRELLO_KEY }}
           trello-auth-token: ${{ secrets.TRELLO_TOKEN }}
