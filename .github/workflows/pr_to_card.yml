@@ -3,6 +3,9 @@ name: Link PR to Trello
 on:
   pull_request:
     branches: [ main ]
+    types:
+      - opened
+      - closed
 
 jobs:
   link-pr-to-trello:
