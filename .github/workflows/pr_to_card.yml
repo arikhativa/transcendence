@@ -22,5 +22,5 @@ jobs:
           trello-list-name-pr-open: "To do"
           trello-list-name-commit: "Doing"
           trello-list-name-pr-closed: "Done"
-          trello-card-id-pattern: "[a-zA-Z0-9]{23}"
+          trello-card-id-pattern: "[a-zA-Z0-9]\{23\}"
          
