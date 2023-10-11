@@ -16,7 +16,7 @@ jobs:
         with:
           trello-api-key: ${{ secrets.TRELLO_KEY }}
           trello-auth-token: ${{ secrets.TRELLO_TOKEN }}
-          trello-board-id: ${{ secrets.TRELLO_BOARD }}
+          trello-board-id: 6525a2be77477877cb027842
           trello-card-action: "Attachment"
           trello-list-name-commit: "Doing"
           trello-list-name-pr-open: "Reviewing"
