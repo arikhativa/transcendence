@@ -14,7 +14,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: arikhativa/github-commit-to-trello-card@bbd1167a0fa7aadfb85fcd10bb2e1c15ec360779
+      - uses: arikhativa/github-commit-to-trello-card@1b5b81aa7295f65584e96f7aa3912f9b21f90ff2
         with:
           trello-api-key: ${{ secrets.TRELLO_KEY }}
           trello-auth-token: ${{ secrets.TRELLO_TOKEN }}
