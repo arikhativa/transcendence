@@ -11,13 +11,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: jessicazu/trello-github-actions@v1.0
+      - uses: dalezak/github-commit-to-trello-card@main
         with:
-            trello-action: 'move_card_when_pull_request_opened'
-    env:
-      TRELLO_API_KEY: ${{ secrets.TRELLO_KEY }}
-      TRELLO_API_TOKEN: ${{ secrets.TRELLO_TOKEN }}
-      TRELLO_BOARD_ID: ${{ secrets.TRELLO_BOARD }}
-      TRELLO_LIST_ID: 6525a2bf96599ed962493cbc
-      TRELLO_DEPARTURE_LIST_ID: 6525a2bf08c85ebb9867f09c
-      TRELLO_DESTINATION_LIST_ID: 6525a2bf2acf714604dfc207
+          trello-api-key: ${{ secrets.TRELLO_KEY }}
+          trello-auth-token: ${{ secrets.TRELLO_TOKEN }}
+          trello-board-id: ${{ secrets.TRELLO_BOARD }}
+          trello-card-action: "Attachment"
+          trello-list-name-commit: "Doing"
+          trello-list-name-pr-open: "Reviewing"
+          trello-list-name-pr-closed: "Testing"
