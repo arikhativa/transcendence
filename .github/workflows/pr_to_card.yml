@@ -3,7 +3,9 @@ name: Link PR to Trello
 on:
   pull_request:
     branches: [ main ]
-  workflow_dispatch:
+    types:
+      - opened
+      - closed
 
 jobs:
   link-pr-to-trello:
@@ -17,8 +19,7 @@ jobs:
           trello-auth-token: ${{ secrets.TRELLO_TOKEN }}
           trello-board-id: 6525a2be77477877cb027842
           trello-card-action: "Attachment"
-          trello-list-name-commit: "Doing"
-          trello-list-name-pr-open: "Reviewing"
-          trello-list-name-pr-closed: "Testing"
-          trello-card-id-pattern: "[a-zA-Z0-9].*"
+          trello-list-name-pr-open: "To do"
+          trello-list-name-pr-closed: "Done"
+          trello-card-id-pattern: "[a-zA-Z0-9]{23}"
          
