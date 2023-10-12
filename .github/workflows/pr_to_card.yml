@@ -14,7 +14,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: arikhativa/github-commit-to-trello-card@main
+      - uses: arikhativa/github-commit-to-trello-card@CardByName
         with:
           trello-api-key: ${{ secrets.TRELLO_KEY }}
           trello-auth-token: ${{ secrets.TRELLO_TOKEN }}
@@ -23,5 +23,5 @@ jobs:
           trello-list-name-pr-open: "To do"
           trello-list-name-commit: "Doing"
           trello-list-name-pr-closed: "Done"
-          trello-card-id-pattern: "[a-zA-Z0-9]+"
-         
+          trello-card-id-pattern: "[a-zA-Z0-9]{23}"
+
