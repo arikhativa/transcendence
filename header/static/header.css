@@ -1,0 +1,11 @@
+
+#header {
+    position: fixed;
+    display: flex;
+    background-color: lightblue;
+    top: 0;
+    left: 0;
+    height: 10em;
+    width: 100%;
+    z-index: 90;
+}

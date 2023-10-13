@@ -1,0 +1,57 @@
+version: '3.8'
+
+networks:
+  transcendence:
+    driver: bridge
+
+volumes:
+  nestjs:
+    driver: local
+    driver_opts:
+      type: none
+      device: ./nestjs
+      o: bind
+  angular:
+    driver: local
+    driver_opts:
+      type: none
+      device: ./angular
+      o: bind
+
+services:
+  postgres:
+    container_name: postgres-prod
+    restart: always
+    image: postgres:16
+    networks:
+      - transcendence
+    env_file:
+      - .env
+
+  nestjs:
+    container_name: nestjs-prod
+    restart: always
+    build: ./nestjs
+    networks:
+      - transcendence
+    depends_on:
+      - postgres
+    env_file:
+      - .env
+    volumes:
+      - nestjs:/home/
+
+  angular:
+    container_name: angular-prod
+    restart: always
+    build: ./angular
+    networks:
+      - transcendence
+    depends_on:
+      - nestjs
+    env_file:
+      - .env
+    ports:
+      - 80:80
+    volumes:
+      - angular:/home/

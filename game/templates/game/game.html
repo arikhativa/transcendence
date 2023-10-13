@@ -1,0 +1,17 @@
+<!-- game/templates/game.html -->
+{% load static %}
+<link rel="stylesheet" href="{% static 'game.css' %}" />
+<script src="{% static 'game.js' %}"></script>
+
+<main id="main">
+  <h1 id="main-title">
+    {% block main_title %}
+      game
+    {% endblock %}
+  </h1>
+  <p id="main-p">
+    {% block main_content %}
+      game
+    {% endblock %}
+  </p>
+</main>
