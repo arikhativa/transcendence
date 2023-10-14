@@ -32,14 +32,7 @@ RUN chown -R angular:angular /home/angular/.npm-global
 WORKDIR /home/angular/app
 EXPOSE 80
 
-# Script that will start ng server with watch for dev
-COPY ./tools/init_angular_dev.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/init_angular_dev.sh
-RUN chown -R angular:angular /usr/local/bin/init_angular_dev.sh
-
-ENTRYPOINT [ "/usr/local/bin/init_angular_dev.sh" ]
-
 # TODO this will not work in dev, only in prod
 # USER angular
 
-CMD ["nginx", "-c", "/home/angular/app/conf/nginx.conf", "-g", "daemon off;"]
+CMD nginx -c /home/angular/app/conf/nginx.conf && npm run start
