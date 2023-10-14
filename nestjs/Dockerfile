@@ -6,7 +6,9 @@ RUN apt install -y \
 	npm \
 	curl
 
-# RUN  rm -rf /var/lib/apt/lists/*
+# Remove redandent files
+# RUN apt-get clean && \
+#     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN groupadd -r nestjs && useradd -r -g nestjs nestjs
 

@@ -44,17 +44,17 @@ services:
       - nestjs:/home/nestjs/app:delegated
     user: '1000:999'
 
-  # angular:
-  #   container_name: angular-dev
-  #   restart: always
-  #   build: ./angular
-  #   networks:
-  #     - transcendence
-  #   depends_on:
-  #     - nestjs
-  #   env_file:
-  #     - .env
-  #   ports:
-  #     - 80:80
-  #   volumes:
-  #     - angular:/home/
+  angular:
+    container_name: angular-dev
+    restart: always
+    build: ./angular
+    networks:
+      - transcendence
+    # depends_on:
+    #   - nestjs
+    env_file:
+      - .env
+    ports:
+      - 80:80
+    volumes:
+      - angular:/home/angular/app:delegated
