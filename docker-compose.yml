@@ -19,14 +19,14 @@ volumes:
       o: bind
 
 services:
-  postgres:
-    container_name: postgres-dev
-    restart: always
-    image: postgres:16
-    networks:
-      - transcendence
-    env_file:
-      - .env
+  # postgres:
+  #   container_name: postgres-dev
+  #   restart: always
+  #   image: postgres:16
+  #   networks:
+  #     - transcendence
+  #   env_file:
+  #     - .env
 
   nestjs:
     container_name: nestjs-dev
@@ -34,24 +34,27 @@ services:
     build: ./nestjs
     networks:
       - transcendence
-    depends_on:
-      - postgres
-    env_file:
-      - .env
-    volumes:
-      - nestjs:/home/
-
-  angular:
-    container_name: angular-dev
-    restart: always
-    build: ./angular
-    networks:
-      - transcendence
-    depends_on:
-      - nestjs
+    # depends_on:
+    #   - postgres
     env_file:
       - .env
     ports:
-      - 80:80
+      - 3000:3000
     volumes:
-      - angular:/home/
+      - nestjs:/home/nestjs/app:delegated
+    user: '1000:999'
+
+  # angular:
+  #   container_name: angular-dev
+  #   restart: always
+  #   build: ./angular
+  #   networks:
+  #     - transcendence
+  #   depends_on:
+  #     - nestjs
+  #   env_file:
+  #     - .env
+  #   ports:
+  #     - 80:80
+  #   volumes:
+  #     - angular:/home/
