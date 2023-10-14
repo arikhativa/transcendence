@@ -1,6 +1,8 @@
 
-DC_FILE := docker-compose.yml
-DC := docker compose -f $(DC_FILE)
+DC_FILE_PROD := docker-compose-prod.yml
+DC_FILE_DEV := docker-compose.yml
+
+DC := docker compose -f $(DC_FILE_DEV)
 
 all:
 	$(DC) up -d --build

@@ -20,7 +20,7 @@ volumes:
 
 services:
   postgres:
-    container_name: postgres-dev
+    container_name: postgres-prod
     restart: always
     image: postgres:16
     networks:
@@ -29,7 +29,7 @@ services:
       - .env
 
   nestjs:
-    container_name: nestjs-dev
+    container_name: nestjs-prod
     restart: always
     build: ./nestjs
     networks:
@@ -42,7 +42,7 @@ services:
       - nestjs:/home/
 
   angular:
-    container_name: angular-dev
+    container_name: angular-prod
     restart: always
     build: ./angular
     networks:
