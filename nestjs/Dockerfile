@@ -22,6 +22,6 @@ WORKDIR /home/nestjs/app
 
 RUN chown -R nestjs:nestjs /home/nestjs/.npm-global
 
-USER nestjs
+# USER nestjs TODO in prod
 
 CMD npm run start:debug
