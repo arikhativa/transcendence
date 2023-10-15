@@ -3,3 +3,25 @@ node_modules
 .makefile_logs
 .angular
 dist
+
+# Compiled output
+tmp
+out-tsc
+bazel-out
+
+# Node
+npm-debug.log
+yarn-error.log
+
+# Miscellaneous
+/.angular/cache
+.sass-cache/
+/connect.lock
+/coverage
+/libpeerconnection.log
+testem.log
+/typings
+
+# System files
+.DS_Store
+Thumbs.db
