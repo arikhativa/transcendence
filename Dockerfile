@@ -16,6 +16,9 @@ RUN apt-get install -y curl
 RUN python3 -m venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 
+COPY ./requirements.txt /home/requirements.txt
+RUN /opt/venv/bin/python3 -m pip install -r /home/requirements.txt
+
 WORKDIR /home
 
 EXPOSE 8000

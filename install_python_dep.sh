@@ -1,7 +1,5 @@
 #!/bin/bash
 
-echo "Installing dependencies..."
-python3 -m pip install -r requirements.txt
 
 # Wait for Postgres to start
 while ! pg_isready -h $POSTGRES_HOST -p $POSTGRES_PORT -d $POSTGRES_DB -U $POSTGRES_USER; do
