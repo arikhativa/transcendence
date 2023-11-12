@@ -1,0 +1,26 @@
+<!-- spa/templates/spa.html -->
+{% extends 'base.html' %}
+
+{% block spa %}
+  {% load static %}
+  <script src="{% static 'spa.js' %}"></script>
+  <link rel="stylesheet" href="{% static 'spa.css' %}" />
+{% endblock %}
+
+{% block title %}
+  Pong
+{% endblock %}
+
+{% block header %}
+  {% include 'header/header.html' %}
+{% endblock %}
+
+{% block navbar %}
+  {% include 'navbar/navbar.html' %}
+{% endblock %}
+
+{% block content %}
+  <div id="dynamic-content">
+    {% include 'main/main.html' %}
+  </div>
+{% endblock %}

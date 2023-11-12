@@ -1,0 +1,17 @@
+<!-- main/templates/main.html -->
+{% load static %}
+<link rel="stylesheet" href="{% static 'main.css' %}" />
+<script src="{% static 'main.js' %}"></script>
+
+<main id="main">
+  <h1 id="main-title">
+    {% block main_title %}
+      Main Content
+    {% endblock %}
+  </h1>
+  <p id="main-p">
+    {% block main_content %}
+      This is the main content.
+    {% endblock %}
+  </p>
+</main>

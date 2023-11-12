@@ -20,7 +20,7 @@ jobs:
           trello-auth-token: ${{ secrets.TRELLO_TOKEN }}
           trello-board-id: 6525a2be77477877cb027842
           trello-card-action: "Attachment"
-          trello-list-name-pr-open: "To do"
+          trello-list-name-pr-open: "Doing"
           trello-list-name-commit: "Doing"
           trello-list-name-pr-closed: "Done"
           trello-card-id-pattern: "[a-zA-Z0-9]{23}"
