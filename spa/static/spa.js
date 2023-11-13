@@ -1,43 +1,30 @@
 
-// function showSection(section) {   
-//     fetch(`/${section}/`)
-//     .then(response => response.text())
-//     .then(text => {
-//         document.querySelector('#dynamic-content').innerHTML = text;
-//     });
-// }
+window.addEventListener('popstate', function(event) {
+    showSection(event.state.path);
+});
 
 function showSection(section) {
+    if (section == undefined) {
+        return;
+    }
+
+    var url = new URL(window.location.href);
+    url.pathname = section + "/";
+    
+    history.pushState(null, null, url.href);
+
+    url.pathname = `section/${section}/`;
+
     // Fetch HTML content
-    fetch(`/${section}/`)
+    fetch(url.href)
         .then(response => response.text())
         .then(html => {
             // Inject HTML content
+            
             document.querySelector('#dynamic-content').innerHTML = html;
-
-            // Fetch and inject CSS
-            fetch(`/static/${section}.css`)
-                .then(response => response.text())
-                .then(css => {
-                    const style = document.createElement('style');
-                    style.innerHTML = css;
-                    document.head.appendChild(style);
-                })
-                .catch(error => console.error('Error loading CSS:', error));
-
-            // Fetch and inject JavaScript
-            fetch(`/static/${section}.js`)
-                .then(response => response.text())
-                .then(js => {
-                    const script = document.createElement('script');
-                    script.innerHTML = js;
-                    document.body.appendChild(script);
-                })
-                .catch(error => console.error('Error loading JavaScript:', error));
         })
         .catch(error => console.error('Error loading HTML:', error));
 }
-
 
 document.addEventListener("DOMContentLoaded", function() {
 
