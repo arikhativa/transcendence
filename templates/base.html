@@ -11,7 +11,8 @@
     {% load bootstrap5 %}
     {% bootstrap_css %}
     {% bootstrap_javascript %}
-    {% comment %} <script src="{% static 'base.js' %}"></script> {% endcomment %}
+    {% load static %}
+    <script src="{% static 'base.js' %}"></script>
     {% block spa %}
 
     {% endblock %}
@@ -29,7 +30,10 @@
 
     <!-- Main Content Section -->
     {% block content %}
+      {% comment %}TODO{% endcomment %}
+      {% block dynamic_content %}
 
+      {% endblock %}
     {% endblock %}
   </body>
 </html>
