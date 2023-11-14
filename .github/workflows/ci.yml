@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  ci:
+    runs-on: ubuntu-22.04
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Install Dependencies
+      run: ./ci/install_dependencies.sh
+
+    - name: Init Env
+      run: |
+        echo "POSTGRES_DB=${{ vars.POSTGRES_DB }}" > .env
+        echo "POSTGRES_HOST=${{ vars.POSTGRES_HOST }}" >> .env
+        echo "POSTGRES_PASSWORD=${{ vars.POSTGRES_PASSWORD }}" >> .env
+        echo "POSTGRES_PORT=${{ vars.POSTGRES_PORT }}" >> .env
+        echo "POSTGRES_USER=${{ vars.POSTGRES_USER }}" >> .env
+
+    - name: Start Docker
+      run: |
+        cat .env
+        make
+        docker ps
+        docker logs postgres-dev
+
+    - name: Run Tests
+      run: make ci/test

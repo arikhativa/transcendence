@@ -12,7 +12,12 @@ DJ := $(PY) manage.py
 DB_HOST := postgres-dev
 DJANGO_HOST := django-dev
 
-all:
+DB_VOLUME := .docker-volume-mnt/postgres_data
+CI_DIR := ci
+
+.PHONY: all clear fclear re restart
+
+all: $(DB_VOLUME)
 	$(DC) up -d --build
 
 clear:
@@ -25,6 +30,10 @@ re: clear all
 
 restart: 
 	$(DC) restart
+
+# Postgres
+$(DB_VOLUME):
+	mkdir -p $@
 
 # Python
 py/dep:
@@ -52,4 +61,6 @@ dj/enter:
 db/enter:
 	$(DX) -it $(DB_HOST) bash
 
-.PHONY: all clear fclear re restart
+# CI
+ci/test:
+	$(CI_DIR)/is_up.sh
