@@ -2,7 +2,7 @@
 
 
 # Wait for Postgres to start
-while ! pg_isready -h $POSTGRES_HOST -p $POSTGRES_PORT -d $POSTGRES_DB -U $POSTGRES_USER; do
+while ! pg_isready -h $POSTGRES_HOST -p $POSTGRES_PORT; do
     echo "Waiting for Postgres to start..."
     sleep 1
 done
