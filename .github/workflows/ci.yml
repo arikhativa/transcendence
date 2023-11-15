@@ -23,13 +23,11 @@ jobs:
 
     - name: Start Docker
       run: |
-        make > del
+        make
         docker ps
+        echo -------------------------------------------------------------------
         docker logs django-dev
-        echo ----------------
-        sleep 10
-        docker ps
-        docker logs django-dev
+        echo -------------------------------------------------------------------
 
     - name: Run Tests
       run: make ci/test
