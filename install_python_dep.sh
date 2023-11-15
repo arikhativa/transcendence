@@ -7,6 +7,15 @@ while ! pg_isready -h $POSTGRES_HOST -p $POSTGRES_PORT; do
     sleep 1
 done
 
+
+# Install Python dependencies
+pip install oauthlib
+pip install requests
+pip install requests-oauthlib
+
+
+
+
 # Init Postgres
 python3 manage.py makemigrations
 python3 manage.py migrate

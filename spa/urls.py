@@ -9,4 +9,7 @@ urlpatterns = [
     path("main/", views.spa_view, name="main"),
     path("", views.spa_view, name="spa"),
     path("<path:catchall>", views.spa_view_catchall, name="spa"),
+    path("API/", views.spa_view, name="api"),
+    path("API/authenticate_42", views.api_view, name="api"),
+
 ]

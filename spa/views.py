@@ -1,9 +1,11 @@
 from django.shortcuts import render
+from django.http import HttpResponse
+from API.views import authenticate_42
 
 
 def spa_view(request):
     section = request.resolver_match.url_name
-    if section != "game" and section != "tournament":
+    if section != "game" and section != "tournament" and section != "API":
         section = "main"
 
     context = {
@@ -29,3 +31,9 @@ def game_view(request):
 
 def tournament_view(request):
     return render(request, "tournament.html")
+
+
+def api_view(request):
+    ur = authenticate_42(request)
+    return HttpResponse("ok")
+    
