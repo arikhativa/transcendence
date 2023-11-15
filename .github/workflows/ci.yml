@@ -23,10 +23,13 @@ jobs:
 
     - name: Start Docker
       run: |
-        cat .env
-        make
+        make > del
         docker ps
-        docker logs postgres-dev
+        docker logs django-dev
+        echo ----------------
+        sleep 10
+        docker ps
+        docker logs django-dev
 
     - name: Run Tests
       run: make ci/test

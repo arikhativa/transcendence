@@ -11,11 +11,23 @@ volumes:
       type: none
       device: ./.docker-volume-mnt/postgres_data
       o: bind
+  prometheus_data:
+    driver: local
+    driver_opts:
+      type: none
+      device: ./.docker-volume-mnt/prometheus_data
+      o: bind
+  grafana-data:
+    driver: local
+    driver_opts:
+      type: none
+      device: ./.docker-volume-mnt/grafana_data
+      o: bind
 
 services:
   postgres:
     container_name: postgres-dev
-    restart: always
+    restart: unless-stopped
     image: postgres:16
     networks:
       - transcendence
@@ -28,7 +40,7 @@ services:
 
   django:
     container_name: django-dev
-    restart: always
+    restart: unless-stopped
     build: .
     networks:
       - transcendence
@@ -41,11 +53,37 @@ services:
     volumes:
       - .:/home:delegated
 
+  prometheus:
+    container_name: prometheus-dev
+    image:  prom/prometheus:v2.47.2
+    restart: unless-stopped
+    networks:
+      - transcendence
+    ports:
+      - 9090:9090
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+
+  grafana:
+    image: grafana/grafana:10.2.1
+    container_name: grafana-dev
+    networks:
+      - transcendence
+    ports:
+      - 3000:3000
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./grafana.yml:/etc/grafana/datasources.yml
+    restart: unless-stopped
+
 # Only for Dev:
   adminer:
     container_name: adminer
     image: adminer:latest
-    restart: always
+    restart: unless-stopped
     depends_on:
       - postgres
     networks:
