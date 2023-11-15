@@ -12,12 +12,14 @@ DJ := $(PY) manage.py
 DB_HOST := postgres-dev
 DJANGO_HOST := django-dev
 
-DB_VOLUME := .docker-volume-mnt/postgres_data
+POSTGRES_VOLUME := .docker-volume-mnt/postgres_data
+GRAFANA_VOLUME := .docker-volume-mnt/grafana_data
+PROMETHEUS_VOLUME := .docker-volume-mnt/prometheus_data
 CI_DIR := ci
 
 .PHONY: all clear fclear re restart
 
-all: $(DB_VOLUME)
+all: $(GRAFANA_VOLUME) $(POSTGRES_VOLUME) $(PROMETHEUS_VOLUME)
 	$(DC) up -d --build
 
 clear:
@@ -31,9 +33,13 @@ re: clear all
 restart: 
 	$(DC) restart
 
-# Postgres
-$(DB_VOLUME):
-	mkdir -p $@
+# Volumes
+$(POSTGRES_VOLUME): 
+	mkdir -p $@ 
+$(PROMETHEUS_VOLUME): 
+	mkdir -p $@ 
+$(GRAFANA_VOLUME): 
+	mkdir -p $@ 
 
 # Python
 py/dep:
