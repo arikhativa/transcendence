@@ -23,4 +23,4 @@ COPY install_python_dep.sh /tmp/install_python_dep.sh
 RUN chmod +x /tmp/install_python_dep.sh
 ENTRYPOINT [ "/tmp/install_python_dep.sh" ]
 
-CMD /home/.venv/bin/python3 manage.py runserver 0.0.0.0:8000
+CMD python3 manage.py runserver 0.0.0.0:8000
