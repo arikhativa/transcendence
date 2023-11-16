@@ -62,7 +62,7 @@ services:
     ports:
       - 9090:9090
     volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./prometheus:/etc/prometheus:ro
       - prometheus_data:/prometheus
     command:
       - --config.file=/etc/prometheus/prometheus.yml
@@ -70,13 +70,17 @@ services:
   grafana:
     image: grafana/grafana:10.2.1
     container_name: grafana-dev
+    env_file:
+      - .env
     networks:
       - transcendence
     ports:
       - 3000:3000
     volumes:
       - grafana-data:/var/lib/grafana
-      - ./grafana.yml:/etc/grafana/datasources.yml
+      - ./grafana/dashboards:/etc/grafana/custom-dashboards:ro
+      - ./grafana/main.yaml:/etc/grafana/provisioning/dashboards/main.yaml:ro
+      - ./grafana/grafana.yml:/etc/grafana/datasources.yml:ro
     restart: unless-stopped
 
   postgres-exporter:
