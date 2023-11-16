@@ -79,6 +79,15 @@ services:
       - ./grafana.yml:/etc/grafana/datasources.yml
     restart: unless-stopped
 
+  postgres-exporter:
+    image: prometheuscommunity/postgres-exporter:v0.15.0
+    container_name: postgres-exporter-dev
+    restart: unless-stopped
+    networks:
+      - transcendence
+    env_file:
+      - .env
+
 # Only for Dev:
   adminer:
     container_name: adminer
