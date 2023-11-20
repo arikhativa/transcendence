@@ -14,12 +14,6 @@ if [ ! -d "/home/.venv" ]; then
 fi
 python3 -m pip install -r /home/requirements.txt
 
-# Install Python dependencies
-pip install oauthlib
-pip install requests
-pip install requests-oauthlib
-
-
 
 # Init Postgres
 python3 manage.py makemigrations

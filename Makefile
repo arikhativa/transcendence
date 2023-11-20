@@ -2,7 +2,7 @@
 DC_FILE_PROD := docker-compose-prod.yml
 DC_FILE_DEV := docker-compose.yml
 
-DC := docker-compose -f $(DC_FILE_DEV)
+DC := docker compose -f $(DC_FILE_DEV)
 DX := docker exec 
 
 PY := python
