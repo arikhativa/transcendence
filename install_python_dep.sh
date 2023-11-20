@@ -9,7 +9,7 @@ done
 
 
 # Install Python dependencies
-pip install oauthlib
+stall oauthlib
 pip install requests
 pip install requests-oauthlib
 

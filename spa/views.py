@@ -5,7 +5,7 @@ from API.views import authenticate_42
 
 def spa_view(request):
     section = request.resolver_match.url_name
-    if section != "game" and section != "tournament" and section != "API":
+    if section != "game" and section != "tournament":
         section = "main"
 
     context = {
