@@ -1,4 +1,59 @@
 {
+    "__inputs": [
+      {
+        "name": "Prometheus",
+        "label": "Prometheus",
+        "description": "",
+        "type": "datasource",
+        "pluginId": "prometheus",
+        "pluginName": "Prometheus"
+      }
+    ],
+    "__elements": {},
+    "__requires": [
+      {
+        "type": "panel",
+        "id": "bargauge",
+        "name": "Bar gauge",
+        "version": ""
+      },
+      {
+        "type": "panel",
+        "id": "gauge",
+        "name": "Gauge",
+        "version": ""
+      },
+      {
+        "type": "grafana",
+        "id": "grafana",
+        "name": "Grafana",
+        "version": "10.2.1"
+      },
+      {
+        "type": "panel",
+        "id": "heatmap",
+        "name": "Heatmap",
+        "version": ""
+      },
+      {
+        "type": "datasource",
+        "id": "prometheus",
+        "name": "Prometheus",
+        "version": "1.0.0"
+      },
+      {
+        "type": "panel",
+        "id": "stat",
+        "name": "Stat",
+        "version": ""
+      },
+      {
+        "type": "panel",
+        "id": "timeseries",
+        "name": "Time series",
+        "version": ""
+      }
+    ],
     "annotations": {
       "list": [
         {
@@ -26,7 +81,7 @@
     "fiscalYearStartMonth": 0,
     "gnetId": 17658,
     "graphTooltip": 0,
-    "id": 1,
+    "id": null,
     "links": [],
     "liveNow": true,
     "panels": [
@@ -286,7 +341,7 @@
       {
         "datasource": {
           "type": "prometheus",
-          "uid": "dae3c0f9-1b1b-4fe3-a5e1-834a11f9f59c"
+          "uid": "Prometheus"
         },
         "fieldConfig": {
           "defaults": {
@@ -342,7 +397,7 @@
           {
             "datasource": {
               "type": "prometheus",
-              "uid": "dae3c0f9-1b1b-4fe3-a5e1-834a11f9f59c"
+              "uid": "Prometheus"
             },
             "editorMode": "code",
             "exemplar": false,
@@ -360,7 +415,7 @@
       {
         "datasource": {
           "type": "prometheus",
-          "uid": "dae3c0f9-1b1b-4fe3-a5e1-834a11f9f59c"
+          "uid": "Prometheus"
         },
         "fieldConfig": {
           "defaults": {
@@ -416,7 +471,7 @@
           {
             "datasource": {
               "type": "prometheus",
-              "uid": "dae3c0f9-1b1b-4fe3-a5e1-834a11f9f59c"
+              "uid": "Prometheus"
             },
             "editorMode": "code",
             "expr": "sum(max_over_time(django_db_new_connection_errors_total{app=~\"^$application$\"}[$__range]))",
@@ -431,7 +486,7 @@
       {
         "datasource": {
           "type": "prometheus",
-          "uid": "dae3c0f9-1b1b-4fe3-a5e1-834a11f9f59c"
+          "uid": "Prometheus"
         },
         "fieldConfig": {
           "defaults": {
@@ -489,7 +544,7 @@
           {
             "datasource": {
               "type": "prometheus",
-              "uid": "dae3c0f9-1b1b-4fe3-a5e1-834a11f9f59c"
+              "uid": "Prometheus"
             },
             "editorMode": "code",
             "expr": "sum(django_cache_get_hits_total{app=~\"^$application$\"}) by (backend) / sum(django_cache_get_total{app=~\"^$application$\"}) by (backend)",
@@ -674,7 +729,7 @@
       {
         "datasource": {
           "type": "prometheus",
-          "uid": "dae3c0f9-1b1b-4fe3-a5e1-834a11f9f59c"
+          "uid": "Prometheus"
         },
         "description": "",
         "fieldConfig": {
@@ -743,7 +798,7 @@
           {
             "datasource": {
               "type": "prometheus",
-              "uid": "dae3c0f9-1b1b-4fe3-a5e1-834a11f9f59c"
+              "uid": "Prometheus"
             },
             "editorMode": "code",
             "expr": "sum(rate(django_http_requests_latency_including_middlewares_seconds_bucket{app=~\"^$application$\"}[$__rate_interval])) by (le)",
@@ -760,7 +815,7 @@
       {
         "datasource": {
           "type": "prometheus",
-          "uid": "dae3c0f9-1b1b-4fe3-a5e1-834a11f9f59c"
+          "uid": "Prometheus"
         },
         "description": "",
         "fieldConfig": {
@@ -829,7 +884,7 @@
           {
             "datasource": {
               "type": "prometheus",
-              "uid": "dae3c0f9-1b1b-4fe3-a5e1-834a11f9f59c"
+              "uid": "Prometheus"
             },
             "editorMode": "code",
             "exemplar": false,
@@ -1082,7 +1137,7 @@
       {
         "datasource": {
           "type": "prometheus",
-          "uid": "dae3c0f9-1b1b-4fe3-a5e1-834a11f9f59c"
+          "uid": "Prometheus"
         },
         "description": "",
         "fieldConfig": {
@@ -1145,7 +1200,7 @@
           {
             "datasource": {
               "type": "prometheus",
-              "uid": "dae3c0f9-1b1b-4fe3-a5e1-834a11f9f59c"
+              "uid": "Prometheus"
             },
             "editorMode": "code",
             "exemplar": false,
@@ -1274,7 +1329,7 @@
       {
         "datasource": {
           "type": "prometheus",
-          "uid": "dae3c0f9-1b1b-4fe3-a5e1-834a11f9f59c"
+          "uid": "Prometheus"
         },
         "fieldConfig": {
           "defaults": {
@@ -1351,7 +1406,7 @@
           {
             "datasource": {
               "type": "prometheus",
-              "uid": "dae3c0f9-1b1b-4fe3-a5e1-834a11f9f59c"
+              "uid": "Prometheus"
             },
             "editorMode": "code",
             "expr": "sum(irate(django_db_execute_total{app=~\"^$application$\"}[$__rate_interval])) by (vendor)",
@@ -1366,7 +1421,7 @@
       {
         "datasource": {
           "type": "prometheus",
-          "uid": "dae3c0f9-1b1b-4fe3-a5e1-834a11f9f59c"
+          "uid": "Prometheus"
         },
         "fieldConfig": {
           "defaults": {
@@ -1433,7 +1488,7 @@
           {
             "datasource": {
               "type": "prometheus",
-              "uid": "dae3c0f9-1b1b-4fe3-a5e1-834a11f9f59c"
+              "uid": "Prometheus"
             },
             "editorMode": "code",
             "expr": "sum(rate(django_db_query_duration_seconds_bucket{app=~\"^$application$\"}[$__rate_interval])) by (le)",
@@ -1461,7 +1516,7 @@
           "current": {
             "selected": false,
             "text": "Prometheus",
-            "value": "dae3c0f9-1b1b-4fe3-a5e1-834a11f9f59c"
+            "value": "PBFA97CFB590B2093"
           },
           "hide": 0,
           "includeAll": false,
@@ -1476,11 +1531,7 @@
           "type": "datasource"
         },
         {
-          "current": {
-            "selected": false,
-            "text": "All",
-            "value": "$__all"
-          },
+          "current": {},
           "datasource": {
             "type": "prometheus",
             "uid": "$datasource"

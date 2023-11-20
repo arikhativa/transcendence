@@ -80,7 +80,8 @@ services:
       - grafana-data:/var/lib/grafana
       - ./grafana/dashboards:/etc/grafana/custom-dashboards:ro
       - ./grafana/main.yaml:/etc/grafana/provisioning/dashboards/main.yaml:ro
-      - ./grafana/grafana.yml:/etc/grafana/datasources.yml:ro
+      - ./grafana/datasources.yml:/etc/grafana/provisioning/datasources/datasources.yml:ro
+
     restart: unless-stopped
 
   postgres-exporter:
