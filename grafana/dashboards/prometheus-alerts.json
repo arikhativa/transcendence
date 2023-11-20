@@ -1,4 +1,41 @@
 {
+    "__inputs": [
+      {
+        "name": "Prometheus",
+        "label": "Prometheus",
+        "description": "",
+        "type": "datasource",
+        "pluginId": "prometheus",
+        "pluginName": "Prometheus"
+      }
+    ],
+    "__elements": {},
+    "__requires": [
+      {
+        "type": "grafana",
+        "id": "grafana",
+        "name": "Grafana",
+        "version": "10.2.1"
+      },
+      {
+        "type": "panel",
+        "id": "graph",
+        "name": "Graph (old)",
+        "version": ""
+      },
+      {
+        "type": "datasource",
+        "id": "prometheus",
+        "name": "Prometheus",
+        "version": "1.0.0"
+      },
+      {
+        "type": "panel",
+        "id": "table-old",
+        "name": "Table (old)",
+        "version": ""
+      }
+    ],
     "annotations": {
       "list": [
         {
@@ -55,7 +92,7 @@
     "fiscalYearStartMonth": 0,
     "gnetId": 11098,
     "graphTooltip": 1,
-    "id": 7,
+    "id": null,
     "links": [
       {
         "icon": "external link",
@@ -83,12 +120,11 @@
         "dashes": false,
         "datasource": {
           "type": "prometheus",
-          "uid": "dae3c0f9-1b1b-4fe3-a5e1-834a11f9f59c"
+          "uid": "Prometheus"
         },
         "description": "",
         "fieldConfig": {
           "defaults": {
-            "fieldMinMax": false,
             "links": []
           },
           "overrides": []
@@ -127,23 +163,19 @@
         "renderer": "flot",
         "seriesOverrides": [
           {
-            "$$hashKey": "object:140",
             "alias": "/firing/",
             "stack": "B",
             "transform": "negative-Y",
             "zindex": -3
           },
           {
-            "$$hashKey": "object:141",
             "alias": "/pending/",
             "stack": "A"
           },
           {
-            "$$hashKey": "object:142",
             "alias": ""
           },
           {
-            "$$hashKey": "object:143",
             "alias": "/help_series_x_axes_in_center/",
             "bars": false,
             "hideTooltip": true,
@@ -160,7 +192,7 @@
           {
             "datasource": {
               "type": "prometheus",
-              "uid": "dae3c0f9-1b1b-4fe3-a5e1-834a11f9f59c"
+              "uid": "Prometheus"
             },
             "expr": "ALERTS{instance=~\"$instance\", alertname=~\"$alertname\", alertstate=~\"$alertstate\"}",
             "legendFormat": "{{alertname}} {{instance}} {{alertstate}} {{datacenter}}",
@@ -169,7 +201,7 @@
           {
             "datasource": {
               "type": "prometheus",
-              "uid": "dae3c0f9-1b1b-4fe3-a5e1-834a11f9f59c"
+              "uid": "Prometheus"
             },
             "expr": "1",
             "hide": false,
@@ -215,7 +247,7 @@
         "columns": [],
         "datasource": {
           "type": "prometheus",
-          "uid": "dae3c0f9-1b1b-4fe3-a5e1-834a11f9f59c"
+          "uid": "Prometheus"
         },
         "description": "Alerts list for all alerts in a selected time range. For filling this table `Alerts annotations` have to be switched on.",
         "fontSize": "100%",
@@ -308,7 +340,7 @@
           {
             "datasource": {
               "type": "prometheus",
-              "uid": "dae3c0f9-1b1b-4fe3-a5e1-834a11f9f59c"
+              "uid": "Prometheus"
             },
             "expr": "",
             "refId": "A"
@@ -322,7 +354,7 @@
         "columns": [],
         "datasource": {
           "type": "prometheus",
-          "uid": "dae3c0f9-1b1b-4fe3-a5e1-834a11f9f59c"
+          "uid": "Prometheus"
         },
         "description": "Shows how many times was particular alert started in a defined time range. Alert can be started either directly as `firing` or as a `pending`. Pending alerts wait for a defined time before it flips to a `firing` alert. This is specified with the `FOR` clause in a Prometheus `rules` file.",
         "fontSize": "100%",
@@ -398,7 +430,7 @@
           {
             "datasource": {
               "type": "prometheus",
-              "uid": "dae3c0f9-1b1b-4fe3-a5e1-834a11f9f59c"
+              "uid": "Prometheus"
             },
             "expr": "changes( ALERTS_FOR_STATE{instance=~\"$instance\",alertname=~\"$alertname\"}[$__range] ) + 1",
             "format": "table",
@@ -423,8 +455,8 @@
         {
           "current": {
             "selected": false,
-            "text": "default",
-            "value": "default"
+            "text": "Prometheus",
+            "value": "PBFA97CFB590B2093"
           },
           "hide": 2,
           "includeAll": false,
@@ -439,13 +471,9 @@
           "type": "datasource"
         },
         {
-          "current": {
-            "selected": false,
-            "text": "All",
-            "value": "$__all"
-          },
+          "current": {},
           "datasource": {
-            "type": "prometheus",
+            "type": "datasource",
             "uid": "$datasource"
           },
           "definition": "label_values(ALERTS_FOR_STATE,instance)",
@@ -466,14 +494,10 @@
           "useTags": false
         },
         {
-          "current": {
-            "selected": false,
-            "text": "All",
-            "value": "$__all"
-          },
+          "current": {},
           "datasource": {
             "type": "prometheus",
-            "uid": "dae3c0f9-1b1b-4fe3-a5e1-834a11f9f59c"
+            "uid": "Prometheus"
           },
           "definition": "label_values(ALERTS_FOR_STATE,alertname)",
           "hide": 0,
@@ -493,14 +517,10 @@
           "useTags": false
         },
         {
-          "current": {
-            "selected": false,
-            "text": "All",
-            "value": "$__all"
-          },
+          "current": {},
           "datasource": {
             "type": "prometheus",
-            "uid": "dae3c0f9-1b1b-4fe3-a5e1-834a11f9f59c"
+            "uid": "Prometheus"
           },
           "definition": "label_values(ALERTS, alertstate)",
           "hide": 0,
@@ -564,6 +584,6 @@
     "timezone": "",
     "title": "Prometheus Alerts",
     "uid": "eea-9_sik",
-    "version": 2,
+    "version": 1,
     "weekStart": ""
   }
