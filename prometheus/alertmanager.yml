@@ -1,0 +1,4 @@
+receivers:
+  - name: 'webhook'
+    webhook_configs:
+      - url: 'http://grafana-dev:3000/api/alerts'

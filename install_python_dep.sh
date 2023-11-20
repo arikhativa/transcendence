@@ -7,12 +7,17 @@ while ! pg_isready -h $POSTGRES_HOST -p $POSTGRES_PORT; do
     sleep 1
 done
 
+# Install venv if needed
+if [ ! -d "/home/.venv" ]; then
+    echo "Installing venv..."
+    python3 -m venv /home/.venv
+fi
+python3 -m pip install -r /home/requirements.txt
 
 # Install Python dependencies
-stall oauthlib
+pip install oauthlib
 pip install requests
 pip install requests-oauthlib
-
 
 
 
