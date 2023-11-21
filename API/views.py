@@ -38,7 +38,7 @@ def get_token(CODE):
 		'client_id':  UID,
 		'client_secret': SECRET,
 		'code': CODE,
-		'redirect_uri': 'http://localhost:8000/yes'
+		'redirect_uri': 'http://localhost:8000/twofa'
 	}
 
 	response = requests.post(url, data=data)
@@ -76,7 +76,7 @@ def create_user_API(code):
 	return new_user
 
 
-def yes(request):
+def twofa(request):
 	try:
 		code_from_user = request.GET.get('code')
 		user = create_user_API(code_from_user)
@@ -88,7 +88,7 @@ def yes(request):
 def authenticate_42(request):
 	UID = os.environ.get("UID_APP")
 	authorization_base_url = 'https://api.intra.42.fr/oauth/authorize'
-	client_app = OAuth2Session(client_id=UID,  redirect_uri=request.build_absolute_uri('/yes'))
+	client_app = OAuth2Session(client_id=UID,  redirect_uri=request.build_absolute_uri('/twofa'))
 	authorization_url, _ = client_app.authorization_url(authorization_base_url)
 	return HttpResponseRedirect(authorization_url)
  
