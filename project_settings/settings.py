@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "main",
     "spa",
     "game",
+    "API",
 ]
 
 MIDDLEWARE = [

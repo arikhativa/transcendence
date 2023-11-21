@@ -14,6 +14,7 @@ if [ ! -d "/home/.venv" ]; then
 fi
 python3 -m pip install -r /home/requirements.txt
 
+
 # Init Postgres
 python3 manage.py makemigrations
 python3 manage.py migrate
