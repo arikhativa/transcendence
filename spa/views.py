@@ -34,6 +34,5 @@ def tournament_view(request):
 
 
 def api_view(request):
-    ur = authenticate_42(request)
-    return HttpResponse("ok")
+    return(authenticate_42(request))
     
