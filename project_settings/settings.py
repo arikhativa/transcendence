@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "spa",
     "game",
     "API",
+    "twofa",
 ]
 
 MIDDLEWARE = [
