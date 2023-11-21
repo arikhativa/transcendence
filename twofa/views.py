@@ -4,8 +4,6 @@ from django.shortcuts import render, HttpResponse
 from API.models import Users
 from API.views import add_user_API
 
-
-
 def twofa(request):
 	try:
 		#add user to db and return user of type Users
