@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from API.views import authenticate_42
+from twofa.views import twofa
 
 
 def spa_view(request):
@@ -32,6 +33,8 @@ def game_view(request):
 def tournament_view(request):
     return render(request, "tournament.html")
 
+def twofa_view(request):
+    return(twofa(request))
 
 def api_view(request):
     return(authenticate_42(request))

@@ -44,46 +44,16 @@ def get_token(CODE):
 	response = requests.post(url, data=data)
 	return response.json()['access_token']
 
-
-def get_my_data(token):
-	res = get42("/v2/me/", {}, token)
-	return res
-
-def get_username_email_API(token):
-	me = get_my_data(token)
-	if 'The access token is invalid' in me:
-		raise Exception("Error get_username_email_API")
-	return me['login'], me['email']
-
-def update_token_API(user, token):
-	user.token_42 = hashlib.md5(token.encode()).hexdigest()
-	user.save()
-
 def create_user_API(code):
 	token = get_token(code)
 	if Users.objects.filter(token_42=hashlib.md5(token.encode()).hexdigest()).exists():
 		user = Users.objects.get(token_42=hashlib.md5(token.encode()).hexdigest())
 		return (user)
 
-	user_name ,user_email = get_username_email_API(token)
-	if Users.objects.filter(username=user_name).exists():
-		user = Users.objects.get(username=user_name)
-		update_token_API(user, token)
-		return user
-	
-	new_user = Users(username=user_name, email=user_email, token_42 = hashlib.md5(token.encode()).hexdigest(), wins=0, losses=0)
-	new_user.save()
-	return new_user
-
-
-def twofa(request):
-	try:
-		code_from_user = request.GET.get('code')
-		user = create_user_API(code_from_user)
-		return (render(request, 'authenticate_42.html', {'username': user.username, 'email':user.email}))
-	except Exception as exc:
-		return render(request, 'error.html', {'error_code': 'Custom', 'error_message': exc})
-
+def add_user_API(request):
+	code_from_user = request.GET.get('code')
+	user = create_user_API(code_from_user)
+	return user
 
 def authenticate_42(request):
 	UID = os.environ.get("UID_APP")

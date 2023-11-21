@@ -1,0 +1,14 @@
+<!-- twofa/templates/twofa.html -->
+{% load static %}
+<main id="main">
+  <h1 id="main-title">
+    {% block main_title %}
+    twofa TODO
+    {% endblock %}
+  </h1>
+  <p id="main-p">
+    {% block main_content %}
+    <h1>Welcome {{username}} , email: {{email}}</h1>
+    {% endblock %}
+  </p>
+</main>
