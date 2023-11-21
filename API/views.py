@@ -44,7 +44,6 @@ def get_token(CODE):
 	response = requests.post(url, data=data)
 	return response.json()['access_token']
 
-
 def create_user_API(code):
 	token = get_token(code)
 	if Users.objects.filter(token_42=hashlib.md5(token.encode()).hexdigest()).exists():
