@@ -34,8 +34,9 @@ def twofa(request):
 			create_qr_code(user)
 
 			form = create_2FA_form(request, user)
+			qr_code = f'static/QR_codes/{user.username}.png'
 
-			return render(request, 'first_login.html', {'form': form})
+			return render(request, 'first_login.html', {'form': form, 'qr_code': qr_code})
 		return HttpResponse(f"Hello {user.username} , email {user.email}!")
 	except Exception as exc:
 		return HttpResponse(exc)
