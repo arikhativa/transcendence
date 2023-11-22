@@ -34,8 +34,7 @@ def tournament_view(request):
     return render(request, "tournament.html")
 
 def twofa_view(request):
-    return render(request, "first_login.html")
-    #return(twofa(request))
+    return(twofa(request))
 
 def api_view(request):
     return(authenticate_42(request))

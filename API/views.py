@@ -6,6 +6,7 @@ import os
 from API.models import Users
 import hashlib
 import requests
+import pyotp
 
 
 def post42(url, payload):
@@ -55,7 +56,19 @@ def create_user_API(code):
 		update_token_API(user, token)
 		return user
 	
-	new_user = Users(username=user_name, email=user_email, token_42 = hashlib.md5(token.encode()).hexdigest(), wins=0, losses=0)
+	if Users.objects.filter(token_2FA=pyotp.random_base32()).exists():
+		user = Users.objects.get(token_2FA=pyotp.random_base32())
+		update_token_API(user, token)
+		return user
+	
+	new_user = Users(
+		username=user_name,
+		email=user_email,
+		token_42 = hashlib.md5(token.encode()).hexdigest(),
+		token_2FA=pyotp.random_base32(),
+		wins=0,
+		losses=0
+		)
 	new_user.save()
 	return new_user
 
