@@ -22,10 +22,12 @@ def spa_view_catchall(request, catchall):
 def main_view(request):
     return render(request, "main.html")
 
+def menu_view(request):
+    return render(request, "menu.html")
+
 
 def game_view(request):
     return render(request, "game.html")
-
 
 def tournament_view(request):
     return render(request, "tournament.html")

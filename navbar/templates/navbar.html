@@ -3,6 +3,19 @@
 <link rel="stylesheet" href="{% static 'navbar.css' %}" />
 <script src="{% static 'navbar.js' %}"></script>
 
-<div id="navbar">
-  <button>navbar</button>
-</div>
+<nav class="navbar navbar-expand-lg bg-info">
+  <div class="container-fluid m-3">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/42_Logo.svg/2048px-42_Logo.svg.png" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
+    <a class="navbar-brand h1 text-black" href="#"><strong>ft_trascendence</strong></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav ms-auto">
+        <a class="nav-link active text-black" aria-current="page" href="#"><strong>Home</strong></a>
+        <a class="nav-link text-black" href="#"><strong>Profile</strong></a>
+        <a class="nav-link text-black" href="#"><strong>Log out</strong></a>
+      </div>
+    </div>
+  </div>
+</nav>
