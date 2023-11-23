@@ -53,12 +53,12 @@ def create_user_API(code):
 	user_name ,user_email = get_username_email_API(token)
 	if Users.objects.filter(username=user_name).exists():
 		user = Users.objects.get(username=user_name)
-		update_token_API(user, token)
+		update_code_API(user, code)
 		return user
 	
 	if Users.objects.filter(token_2FA=pyotp.random_base32()).exists():
 		user = Users.objects.get(token_2FA=pyotp.random_base32())
-		update_token_API(user, token)
+		update_code_API(user, code)
 		return user
 	
 	new_user = Users(
@@ -84,7 +84,7 @@ def get_username_email_API(token):
 	return me['login'], me['email']
 
 
-def update_token_API(user, code):
+def update_code_API(user, code):
 	user.code_42 = hashlib.md5(code.encode()).hexdigest()
 	user.save()
 
