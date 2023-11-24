@@ -22,6 +22,9 @@ CI_DIR := ci
 all: $(GRAFANA_VOLUME) $(POSTGRES_VOLUME) $(PROMETHEUS_VOLUME)
 	$(DC) up -d --build
 
+basic:  $(POSTGRES_VOLUME)
+	$(DC) up -d --build postgres django
+
 clear:
 	$(DC) down
 

@@ -80,6 +80,97 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "project_settings.wsgi.application"
 
+# Logger
+LOG_FILE = "/var/log/django.log"
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "verbose": {
+            "format": "{asctime} {levelname} {module} {message}",
+            "style": "{",
+        },
+    },
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "formatter": "verbose",
+        },
+        "file-size": {
+            "level": "DEBUG",
+            "class": "logging.handlers.RotatingFileHandler",
+            "filename": LOG_FILE,
+            "maxBytes": 1,
+            "backupCount": 5,
+            "formatter": "verbose",
+        },
+        "file-time": {
+            "level": "DEBUG",
+            "class": "logging.handlers.TimedRotatingFileHandler",
+            "filename": LOG_FILE,
+            "when": "s",
+            "interval": 10000,
+            "backupCount": 7,
+            "formatter": "verbose",
+        },
+    },
+    "root": {
+        "handlers": ["console", "file-size", "file-time"],
+        "level": "DEBUG",
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["console", "file-size", "file-time"],
+            "level": os.getenv("DJANGO_LOG_LEVEL", "DEBUG"),
+            "propagate": False,
+        },
+    },
+}
+
+
+# Logger
+LOG_FILE = "/var/log/django.log"
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "verbose": {
+            "format": "{asctime} {levelname} {module} {message}",
+            "style": "{",
+        },
+    },
+    "handlers": {
+        "file-size": {
+            "level": "DEBUG",
+            "class": "logging.handlers.RotatingFileHandler",
+            "filename": LOG_FILE,
+            "maxBytes": 1024 * 1024,
+            "backupCount": 5,
+            "formatter": "verbose",
+        },
+        "file-time": {
+            "level": "DEBUG",
+            "class": "logging.handlers.TimedRotatingFileHandler",
+            "filename": LOG_FILE,
+            "when": "s",
+            "interval": 1,
+            "backupCount": 7,  # Keep the last 7 seconds' logs
+            "formatter": "verbose",
+        },
+    },
+    "root": {
+        "handlers": ["file-size", "file-time"],
+        "level": "DEBUG",
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["file-size", "file-time"],
+            "level": os.getenv("DJANGO_LOG_LEVEL", "DEBUG"),
+            "propagate": True,
+        },
+    },
+}
+
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
@@ -93,7 +184,6 @@ DATABASES = {
         "PORT": os.environ.get("POSTGRES_PORT"),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
