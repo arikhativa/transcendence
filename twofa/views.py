@@ -51,6 +51,7 @@ def twofa(request):
 			token = create_jwt(user)
 		else:
 			user = _user_jwt_cookie(request)
+			token = create_jwt(user)
 
 		if not (user.active_2FA):
 			qr_code = create_qr_code(user)
@@ -69,7 +70,7 @@ def twofa(request):
 def validate_qr(request):
 	user = _user_jwt_cookie(request)
 	user_code = request.POST.get('code')
-	is_valid = True #validate_code(request) 
+	is_valid = True #validate_code(request)
 
 	if is_valid:
 		user.active_2FA = True
