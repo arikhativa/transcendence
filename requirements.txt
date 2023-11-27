@@ -12,3 +12,5 @@ requests
 requests-oauthlib
 qrcode
 pyotp
+djangorestframework-simplejwt
+PyJWT

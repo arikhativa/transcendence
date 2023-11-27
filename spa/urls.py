@@ -10,6 +10,12 @@ urlpatterns = [
     path("API/authenticate_42", views.api_view, name="api"),
     path("twofa", views.twofa_view, name="twofa"),
     path("", views.spa_view, name="spa"),
-    path("<path:catchall>", views.spa_view_catchall, name="spa"),
+    path('validate_qr_code/', views.validate_qr_code, name='validate_qr_code'),
 
+
+
+
+    
+    path("<path:catchall>", views.spa_view_catchall, name="spa"),
+   
 ]
