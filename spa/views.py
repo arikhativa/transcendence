@@ -1,9 +1,6 @@
 from django.shortcuts import render
-from django.http import HttpResponse
 from API.views import authenticate_42
 from twofa.views import twofa, validate_qr
-from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated
 
 
 

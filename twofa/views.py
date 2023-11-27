@@ -60,7 +60,9 @@ def twofa(request):
 			response.set_cookie('jwt_token', token, httponly=True, secure=False)
 			return response
 		else:
-			return HttpResponse(f"Hello {user.username} , email {user.email}!")
+			response = HttpResponse(f"Hello {user.username} , email {user.email}!")
+			response.set_cookie('jwt_token', token, httponly=True, secure=False)
+			return response
 	except Exception as exc:
 		return HttpResponse(exc)
 
