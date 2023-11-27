@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     "main",
     "spa",
     "game",
+    "tournament",
+    "home",
 ]
 
 MIDDLEWARE = [

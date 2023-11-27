@@ -29,5 +29,8 @@ def menu_view(request):
 def game_view(request):
     return render(request, "game.html")
 
+def home_view(request):
+    return render(request, "home.html")
+
 def tournament_view(request):
     return render(request, "tournament.html")
