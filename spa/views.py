@@ -6,6 +6,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 
 
+
 def spa_view(request):
     section = request.resolver_match.url_name
     if section != "game" and section != "tournament":
@@ -28,9 +29,9 @@ def main_view(request):
     return render(request, "main.html")
 
 
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])
 def game_view(request):
+    if not request.COOKIES.get('jwt_token'):
+        return render(request, "main.html")
     return render(request, "game.html")
 
 

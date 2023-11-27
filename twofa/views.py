@@ -4,21 +4,8 @@ from API.views import add_user_API
 from .forms import Form2FA
 import pyotp
 import qrcode
-
-
-
 from django.conf import settings
 import jwt
-
-from django.views.decorators.csrf import csrf_exempt
-
-from django.http import JsonResponse
-from django.contrib import messages
-from django.views.decorators.http import require_POST
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
-from rest_framework_simplejwt.tokens import UntypedToken
-from rest_framework_simplejwt.state import token_backend
 
 
 def create_qr_code(user):
@@ -42,13 +29,15 @@ def create_2FA_form(request, user):
 		form = Form2FA()
 	return form
 
+
 def create_jwt(user):
 	token = jwt.encode({'username': user.username}, settings.SECRET_KEY, algorithm='HS256')
 	user.jwt = token
 	user.save()
 	return token
 
-def get_user_from_jwt(token):
+def _user_jwt_cookie(request):
+	token = request.COOKIES.get('jwt_token')
 	payload = jwt.decode(token, settings.SECRET_KEY, algorithms=['HS256'])
 	user = Users.objects.get(username=payload['username'])
 	return user
@@ -56,33 +45,33 @@ def get_user_from_jwt(token):
 
 def twofa(request):
 	try:
-		user = add_user_API(request)
-		token = create_jwt(user)
+		# if the user has not yet set the cookie
+		if not request.COOKIES.get('jwt_token'):
+			user = add_user_API(request)
+			token = create_jwt(user)
+		else:
+			user = _user_jwt_cookie(request)
 
 		if not (user.active_2FA):
 			qr_code = create_qr_code(user)
 			form = create_2FA_form(request, user)
 			qr_code = f'static/QR_codes/{user.username}.png'
-			
-			return render(request, 'first_login.html', {'form': form, 'qr_code': qr_code, 'token': token})
-		return HttpResponse(f"Hello {user.username} , email {user.email}!")
+			response = render(request, 'first_login.html', {'form': form, 'qr_code': qr_code})
+			response.set_cookie('jwt_token', token, httponly=True, secure=False)
+			return response
+		else:
+			return HttpResponse(f"Hello {user.username} , email {user.email}!")
 	except Exception as exc:
 		return HttpResponse(exc)
 
 def validate_qr(request):
-	token = request.POST.get('jwt') 
-	user = get_user_from_jwt(token)
-	print(user.username)
-
- 
+	user = _user_jwt_cookie(request)
 	user_code = request.POST.get('code')
-	
-
-	is_valid = False #validate_code(request) 
+	is_valid = True #validate_code(request) 
 
 	if is_valid:
 		user.active_2FA = True
-		user.save() 
-		return redirect('a.html') 
+		user.save()
+		return HttpResponse(f"Hello {user.username} , email {user.email}!")
 	else:
 		return twofa(request) 
