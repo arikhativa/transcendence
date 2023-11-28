@@ -6,10 +6,10 @@
 <main id="main">
   <h1 id="main-title">
     {% block main_title %}
-    TWO FACTOR AUTHENTICATOR
+      TWO FACTOR AUTHENTICATOR
     {% endblock %}
   </h1>
-  <p id="main-p">
+  <div id="main-p">
     {% block main_content %}
       <h2>Please introduce a valid 2FA code:</h2>
       <form method="post" action="/validate_qr_code/">
@@ -19,5 +19,5 @@
         <p>{{ error_msg }}</p>
       </form>
     {% endblock %}
-  </p>
+    </div>
 </main>
