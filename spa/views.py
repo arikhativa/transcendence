@@ -4,7 +4,8 @@ from twofa.views import twofa, validate_qr, validate_user
 
 def spa_view(request):
     section = request.resolver_match.url_name
-    if section != "game" and section != "tournament":
+    if section != "game" and section != "tournament" and section != "validate_qr_code" \
+        and section != "twofa":
         section = "main"
 
     context = {

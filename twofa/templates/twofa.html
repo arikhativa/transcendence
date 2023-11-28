@@ -1,5 +1,8 @@
 <!-- twofa/templates/twofa.html -->
 {% load static %}
+<link rel="stylesheet" href="{% static 'main.css' %}" />
+<script src="{% static 'main.js' %}"></script>
+
 <main id="main">
   <h1 id="main-title">
     {% block main_title %}
@@ -8,13 +11,13 @@
   </h1>
   <p id="main-p">
     {% block main_content %}
-    <h2>Please introduce a valid 2FA code:</h2>
-    <form method="post" action="/validate_qr_code/">
-      {% csrf_token %}
-      {{ form }}
-      <button type="submit">Submit</button>
-      <p>{{ error_msg }}</p>
-    </form>
+      <h2>Please introduce a valid 2FA code:</h2>
+      <form method="post" action="/validate_qr_code/">
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit">Submit</button>
+        <p>{{ error_msg }}</p>
+      </form>
     {% endblock %}
   </p>
 </main>
