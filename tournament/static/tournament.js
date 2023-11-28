@@ -68,7 +68,8 @@ function addNewPlayer() {
     numOfPlayers.textContent = parseInt(numOfPlayers.textContent) + 1;
 
     // Append the new item to the list
-    players.appendChild(newPlayer);
+    players.insertBefore(newPlayer, players.firstElementChild);
+    // players.appendChild(newPlayer);
     console.log("New player added");
 }
 
@@ -76,3 +77,10 @@ function addNewPlayer() {
 var playerSubmitButton = document.getElementById('player-submit-button');
 // Add the handleClick function to the button's onclick event
 playerSubmitButton.onclick = addNewPlayer;
+ // Enable form submission on Enter key press
+ document.getElementById('new-player-name').addEventListener('keyup', function (event) {
+    if (event.key === 'Enter') {
+        addNewPlayer();
+    document.getElementById('new-player-name').value = '';
+    }
+});
