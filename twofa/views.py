@@ -59,7 +59,10 @@ def twofa(request, wrong_code=False):
 			user = add_user_API(request)
 			token = create_jwt(user)
 		else:
-			user = _user_jwt_cookie(request)
+			try:
+				user = _user_jwt_cookie(request)
+			except Exception as exc:
+				user = add_user_API(request)
 			token = create_jwt(user)
 
 		if not (user.active_2FA):
@@ -85,6 +88,19 @@ def validate_code(user, user_code):
 		return False
 	else:
 		return True
+
+def validate_user(request):
+    #user has to be logged in to access this page and have 2FA enabled
+    try:
+        token = request.COOKIES.get('jwt_token')
+        payload = jwt.decode(token, settings.SECRET_KEY, algorithms=['HS256'])
+        user = Users.objects.get(username=payload['username'])
+        if user.active_2FA:
+            return True
+        else:
+            return False
+    except Exception as exc:
+        return False
 
 @csrf_protect
 def validate_qr(request):
