@@ -1,5 +1,16 @@
 var players = document.getElementById('tournament-players');
 
+function playerExists(name) {
+    var names = players.getElementsByTagName('li');
+    for (var i = 0; i < names.length; i++) {
+        console.log(names[i].innerText);
+        if (names[i].getAttribute('id') === name) {
+            return true;
+        }
+    }
+    return false;
+}
+
 function getTournamentPlayers() {
     // Get list of player on turnament
     // Log the entire list to the console
@@ -35,9 +46,14 @@ function addNewPlayer() {
         return ;
     }
     // Check if Player already in list
-    
+   
+    if (playerExists(newPlayerName)) {
+        console.log("Player already in tournament");
+        return ;
+    }
+
     // Create a new list item element
-    var newPlayer = document.createElement('button');
+    var newPlayer = document.createElement('li');
     newPlayer.innerText = newPlayerName;
     newPlayer.classList.add('list-group-item');
     newPlayer.classList.add('list-group-item-warning');
