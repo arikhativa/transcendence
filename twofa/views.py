@@ -1,4 +1,5 @@
 from django.shortcuts import render, HttpResponse, redirect
+from django.views.decorators.csrf import csrf_protect
 from API.models import Users 
 from API.views import add_user_API
 from .forms import Form2FA
@@ -42,9 +43,9 @@ def _user_jwt_cookie(request):
 	user = Users.objects.get(username=payload['username'])
 	return user
 
-
+@csrf_protect
 def twofa(request):
-	try:
+	#try:
 		# if the user has not yet set the cookie
 		if not request.COOKIES.get('jwt_token'):
 			user = add_user_API(request)
@@ -55,7 +56,8 @@ def twofa(request):
 
 		if not (user.active_2FA):
 			qr_code = create_qr_code(user)
-			form = create_2FA_form(request, user)
+			#form = create_2FA_form(request, user)
+			form = Form2FA()
 			qr_code = f'static/QR_codes/{user.username}.png'
 			response = render(request, 'first_login.html', {'form': form, 'qr_code': qr_code})
 			response.set_cookie('jwt_token', token, httponly=True, secure=False)
@@ -64,13 +66,21 @@ def twofa(request):
 			response = HttpResponse(f"Hello {user.username} , email {user.email}!")
 			response.set_cookie('jwt_token', token, httponly=True, secure=False)
 			return response
-	except Exception as exc:
-		return HttpResponse(exc)
+	#except Exception as exc:
+		#return HttpResponse(exc)
 
+def validate_code(user, user_code):
+	totp = pyotp.TOTP(user.token_2FA)
+	if not (totp.verify(user_code)):
+		return False
+	else:
+		return True
+
+@csrf_protect
 def validate_qr(request):
 	user = _user_jwt_cookie(request)
 	user_code = request.POST.get('code')
-	is_valid = True #validate_code(request)
+	is_valid = validate_code(user, user_code)
 
 	if is_valid:
 		user.active_2FA = True

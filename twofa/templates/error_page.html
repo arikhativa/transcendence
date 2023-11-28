@@ -11,10 +11,11 @@
 		<h1>Welcome to Two-Factor Authentication Setup</h1>
 		<p>Please scan the QR code below with your Google Authenticator app to set up 2FA:</p>
     <img src="{{ qr_code }}" alt="QR Code for Google Authenticator">
-    <form method="post" action="/validate_qr_code/">
+    <form method="post">
       {% csrf_token %}
       {{ form }}
       <button type="submit">Submit</button>
+      <p>{{ error_msg }}</p>
   </form>
     {% endblock %}
   </p>
