@@ -81,13 +81,13 @@ TEMPLATES = [
 WSGI_APPLICATION = "project_settings.wsgi.application"
 
 # Logger
-LOG_FILE = "/var/log/django.log"
+LOG_FILE = "/var/log/django/django.log"
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
     "formatters": {
         "verbose": {
-            "format": "{asctime} {levelname} {module} {message}",
+            "format": "{asctime} {levelname} {module}: {message}",
             "style": "{",
         },
     },

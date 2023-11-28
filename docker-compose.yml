@@ -23,6 +23,19 @@ volumes:
       type: none
       device: ./.docker-volume-mnt/grafana_data
       o: bind
+  elastic-data:
+    driver: local
+    driver_opts:
+      type: none
+      device: ./.docker-volume-mnt/elastic_data
+      o: bind
+  common-log-data:
+    driver: local
+    driver_opts:
+      type: none
+      device: ./.docker-volume-mnt/commonlog_data
+      o: bind
+
 
 services:
   postgres:
@@ -52,7 +65,10 @@ services:
       - 8000:8000
     volumes:
       - .:/home:delegated
+      - common-log-data:/var/log/django/
 
+
+# Monitoring
   prometheus:
     container_name: prometheus-dev
     image:  prom/prometheus:v2.47.2
@@ -93,6 +109,75 @@ services:
     env_file:
       - .env
 
+# ELK
+  elasticsearch:
+    image: elasticsearch:8.11.1
+    container_name: elasticsearch-dev
+    restart: unless-stopped
+    volumes:
+      - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
+      - elastic-data:/usr/share/elasticsearch/data/
+    ports:
+    - 9200:9200
+    - 9300:9300
+    networks:
+      - transcendence
+    env_file:
+      - .env
+    mem_limit: 1GB
+
+  logstash:
+    image: logstash:8.11.1
+    container_name: logstash-dev
+    restart: unless-stopped
+    volumes:
+    - ./logstash/logstash.conf:/logstash/logstash.conf
+    - common-log-data:/var/log/django/:ro
+    command: logstash -f /logstash/logstash.conf --config.reload.automatic
+    depends_on:
+      - elasticsearch
+    ports:
+    - 9600:9600
+    - 50000:50000
+    env_file:
+      - .env
+    networks:
+      - transcendence
+    mem_limit: 1GB
+
+  kibana:
+    image: kibana:8.11.1
+    container_name: kibana-dev
+    restart: unless-stopped
+    volumes:
+      - ./kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml:ro
+    ports:
+    - 5601:5601
+    env_file:
+      - .env
+    depends_on:
+      - elasticsearch  
+    networks:
+      - transcendence
+
+  elasticsearch-setup:
+    container_name: elasticsearch-setup-dev
+    build: ./elasticsearch-setup
+    volumes:
+      - ./elasticsearch-setup/kibana:/kibana:ro
+      - ./elasticsearch-setup/templates:/templates:ro
+      - ./elasticsearch-setup/policies:/policies:ro
+      - ./elasticsearch-setup/roles:/roles:ro
+      - ./elasticsearch-setup/entrypoint.sh:/entrypoint.sh:ro
+      - ./elasticsearch-setup/lib.sh:/lib.sh:ro
+    depends_on:
+      - elasticsearch  
+    restart: no
+    networks:
+      - transcendence
+    env_file:
+      - .env
+
 # Only for Dev:
   adminer:
     container_name: adminer
@@ -106,3 +191,4 @@ services:
       - 9001:8080
     environment:
       - ADMINER_DEFAULT_SERVER=postgres-dev
+
