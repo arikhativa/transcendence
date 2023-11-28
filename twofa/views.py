@@ -3,17 +3,25 @@ from django.views.decorators.csrf import csrf_protect
 from API.models import Users 
 from API.views import add_user_API
 from .forms import Form2FA
+from pyotp.totp import TOTP
 import pyotp
 import qrcode
 from django.conf import settings
 import jwt
-
+import io
+import base64
 
 def create_qr_code(user):
-	uri = pyotp.totp.TOTP(user.token_2FA).provisioning_uri(name=user.username, issuer_name="Pong App")
-	img_url = f"twofa/static/QR_codes/{user.username}.png"
-	qrcode.make(uri).save(img_url)
-	return img_url
+    uri = TOTP(user.token_2FA).provisioning_uri(name=user.username, issuer_name="Pong App")
+    qr_img = qrcode.make(uri)
+    # Create an in-memory buffer using io.BytesIO
+    buffer = io.BytesIO()
+    # Save the QR code image to the buffer
+    qr_img.save(buffer)
+    # Convert the buffer to a base64-encoded string
+    buffer_data = base64.b64encode(buffer.getvalue()).decode("utf-8")
+    # Return the base64-encoded string
+    return buffer_data
 
 def create_2FA_form(request, user):
 	if request.method == 'POST':
@@ -44,7 +52,7 @@ def _user_jwt_cookie(request):
 	return user
 
 @csrf_protect
-def twofa(request):
+def twofa(request, wrong_code=False):
 	try:
 		# if the user has not yet set the cookie
 		if not request.COOKIES.get('jwt_token'):
@@ -56,10 +64,12 @@ def twofa(request):
 
 		if not (user.active_2FA):
 			qr_code = create_qr_code(user)
-			#form = create_2FA_form(request, user)
 			form = Form2FA()
-			qr_code = f'static/QR_codes/{user.username}.png'
-			response = render(request, 'first_login.html', {'form': form, 'qr_code': qr_code})
+			if not wrong_code:
+				response = render(request, 'first_login.html', {'form': form, 'qr_code': qr_code})
+			else:
+				error_msg = 'Invalid code, try again.'
+				response = render(request, 'first_login.html', {'form': form, 'qr_code': qr_code, 'error_msg': error_msg})
 			response.set_cookie('jwt_token', token, httponly=True, secure=False)
 			return response
 		else:
@@ -87,4 +97,5 @@ def validate_qr(request):
 		user.save()
 		return HttpResponse(f"Hello {user.username} , email {user.email}!")
 	else:
-		return twofa(request) 
+		response = twofa(request, True)
+		return response
