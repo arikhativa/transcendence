@@ -123,18 +123,18 @@ def twofa(request, wrong_code=False):
 				user = add_user_API(request)
 			token = create_jwt(user)
 
+		form = Form2FA()
+		if not wrong_code:
+			error_msg = ''
+		else:
+			error_msg = 'Invalid code, try again.'
 		if not (user.active_2FA):
 			qr_code = create_qr_code(user)
-			form = Form2FA()
-			if not wrong_code:
-				response = render(request, 'first_login.html', {'form': form, 'qr_code': qr_code})
-			else:
-				error_msg = 'Invalid code, try again.'
-				response = render(request, 'first_login.html', {'form': form, 'qr_code': qr_code, 'error_msg': error_msg})
+			response = render(request, 'first_login.html', {'form': form, 'qr_code': qr_code, 'error_msg': error_msg})
 			response.set_cookie('jwt_token', token, httponly=True, secure=False)
 			return response
 		else:
-			response = HttpResponse(f"Hello {user.username} , email {user.email}!")
+			response = render(request, 'twofa.html', {'form': form, 'error_msg': error_msg})
 			response.set_cookie('jwt_token', token, httponly=True, secure=False)
 			return response
 	except Exception as exc:
