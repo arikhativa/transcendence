@@ -45,7 +45,7 @@ def _user_jwt_cookie(request):
 
 @csrf_protect
 def twofa(request):
-	#try:
+	try:
 		# if the user has not yet set the cookie
 		if not request.COOKIES.get('jwt_token'):
 			user = add_user_API(request)
@@ -66,8 +66,8 @@ def twofa(request):
 			response = HttpResponse(f"Hello {user.username} , email {user.email}!")
 			response.set_cookie('jwt_token', token, httponly=True, secure=False)
 			return response
-	#except Exception as exc:
-		#return HttpResponse(exc)
+	except Exception as exc:
+		return HttpResponse(exc)
 
 def validate_code(user, user_code):
 	totp = pyotp.TOTP(user.token_2FA)
