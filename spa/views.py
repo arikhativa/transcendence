@@ -6,7 +6,12 @@ from twofa.views import twofa
 
 def spa_view(request):
     section = request.resolver_match.url_name
-    if section != "game" and section != "tournament":
+    if (
+        section != "game"
+        and section != "tournament"
+        and section != "validate_qr_code"
+        and section != "twofa"
+    ):
         section = "main"
 
     context = {
@@ -33,10 +38,14 @@ def main_view(request):
 
 
 def game_view(request):
+    if not validate_user(request):
+        return render(request, "main.html")
     return render(request, "game.html")
 
 
 def tournament_view(request):
+    if not validate_user(request):
+        return render(request, "main.html")
     return render(request, "tournament.html")
 
 
