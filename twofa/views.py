@@ -137,17 +137,20 @@ def twofa(request, wrong_code=False):
         error_msg = "Invalid code, try again."
     if not (user.active_2FA):
         qr_code = create_qr_code(user)
-        response = render(
-            request,
-            "first_login.html",
-            {"form": form, "qr_code": qr_code, "error_msg": error_msg},
-        )
-        # response.set_cookie('jwt_token', token, httponly=True, secure=False)
-        return response
+        # response.set_cookie("jwt_token", token, httponly=True, secure=False)
+        return {
+            "form": form,
+            "qr_code": qr_code,
+            "error_msg": error_msg,
+            "section": "first_login.html",
+        }, token
     else:
-        response = render(request, "twofa.html", {"form": form, "error_msg": error_msg})
         # response.set_cookie('jwt_token', token, httponly=True, secure=False)
-        return response
+        return {
+            "form": form,
+            "error_msg": error_msg,
+            "section": "twofa.html",
+        }, token
     # except Exception as exc:
     # return HttpResponse(exc)
 
