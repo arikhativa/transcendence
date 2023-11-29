@@ -1,7 +1,7 @@
 <!-- twofa/templates/twofa.html -->
-{% load static %}
-<link rel="stylesheet" href="{% static 'main.css' %}" />
-<script src="{% static 'main.js' %}"></script>
+{% comment %} {% load static %}
+<link rel="stylesheet" href="{% static 'twofa.css' %}" />
+<script src="{% static 'twofa.js' %}"></script> {% endcomment %}
 
 <main id="main">
   <h1 id="main-title">
@@ -19,5 +19,5 @@
         <p>{{ error_msg }}</p>
       </form>
     {% endblock %}
-    </div>
+  </div>
 </main>
