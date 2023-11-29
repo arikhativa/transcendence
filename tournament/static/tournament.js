@@ -1,5 +1,15 @@
 var players = document.getElementById('tournament-players');
 
+function getTournamentPlayers() {
+    // Get list of player on turnament
+    // Log the entire list to the console
+    // // Loop through the list items and log each item
+    var names = players.getElementsByTagName('li');
+    for (var i = 0; i < names.length; i++) {
+        console.log(names[i].innerText);
+    }
+}
+
 function playerExists(name) {
     var names = players.getElementsByTagName('li');
     for (var i = 0; i < names.length; i++) {
@@ -11,15 +21,6 @@ function playerExists(name) {
     return false;
 }
 
-function getTournamentPlayers() {
-    // Get list of player on turnament
-    // Log the entire list to the console
-    // // Loop through the list items and log each item
-    var names = players.getElementsByTagName('li');
-    for (var i = 0; i < names.length; i++) {
-        console.log(names[i].innerText);
-    }
-}
 var tournamentStartButton = document.getElementById('tournament-start-button');
 tournamentStartButton.onclick = getTournamentPlayers;
 
@@ -44,7 +45,7 @@ function addNewPlayer() {
 
     // Get name from text form
     // Get the value from the text input field
-    var newPlayerName = document.getElementById('new-player-name').value;
+    var newPlayerName = document.getElementById('new-player-name').value.trim();
     // Username field must not be empty
     if (newPlayerName.trim().length === 0) {
         console.log("Username field must not be empty");
