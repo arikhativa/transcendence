@@ -183,8 +183,8 @@ def validate_user(request):
 		payload = jwt.decode(token, settings.SECRET_KEY, algorithms=['HS256'])
 		user = Users.objects.get(username=payload['username'])
 		#make sure the jwt is the same as the one in the db
-		#if not user.jwt == token:
-		#	return False
+		if not user.jwt == token:
+			return False
 		if user.active_2FA:
 			return True
 		else:
