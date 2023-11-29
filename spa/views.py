@@ -1,17 +1,33 @@
 from django.shortcuts import render
 from API.views import authenticate_42
 from twofa.views import twofa, validate_qr, validate_user
+from django.template.loader import render_to_string
 
 def spa_view(request):
     section = request.resolver_match.url_name
-    if section != "game" and section != "tournament" and section != "validate_qr_code" \
-        and section != "twofa":
+    if (
+        section != "game"
+        and section != "tournament"
+        and section != "validate_qr_code"
+        and section != "twofa"
+    ):
         section = "main"
 
     context = {
         "section": section + ".html",
     }
-    return render(request, "spa.html", context)
+
+    if section == "validate_qr_code":
+        context, token = validate_qr(request)
+    if section == "twofa":
+        context, token = twofa(request)
+
+
+    res = render(request, "spa.html", context)
+
+    if section == "twofa":
+        res.set_cookie("jwt_token", token, httponly=True, secure=False)
+    return res
 
 
 def spa_view_catchall(request, catchall):

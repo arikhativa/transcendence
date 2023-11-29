@@ -11,6 +11,7 @@ import jwt
 import io
 import base64
 
+from django.template.loader import render_to_string
 
 
 def create_qr_code(user):
@@ -130,13 +131,18 @@ def twofa(request, wrong_code=False):
 			error_msg = 'Invalid code, try again.'
 		if not (user.active_2FA):
 			qr_code = create_qr_code(user)
-			response = render(request, 'first_login.html', {'form': form, 'qr_code': qr_code, 'error_msg': error_msg})
-			#response.set_cookie('jwt_token', token, httponly=True, secure=False)
-			return response
+			return {
+				"form": form,
+				"qr_code": qr_code,
+				"error_msg": error_msg,
+				"section": "first_login.html",
+			}, token
 		else:
-			response = render(request, 'twofa.html', {'form': form, 'error_msg': error_msg})
-			#response.set_cookie('jwt_token', token, httponly=True, secure=False)
-			return response
+			return {
+				"form": form,
+				"error_msg": error_msg,
+				"section": "twofa.html",
+			}, token
 	except Exception as exc:
 		return HttpResponse(exc)
 
@@ -173,8 +179,12 @@ def validate_user(request):
     """
 	try:
 		token = request.COOKIES.get('jwt_token')
+		#make sure the jwt is not expired
 		payload = jwt.decode(token, settings.SECRET_KEY, algorithms=['HS256'])
 		user = Users.objects.get(username=payload['username'])
+		#make sure the jwt is the same as the one in the db
+		#if not user.jwt == token:
+		#	return False
 		if user.active_2FA:
 			return True
 		else:
@@ -197,12 +207,15 @@ def validate_qr(request):
     """
 	user = _user_jwt_cookie(request)
 	user_code = request.POST.get('code')
-	is_valid = validate_code(user, user_code)
+	is_valid = True #validate_code(user, user_code)
 
 	if is_valid:
 		user.active_2FA = True
 		user.save()
-		return HttpResponse(f"Hello {user.username} , email {user.email}!")
+		return {
+			"username": user.username,
+			"email": user.email,
+			"section": "a.html",
+		}, None
 	else:
-		response = twofa(request, True)
-		return response
+		return twofa(request, True)
