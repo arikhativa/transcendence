@@ -27,6 +27,11 @@ function removePlayer() {
     console.log(this);
     console.log("Player ", this.textContent, "was deleted.");
     players.removeChild(this);
+
+    // Update num of players on HTML
+    var numOfPlayers = document.getElementById('num-of-players');
+    console.log(numOfPlayers);
+    numOfPlayers.textContent = parseInt(numOfPlayers.textContent) - 1;
 }
 
 // Add new Players using button
