@@ -10,6 +10,7 @@ from django.conf import settings
 import jwt
 import io
 import base64
+from django.contrib.sessions.models import Session
 
 from django.template.loader import render_to_string
 
@@ -97,25 +98,33 @@ def twofa(request, wrong_code=False):
 				user = add_user_API(request)
 			token = create_jwt(user)
 
-		form = Form2FA()
-		if not wrong_code:
-			error_msg = ''
-		else:
-			error_msg = 'Invalid code, try again.'
-		if not (user.active_2FA):
-			qr_code = create_qr_code(user)
+		jwt_token = request.session.get('jwt_token', None)
+		if jwt_token:
 			return {
-				"form": form,
-				"qr_code": qr_code,
-				"error_msg": error_msg,
-				"section": "first_login.html",
-			}, token
+				"username": user.username,
+				"email": user.email,
+				"section": "a.html",
+			}, jwt_token
 		else:
-			return {
-				"form": form,
-				"error_msg": error_msg,
-				"section": "twofa.html",
-			}, token
+			form = Form2FA()
+			if not wrong_code:
+				error_msg = ''
+			else:
+				error_msg = 'Invalid code, try again.'
+			if not (user.active_2FA):
+				qr_code = create_qr_code(user)
+				return {
+					"form": form,
+					"qr_code": qr_code,
+					"error_msg": error_msg,
+					"section": "first_login.html",
+				}, token
+			else:
+				return {
+					"form": form,
+					"error_msg": error_msg,
+					"section": "twofa.html",
+				}, token
 	except Exception as exc:
 		return HttpResponse(exc)
 
@@ -159,6 +168,7 @@ def validate_user(request):
 		if not user.jwt == token:
 			return False
 		if user.active_2FA:
+			request.session['jwt_token'] = token
 			return True
 		else:
 			return False
