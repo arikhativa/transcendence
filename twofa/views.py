@@ -37,33 +37,6 @@ def create_qr_code(user):
 	# Return the base64-encoded string
 	return buffer_data
 
-def create_2FA_form(request, user):
-	"""
-    Create a 2FA form for the given user.
-
-    If the request method is POST and the form is valid, the user's 2FA status is updated.
-
-    Args:
-        request: The HTTP request.
-        user: The user for whom to create the form.
-
-    Returns:
-        The created form.
-    """
-	if request.method == 'POST':
-		form = Form2FA(request.POST)
-		if form.is_valid():
-			input_2FA = form.cleaned_data['code_2FA']
-			totp = pyotp.TOTP(user.token_2FA)
-			if not (totp.verify(input_2FA)):
-				print(form.errors)
-			else:
-				user.active_2FA = True
-				user.save()
-	else:
-		form = Form2FA()
-	return form
-
 def create_jwt(user):
 	"""
     Create a JWT for the given user.
@@ -207,7 +180,7 @@ def validate_qr(request):
     """
 	user = _user_jwt_cookie(request)
 	user_code = request.POST.get('code')
-	is_valid = True #validate_code(user, user_code)
+	is_valid = validate_code(user, user_code)
 
 	if is_valid:
 		user.active_2FA = True
