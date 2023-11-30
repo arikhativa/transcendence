@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from API.views import authenticate_42
-from twofa.views import twofa, validate_qr, validate_user
+from twofa.views import twofa, validate_2fa, validate_user
 from django.template.loader import render_to_string
 
 def spa_view(request):
@@ -8,7 +8,7 @@ def spa_view(request):
     if (
         section != "game"
         and section != "tournament"
-        and section != "validate_qr_code"
+        and section != "validate_2fa_code"
         and section != "twofa"
     ):
         section = "main"
@@ -17,8 +17,8 @@ def spa_view(request):
         "section": section + ".html",
     }
 
-    if section == "validate_qr_code":
-        context, token = validate_qr(request)
+    if section == "validate_2fa_code":
+        context, token = validate_2fa(request)
     if section == "twofa":
         context, token = twofa(request)
 
@@ -59,5 +59,5 @@ def api_view(request):
     return(authenticate_42(request))
 
 
-def validate_qr_code(request):
-    return(validate_qr(request))
+def validate_2fa_code(request):
+    return(validate_2fa(request))

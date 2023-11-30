@@ -10,7 +10,7 @@
   <div id="main-p">
     {% block main_content %}
       <h2>Please introduce a valid 2FA code:</h2>
-      <form method="post" action="/validate_qr_code/">
+      <form method="post" action="/validate_2fa_code/">
         {% csrf_token %}
         {{ form }}
         <button type="submit">Submit</button>

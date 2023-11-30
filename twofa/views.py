@@ -99,7 +99,7 @@ def twofa(request, wrong_code=False):
 			token = create_jwt(user)
 
 		jwt_token = request.session.get('jwt_token', None)
-		if jwt_token:
+		if jwt_token and user.active_2FA:
 			return {
 				"username": user.username,
 				"email": user.email,
@@ -176,7 +176,7 @@ def validate_user(request):
 		return False
 
 @csrf_protect
-def validate_qr(request):
+def validate_2fa(request):
 	"""
     Handle a QR validation request.
 
@@ -198,7 +198,7 @@ def validate_qr(request):
 		return {
 			"username": user.username,
 			"email": user.email,
-			"section": "a.html",
+			"section": "temporal_loggedin.html",
 		}, None
 	else:
 		return twofa(request, True)
