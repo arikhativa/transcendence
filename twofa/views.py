@@ -103,7 +103,7 @@ def twofa(request, wrong_code=False):
 			return {
 				"username": user.username,
 				"email": user.email,
-				"section": "a.html",
+				"section": "temporal_loggedin.html",
 			}, jwt_token
 		else:
 			form = Form2FA()
