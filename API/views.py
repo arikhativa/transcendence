@@ -45,7 +45,6 @@ def get_token(CODE):
 		}
 
 		response = requests.post(url, data=data)
-		print(response.json())
 	
 		return response.json()['access_token']
 	except:

@@ -1,4 +1,3 @@
-from django.shortcuts import render, HttpResponse, redirect
 from django.views.decorators.csrf import csrf_protect
 from API.models import Users 
 from API.views import add_user_API
@@ -10,9 +9,7 @@ from django.conf import settings
 import jwt
 import io
 import base64
-from django.contrib.sessions.models import Session
-
-from django.template.loader import render_to_string
+from jwt.exceptions import ExpiredSignatureError
 import datetime
 
 
@@ -55,7 +52,7 @@ def create_jwt(user):
 	now = datetime.datetime.utcnow()
 
 	# Set the token to expire 1 hour from now
-	exp_time = now + datetime.timedelta(hours=1)
+	exp_time = now + datetime.timedelta(seconds=30)
 	payload = {
     'username': user.username,
     'exp': exp_time,
@@ -78,12 +75,15 @@ def _user_jwt_cookie(request):
         The user retrieved from the JWT cookie.
     """
 	token = request.COOKIES.get('jwt_token')
-	payload = jwt.decode(token, settings.SECRET_KEY, algorithms=['HS256'])
-	user = Users.objects.get(username=payload['username'])
-	return user
+	try:
+		payload = jwt.decode(token, settings.SECRET_KEY, algorithms=['HS256'])
+		user = Users.objects.get(username=payload['username'])
+		return user
+	except ExpiredSignatureError:
+		return None
 
 @csrf_protect
-def twofa(request, wrong_code=False):
+def twofa(request, wrong_code=False, expired_jwt=False):
 	"""
     Handle a 2FA request.
 
@@ -101,14 +101,14 @@ def twofa(request, wrong_code=False):
 		user = add_user_API(request)
 		token = create_jwt(user)
 	else:
-		try:
-			user = _user_jwt_cookie(request)
-		except Exception as exc:
+		user = _user_jwt_cookie(request)
+		if user is None:
 			user = add_user_API(request)
-		token = create_jwt(user)
+			token = create_jwt(user)
+			expired_jwt = True
 
 	jwt_token = request.session.get('jwt_token', None)
-	if jwt_token and user.active_2FA:
+	if jwt_token and user.active_2FA and not expired_jwt:
 		return {
 			"username": user.username,
 			"email": user.email,
