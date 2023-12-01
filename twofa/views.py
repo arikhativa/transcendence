@@ -13,6 +13,7 @@ import base64
 from django.contrib.sessions.models import Session
 
 from django.template.loader import render_to_string
+import datetime
 
 
 def create_qr_code(user):
@@ -50,7 +51,16 @@ def create_jwt(user):
     Returns:
         The created JWT.
     """
-	token = jwt.encode({'username': user.username}, settings.SECRET_KEY, algorithm='HS256')
+	# Get the current time
+	now = datetime.datetime.utcnow()
+
+	# Set the token to expire 1 hour from now
+	exp_time = now + datetime.timedelta(hours=1)
+	payload = {
+    'username': user.username,
+    'exp': exp_time,
+	}
+	token = jwt.encode(payload, settings.SECRET_KEY, algorithm='HS256')
 	user.jwt = token
 	user.save()
 	return token
