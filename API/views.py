@@ -9,6 +9,8 @@ import requests
 import pyotp
 
 
+
+
 def post42(url, payload):
 	url = "https://api.intra.42.fr" + url
 	payload = payload
@@ -29,20 +31,23 @@ def get42(url, payload, token):
 	return response.json()
 
 def get_token(CODE):
-	url = 'https://api.intra.42.fr/oauth/token'
-	UID = os.environ.get("UID_APP")
-	SECRET = os.environ.get("SECRET_KEY_APP")
+	try:
+		url = 'https://api.intra.42.fr/oauth/token'
+		UID = os.environ.get("UID_APP")
+		SECRET = os.environ.get("SECRET_KEY_APP")
 
-	data = {
-		'grant_type': 'authorization_code',
-		'client_id':  UID,
-		'client_secret': SECRET,
-		'code': CODE,
-		'redirect_uri': 'http://localhost:8000/twofa'
-	}
+		data = {
+			'grant_type': 'authorization_code',
+			'client_id':  UID,
+			'client_secret': SECRET,
+			'code': CODE,
+			'redirect_uri': 'http://localhost:8000/twofa'
+		}
 
-	response = requests.post(url, data=data)
-	return response.json()['access_token']
+		response = requests.post(url, data=data)
+		return response.json()['access_token']
+	except:
+		raise Exception("Error get_token") 
 
 def create_user_API(code):
 	
