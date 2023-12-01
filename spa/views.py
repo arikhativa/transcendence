@@ -4,36 +4,35 @@ from twofa.views import twofa, validate_2fa, validate_user
 from django.template.loader import render_to_string
 
 def spa_view(request):
-    #try:
-    section = request.resolver_match.url_name
-    if (
-        section != "game"
-        and section != "tournament"
-        and section != "validate_2fa_code"
-        and section != "twofa"
-    ):
-        section = "main"
+    try:
+        section = request.resolver_match.url_name
+        if (
+            section != "game"
+            and section != "tournament"
+            and section != "validate_2fa_code"
+            and section != "twofa"
+        ):
+            section = "main"
 
-    context = {
-        "section": section + ".html",
-    }
+        context = {
+            "section": section + ".html",
+        }
 
-    if section == "validate_2fa_code":
-        context, token = validate_2fa(request)
-    if section == "twofa":
-        context, token = twofa(request)
+        if section == "validate_2fa_code":
+            context, token = validate_2fa(request)
+        if section == "twofa":
+            context, token = twofa(request)
 
-    """ except Exception as exc:
+    except Exception as exc:
         context = {
             "error_msg": exc,
             "section": "error_page.html"
         }
-        token = None """
+        token = None
 
     res = render(request, "spa.html", context)
 
-    #if context.get()
-    if section == "twofa":
+    if section == "twofa" or section == "validate_2fa_code":
         res.set_cookie("jwt_token", token, httponly=True, secure=False)
     return res
 
@@ -50,7 +49,7 @@ def main_view(request):
 
 
 def game_view(request):
-    if not validate_user(request) :
+    if not validate_user(request):
         return render(request, "main.html")
     return render(request, "game.html")
 

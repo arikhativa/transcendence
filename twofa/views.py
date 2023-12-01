@@ -144,19 +144,14 @@ def validate_2fa(request):
 
 	user = _user_jwt_cookie(request)
 	
-	'''if user is None:
-		return twofa(request, expired_jwt=True)'''
-	
 	user_code = request.POST.get('code') 
-	is_valid = True#validate_code(user, user_code)
+	is_valid = validate_code(user, user_code)
 
 	if is_valid:
 		user.active_2FA = True
-		print("antes----->",user.jwt)
 		if _jwt_is_expired(request.COOKIES.get('jwt_token')):
 			user.jwt = create_jwt(user)
 		user.save()
-		print("despues----->",user.jwt)
 		return {
 			"username": user.username,
 			"email": user.email,
