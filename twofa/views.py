@@ -79,13 +79,11 @@ def twofa(request, wrong_code=False, expired_jwt=False):
 		if _jwt_is_expired(token):
 			expired_jwt = True
 		user = _user_jwt_cookie(request)
-		#if user is None:
-				#TODO is an attack
-				#user = add_user_API(request)
-				#token = create_jwt(user)
-				#expired_jwt = True
-
-	#jwt_token = request.COOKIES.get('jwt_token')
+	if user is None:
+		return {
+			"error_msg": "User not found",
+			"section": "error_page.html",
+		}, None
 	if user.active_2FA and not expired_jwt:
 		return {
 			"username": user.username,
