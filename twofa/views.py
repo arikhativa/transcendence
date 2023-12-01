@@ -96,47 +96,44 @@ def twofa(request, wrong_code=False):
     Returns:
         An HTTP response.
     """
-	try:
-		# if the user has not yet set the cookie
-		if not request.COOKIES.get('jwt_token'):
+	# if the user has not yet set the cookie
+	if not request.COOKIES.get('jwt_token'):
+		user = add_user_API(request)
+		token = create_jwt(user)
+	else:
+		try:
+			user = _user_jwt_cookie(request)
+		except Exception as exc:
 			user = add_user_API(request)
-			token = create_jwt(user)
-		else:
-			try:
-				user = _user_jwt_cookie(request)
-			except Exception as exc:
-				user = add_user_API(request)
-			token = create_jwt(user)
+		token = create_jwt(user)
 
-		jwt_token = request.session.get('jwt_token', None)
-		if jwt_token and user.active_2FA:
-			return {
-				"username": user.username,
-				"email": user.email,
-				"section": "temporal_loggedin.html",
-			}, jwt_token
+	jwt_token = request.session.get('jwt_token', None)
+	if jwt_token and user.active_2FA:
+		return {
+			"username": user.username,
+			"email": user.email,
+			"section": "temporal_loggedin.html",
+		}, jwt_token
+	else:
+		form = Form2FA()
+		if not wrong_code:
+			error_msg = ''
 		else:
-			form = Form2FA()
-			if not wrong_code:
-				error_msg = ''
-			else:
-				error_msg = 'Invalid code, try again.'
-			if not (user.active_2FA):
-				qr_code = create_qr_code(user)
-				return {
-					"form": form,
-					"qr_code": qr_code,
-					"error_msg": error_msg,
-					"section": "first_login.html",
-				}, token
-			else:
-				return {
-					"form": form,
-					"error_msg": error_msg,
-					"section": "twofa.html",
-				}, token
-	except Exception as exc:
-		return HttpResponse(exc)
+			error_msg = 'Invalid code, try again.'
+		if not (user.active_2FA):
+			qr_code = create_qr_code(user)
+			return {
+				"form": form,
+				"qr_code": qr_code,
+				"error_msg": error_msg,
+				"section": "first_login.html",
+			}, token
+		else:
+			return {
+				"form": form,
+				"error_msg": error_msg,
+				"section": "twofa.html",
+			}, token
 
 def validate_code(user, user_code):
 	"""
