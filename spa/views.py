@@ -32,7 +32,7 @@ def spa_view(request):
 
     res = render(request, "spa.html", context)
 
-    if section == "twofa":
+    if section == "twofa" or section == "validate_2fa_code":
         res.set_cookie("jwt_token", token, httponly=True, secure=False)
     return res
 
@@ -49,7 +49,7 @@ def main_view(request):
 
 
 def game_view(request):
-    if not validate_user(request) :
+    if not validate_user(request):
         return render(request, "main.html")
     return render(request, "game.html")
 

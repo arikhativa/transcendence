@@ -1,4 +1,3 @@
-from django.shortcuts import render, HttpResponse, redirect
 from django.views.decorators.csrf import csrf_protect
 from API.models import Users 
 from API.views import add_user_API
@@ -10,9 +9,7 @@ from django.conf import settings
 import jwt
 import io
 import base64
-from django.contrib.sessions.models import Session
-
-from django.template.loader import render_to_string
+from jwt.exceptions import ExpiredSignatureError
 import datetime
 
 
@@ -40,25 +37,14 @@ def create_qr_code(user):
 	return buffer_data
 
 def create_jwt(user):
-	"""
-    Create a JWT for the given user.
-
-    The JWT is created using the user's username and is saved to the user.
-
-    Args:
-        user: The user for whom to create the JWT.
-
-    Returns:
-        The created JWT.
-    """
 	# Get the current time
 	now = datetime.datetime.utcnow()
 
 	# Set the token to expire 1 hour from now
-	exp_time = now + datetime.timedelta(hours=1)
+	exp_time = now + datetime.timedelta(seconds=30)
 	payload = {
-    'username': user.username,
-    'exp': exp_time,
+	'username': user.username,
+	'exp': exp_time,
 	}
 	token = jwt.encode(payload, settings.SECRET_KEY, algorithm='HS256')
 	user.jwt = token
@@ -66,54 +52,46 @@ def create_jwt(user):
 	return token
 
 def _user_jwt_cookie(request):
-	"""
-    Get the user from the JWT cookie in the request.
+	try:
+		token = request.COOKIES.get('jwt_token')
+		options = {'verify_exp': False}
+		payload = jwt.decode(token, settings.SECRET_KEY, algorithms=['HS256'], options=options)
+		user = Users.objects.get(username=payload['username'])
+		return user
+	except Exception as exc:
+		return None
 
-    The JWT is decoded and the user is retrieved from the database using the username in the JWT.
-
-    Args:
-        request: The HTTP request.
-
-    Returns:
-        The user retrieved from the JWT cookie.
-    """
-	token = request.COOKIES.get('jwt_token')
-	payload = jwt.decode(token, settings.SECRET_KEY, algorithms=['HS256'])
-	user = Users.objects.get(username=payload['username'])
-	return user
+def _jwt_is_expired(jwt_token):
+	try:
+		payload = jwt.decode(jwt_token, settings.SECRET_KEY, algorithms=['HS256'])
+		return False
+	except Exception as exc:
+		return True
 
 @csrf_protect
-def twofa(request, wrong_code=False):
-	"""
-    Handle a 2FA request.
-
-    If the user has not yet set the JWT cookie, a new user is added and a JWT is created for them.
-
-    Args:
-        request: The HTTP request.
-        wrong_code: Whether the 2FA code was wrong.
-
-    Returns:
-        An HTTP response.
-    """
-	# if the user has not yet set the cookie
+def twofa(request, wrong_code=False, expired_jwt=False):
+	token = None
 	if not request.COOKIES.get('jwt_token'):
 		user = add_user_API(request)
 		token = create_jwt(user)
 	else:
-		try:
-			user = _user_jwt_cookie(request)
-		except Exception as exc:
-			user = add_user_API(request)
-		token = create_jwt(user)
+		token = request.COOKIES.get('jwt_token')
+		if _jwt_is_expired(token):
+			expired_jwt = True
+		user = _user_jwt_cookie(request)
+		#if user is None:
+				#TODO is an attack
+				#user = add_user_API(request)
+				#token = create_jwt(user)
+				#expired_jwt = True
 
-	jwt_token = request.session.get('jwt_token', None)
-	if jwt_token and user.active_2FA:
+	#jwt_token = request.COOKIES.get('jwt_token')
+	if user.active_2FA and not expired_jwt:
 		return {
 			"username": user.username,
 			"email": user.email,
 			"section": "temporal_loggedin.html",
-		}, jwt_token
+		}, token
 	else:
 		form = Form2FA()
 		if not wrong_code:
@@ -136,46 +114,25 @@ def twofa(request, wrong_code=False):
 			}, token
 
 def validate_code(user, user_code):
-	"""
-    Validate the given 2FA code for the given user.
-
-    The code is verified using the user's 2FA token.
-
-    Args:
-        user: The user for whom to validate the code.
-        user_code: The 2FA code to validate.
-
-    Returns:
-        True if the code is valid, False otherwise.
-    """
-	totp = pyotp.TOTP(user.token_2FA)
-	if not (totp.verify(user_code)):
+	try:
+		totp = pyotp.TOTP(user.token_2FA)
+		if not (totp.verify(user_code)):
+			return False
+		else:
+			return True
+	except Exception as exc:
 		return False
-	else:
-		return True
 
 def validate_user(request):
-	"""
-    Validate the user in the given request.
-
-    The user is retrieved from the JWT cookie in the request and is considered valid if they have 2FA enabled.
-
-    Args:
-        request: The HTTP request.
-
-    Returns:
-        True if the user is valid, False otherwise.
-    """
 	try:
 		token = request.COOKIES.get('jwt_token')
-		#make sure the jwt is not expired
+		if _jwt_is_expired(token):
+			return False
 		payload = jwt.decode(token, settings.SECRET_KEY, algorithms=['HS256'])
 		user = Users.objects.get(username=payload['username'])
+
 		#make sure the jwt is the same as the one in the db
-		if not user.jwt == token:
-			return False
 		if user.active_2FA:
-			request.session['jwt_token'] = token
 			return True
 		else:
 			return False
@@ -184,28 +141,21 @@ def validate_user(request):
 
 @csrf_protect
 def validate_2fa(request):
-	"""
-    Handle a QR validation request.
 
-    The user is retrieved from the JWT cookie in the request and their 2FA code is validated.
-
-    Args:
-        request: The HTTP request.
-
-    Returns:
-        An HTTP response.
-    """
 	user = _user_jwt_cookie(request)
-	user_code = request.POST.get('code')
+	
+	user_code = request.POST.get('code') 
 	is_valid = validate_code(user, user_code)
 
 	if is_valid:
 		user.active_2FA = True
+		if _jwt_is_expired(request.COOKIES.get('jwt_token')):
+			user.jwt = create_jwt(user)
 		user.save()
 		return {
 			"username": user.username,
 			"email": user.email,
-			"section": "temporal_loggedin.html",
-		}, None
+			"section": "temporal_loggedin.html", 
+		}, user.jwt
 	else:
 		return twofa(request, True)
