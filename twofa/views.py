@@ -91,13 +91,18 @@ def qr_setup(request, wrong_code=False):
 def sms_setup(request, wrong_code=False):
 	token = request.COOKIES.get('jwt_token')
 	user = _user_jwt_cookie(request)
-	user_phone = request.POST.get('phone')
+	if not wrong_code:
+		user_phone = request.POST.get('phone')
+		user.phone = user_phone
 	user.qr_2FA = False
 	user.sms_2FA = True
 	user.email_2FA = False
-	user.phone = user_phone
 	user.save()
-	if user.phone == None:
+	if not wrong_code:
+		error_msg = ''
+	else:
+		error_msg = 'Invalid code, try again.'
+	if user.phone == None and not wrong_code:
 		msg = 'Please enter your phone number:'
 		form = FormPhone()
 		url = '/twofa/sms_setup'
@@ -109,6 +114,7 @@ def sms_setup(request, wrong_code=False):
 		"msg": msg,
 		"form": form,
 		"url": url,
+		"error_msg": error_msg,
 		"section": "sms_setup.html",
 	}, token
 
