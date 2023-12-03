@@ -1,7 +1,8 @@
+from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_protect
 from API.models import Users 
 from API.views import add_user_API
-from .forms import Form2FA
+from .forms import Form2FA, FormPhone
 from pyotp.totp import TOTP
 import pyotp
 import qrcode
@@ -68,6 +69,57 @@ def _jwt_is_expired(jwt_token):
 	except Exception as exc:
 		return True
 
+def qr_setup(request, wrong_code=False):
+	token = request.COOKIES.get('jwt_token')
+	user = _user_jwt_cookie(request)
+	user.qr_2FA = True
+	user.sms_2FA = False
+	user.email_2FA = False
+	user.save()
+	qr_code = create_qr_code(user)
+	if not wrong_code:
+			error_msg = ''
+	else:
+		error_msg = 'Invalid code, try again.'
+	return {
+		"form": Form2FA(),
+		"qr_code": qr_code,
+		"error_msg": error_msg,
+		"section": "qr_setup.html",
+	}, token
+
+def sms_setup(request, wrong_code=False):
+	token = request.COOKIES.get('jwt_token')
+	user = _user_jwt_cookie(request)
+	user_phone = request.POST.get('phone')
+	user.qr_2FA = False
+	user.sms_2FA = True
+	user.email_2FA = False
+	user.phone = user_phone
+	user.save()
+	if user.phone == None:
+		msg = 'Please enter your phone number:'
+		form = FormPhone()
+		url = '/twofa/sms_setup'
+	else:
+		msg = 'Please enter the code sent to your phone:'
+		form = Form2FA()
+		url = '/validate_2fa_code/'
+	return {
+		"msg": msg,
+		"form": form,
+		"url": url,
+		"section": "sms_setup.html",
+	}, token
+
+def email_setup(request, wrong_code=False):
+	user = _user_jwt_cookie(request)
+	user.qr_2FA = False
+	user.sms_2FA = False
+	user.email_2FA = True
+	user.save()
+	return HttpResponse('email_setup')
+
 @csrf_protect
 def twofa(request, wrong_code=False, expired_jwt=False):
 	token = None
@@ -93,35 +145,27 @@ def twofa(request, wrong_code=False, expired_jwt=False):
 			"section": "temporal_loggedin.html",
 		}, token
 	else:
-		form = Form2FA()
 		if not wrong_code:
 			error_msg = ''
 		else:
 			error_msg = 'Invalid code, try again.'
 		if not (user.active_2FA):
-			qr_code = create_qr_code(user)
+			#TODO: Check which 2FA method was selected.
+			if user.qr_2FA and wrong_code:
+				return qr_setup(request, wrong_code)
+			if user.sms_2FA and wrong_code:
+				return sms_setup(request, wrong_code)
+			if user.email_2FA and wrong_code:
+				return email_setup(request, wrong_code)
 			return {
-				"form": form,
-				"qr_code": qr_code,
-				"error_msg": error_msg,
-				"section": "first_login.html",
+				"section": "2fa_setup.html",
 			}, token
 		else:
 			return {
-				"form": form,
+				"form": Form2FA(),
 				"error_msg": error_msg,
 				"section": "twofa.html",
 			}, token
-
-def validate_code_qr(user, user_code):
-	try:
-		totp = pyotp.TOTP(user.token_2FA)
-		if not (totp.verify(user_code)):
-			return False
-		else:
-			return True
-	except Exception as exc:
-		return False
 
 def validate_user(request):
 	try:
@@ -139,6 +183,16 @@ def validate_user(request):
 	except Exception as exc:
 		return False
 
+def validate_code_qr(user, user_code):
+	try:
+		totp = pyotp.TOTP(user.token_2FA)
+		if not (totp.verify(user_code)):
+			return False
+		else:
+			return True
+	except Exception as exc:
+		return False
+	
 #TODO: def validate_code_sms(request):
 #TODO: def validate_code_email(request):
 
@@ -162,4 +216,4 @@ def validate_2fa(request):
 			"section": "temporal_loggedin.html", 
 		}, user.jwt
 	else:
-		return twofa(request, True)
+		return twofa(request, wrong_code=True)

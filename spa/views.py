@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from API.views import authenticate_42
-from twofa.views import twofa, validate_2fa, validate_user
+from twofa.views import twofa, validate_2fa, validate_user, qr_setup, sms_setup, email_setup
 from django.template.loader import render_to_string
 
 def spa_view(request):
@@ -11,6 +11,8 @@ def spa_view(request):
             and section != "tournament"
             and section != "validate_2fa_code"
             and section != "twofa"
+            and section != "qr_setup"
+            and section != "sms_setup"
         ):
             section = "main"
 
@@ -22,6 +24,10 @@ def spa_view(request):
             context, token = validate_2fa(request)
         if section == "twofa":
             context, token = twofa(request)
+        if section == "qr_setup":
+            context, token = qr_setup(request)
+        if section == "sms_setup":
+            context, token = sms_setup(request)
 
     except Exception as exc:
         context = {
@@ -32,7 +38,8 @@ def spa_view(request):
 
     res = render(request, "spa.html", context)
 
-    if section == "twofa" or section == "validate_2fa_code":
+    if section == "twofa" or section == "validate_2fa_code" \
+        or section == "qr_setup":
         res.set_cookie("jwt_token", token, httponly=True, secure=False)
     return res
 
@@ -59,12 +66,11 @@ def tournament_view(request):
         return render(request, "main.html")
     return render(request, "tournament.html")
 
-def twofa_view(request):
-    return(twofa(request))
-
 def api_view(request):
     return(authenticate_42(request))
 
-
 def validate_2fa_code(request):
     return(validate_2fa(request))
+
+def email_setup_view(request):
+    return(email_setup(request))

@@ -1,0 +1,23 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'twofa.css' %}" />
+
+<main id="main">
+  <h1 id="main-title">
+    {% block main_title %}
+      First Login
+    {% endblock %}
+  </h1>
+  <div id="main-p">
+    {% block main_content %}
+		<h1>Welcome to Two-Factor Authentication Setup</h1>
+		<p>Please scan the QR code below with your Google Authenticator app to set up 2FA:</p>
+    <img src="data:image/png;base64,{{ qr_code }}" alt="QR Code for Google Authenticator">
+    <form method="post" action="/validate_2fa_code/">
+      {% csrf_token %}
+      {{ form }}
+      <button type="submit">Submit</button>
+      <p>{{ error_msg }}</p>
+    </form>
+    {% endblock %}
+  </div>
+</main>
