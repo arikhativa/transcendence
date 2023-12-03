@@ -41,7 +41,7 @@ def create_jwt(user):
 	now = datetime.datetime.utcnow()
 
 	# Set the token to expire 1 hour from now
-	exp_time = now + datetime.timedelta(seconds=30)
+	exp_time = now + datetime.timedelta(hours=24)
 	payload = {
 	'username': user.username,
 	'exp': exp_time,
@@ -71,7 +71,9 @@ def _jwt_is_expired(jwt_token):
 @csrf_protect
 def twofa(request, wrong_code=False, expired_jwt=False):
 	token = None
-	if not request.COOKIES.get('jwt_token'):
+	if not request.COOKIES.get('jwt_token') \
+		or request.COOKIES.get('jwt_token') == 'None':
+
 		user = add_user_API(request)
 		token = create_jwt(user)
 	else:
@@ -111,7 +113,7 @@ def twofa(request, wrong_code=False, expired_jwt=False):
 				"section": "twofa.html",
 			}, token
 
-def validate_code(user, user_code):
+def validate_code_qr(user, user_code):
 	try:
 		totp = pyotp.TOTP(user.token_2FA)
 		if not (totp.verify(user_code)):
@@ -137,13 +139,17 @@ def validate_user(request):
 	except Exception as exc:
 		return False
 
+#TODO: def validate_code_sms(request):
+#TODO: def validate_code_email(request):
+
 @csrf_protect
 def validate_2fa(request):
 
 	user = _user_jwt_cookie(request)
 	
 	user_code = request.POST.get('code') 
-	is_valid = validate_code(user, user_code)
+	#TODO: Check which type of 2FA is being used and validate accordingly
+	is_valid = validate_code_qr(user, user_code)
 
 	if is_valid:
 		user.active_2FA = True
