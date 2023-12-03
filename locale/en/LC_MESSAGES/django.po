@@ -1,0 +1,96 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-12-03 09:48+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: game/templates/game.html:9 game/templates/game.html:14
+#: header/templates/header.html:8
+msgid "game"
+msgstr "game"
+
+#: header/templates/header.html:7
+msgid "main"
+msgstr "main"
+
+#: header/templates/header.html:9
+msgid "tournament"
+msgstr "tournament"
+
+#: main/templates/main.html:10
+msgid "Main Content"
+msgstr "Main Content"
+
+#: main/templates/main.html:11
+msgid "Clic here"
+msgstr "Clic here"
+
+#: main/templates/main.html:16
+msgid "This is the main content"
+msgstr "This is the main content"
+
+#: navbar/templates/navbar.html:7
+msgid "navbar"
+msgstr "navbar"
+
+#: spa/templates/error_page.html:8
+msgid "ERROR"
+msgstr "ERROR"
+
+#: twofa/templates/first_login.html:8
+msgid "First Login"
+msgstr "First Login"
+
+#: twofa/templates/first_login.html:13
+msgid "Welcome to Two-Factor Authentication Setup"
+msgstr "Welcome to Two-Factor Authentication Setup"
+
+#: twofa/templates/first_login.html:14
+msgid ""
+"Please scan the QR code below with your Google Authenticator app to set up "
+"2FA:"
+msgstr ""
+"Please scan the QR code below with your Google Authenticator app to set up "
+"2FA:"
+
+#: twofa/templates/first_login.html:19 twofa/templates/twofa.html:17
+msgid "Submit"
+msgstr "Submit"
+
+#: twofa/templates/temporal_loggedin.html:8
+msgid "Hello"
+msgstr "Hello"
+
+#: twofa/templates/temporal_loggedin.html:13
+msgid "Welcome"
+msgstr "Welcome"
+
+#: twofa/templates/twofa.html:8
+msgid "TWO FACTOR AUTHENTICATOR"
+msgstr "TWO FACTOR AUTHENTICATOR"
+
+#: twofa/templates/twofa.html:13
+msgid "Please introduce a valid 2FA code:"
+msgstr "Please introduce a valid 2FA code:"
+
+#: twofa/views.py:75
+msgid "User not found"
+msgstr "User not found"
+
+#: twofa/views.py:89
+msgid "Invalid code, try again."
+msgstr "Invalid code, try again."

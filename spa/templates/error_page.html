@@ -1,11 +1,11 @@
-<!-- game/templates/game.html -->
+{% load i18n %}
 {% load static %}
 <link rel="stylesheet" href="{% static 'spa.css' %}" />
 
 <main id="main">
   <h1 id="main-title">
     {% block main_title %}
-      ERROR 500
+      {% trans "ERROR" %} 500
     {% endblock %}
   </h1>
   <p id="main-p">
