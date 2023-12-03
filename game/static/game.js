@@ -35,6 +35,7 @@ window.addEventListener('keyup', (e) => {
 	if (e.key == " ")
 		test_game_pause = !test_game_pause;
 });
+document.addEventListener('keydown', handleKeyPress);
 
 //Setup
 let p = new Player(30, canvas.height/2);
@@ -42,19 +43,13 @@ p.setControls({
     up: {state: false, keys: "wW"},
     down: {state: false, keys: "sS"}
 });
-
 let p1 = new Player(canvas.width - 30, canvas.height/2);
 p1.setControls({
     up: {state: false, keys: "iI"},
     down: {state: false, keys: "kK"}
 });
-
-document.addEventListener('keydown', handleKeyPress);
-
 let b = new Ball(canvas.width/2, canvas.height/2);
-
 let board = new Board(canvas.width, canvas.height);
-
 let  game = new GameController(board, b, p, p1);
 
 // Loops
