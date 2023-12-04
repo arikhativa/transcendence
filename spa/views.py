@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from API.views import authenticate_42
-from twofa.views import twofa, validate_2fa, validate_user, qr_setup, sms_setup, email_setup
-from django.template.loader import render_to_string
+from twofa.views import twofa, validate_2fa, validate_user, qr_setup, email_setup
 
 def spa_view(request):
     try:
@@ -12,7 +11,6 @@ def spa_view(request):
             and section != "validate_2fa_code"
             and section != "twofa"
             and section != "qr_setup"
-            and section != "sms_setup"
             and section != "email_setup"
         ):
             section = "main"
@@ -27,10 +25,9 @@ def spa_view(request):
             context, token = twofa(request)
         if section == "qr_setup":
             context, token = qr_setup(request)
-        if section == "sms_setup":
-            context, token = sms_setup(request)
         if section == "email_setup":
             context, token = email_setup(request)
+
 
     except Exception as exc:
         context = {

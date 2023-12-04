@@ -10,7 +10,6 @@ import qrcode
 import jwt
 import io
 import base64
-from jwt.exceptions import ExpiredSignatureError
 import datetime
 import smtplib
 from email.mime.multipart import MIMEMultipart
@@ -80,7 +79,6 @@ def qr_setup(request, wrong_code=False):
 	token = request.COOKIES.get('jwt_token')
 	user = _user_jwt_cookie(request)
 	user.qr_2FA = True
-	user.sms_2FA = False
 	user.email_2FA = False
 	user.save()
 	qr_code = create_qr_code(user)
@@ -93,38 +91,6 @@ def qr_setup(request, wrong_code=False):
 		"qr_code": qr_code,
 		"error_msg": error_msg,
 		"section": "qr_setup.html",
-	}, token
-
-def sms_setup(request, wrong_code=False):
-	token = request.COOKIES.get('jwt_token')
-	user = _user_jwt_cookie(request)
-	if not wrong_code:
-		user_phone = request.POST.get('phone')
-		user.phone = user_phone
-	user.qr_2FA = False
-	user.sms_2FA = True
-	user.email_2FA = False
-	user.save()
-	if not wrong_code:
-		error_msg = ''
-	else:
-		error_msg = 'Invalid code, try again.'
-	
-	if user.phone == None and not wrong_code:
-		msg = 'Please enter your phone number:'
-		form = FormPhone()
-		url = '/twofa/sms_setup'
-	else:
-		msg = 'Please enter the code sent to your phone:'
-		form = Form2FA()
-		url = '/validate_2fa_code/'
-	
-	return {
-		"msg": msg,
-		"form": form,
-		"url": url,
-		"error_msg": error_msg,
-		"section": "sms_setup.html",
 	}, token
 
 def send_email(user, code):
@@ -148,12 +114,11 @@ def send_email(user, code):
 	text = msg.as_string()
 	server.sendmail(from_addr, to_addr, text)
 	server.quit()
-
+ 
 def email_setup(request, wrong_code=False):
 	token = request.COOKIES.get('jwt_token')
 	user = _user_jwt_cookie(request)
 	user.qr_2FA = False
-	user.sms_2FA = False
 	user.email_2FA = True
 	code = TOTP(user.token_2FA).now()
 	send_email(user, code)
@@ -205,11 +170,8 @@ def twofa(request, wrong_code=False, expired_jwt=False):
 		else:
 			error_msg = 'Invalid code, try again.'
 		if not (user.active_2FA):
-			#TODO: Check which 2FA method was selected.
 			if user.qr_2FA and wrong_code:
 				return qr_setup(request, wrong_code)
-			if user.sms_2FA and wrong_code:
-				return sms_setup(request, wrong_code)
 			if user.email_2FA and wrong_code:
 				return email_setup(request, wrong_code)
 			return {
@@ -238,7 +200,7 @@ def validate_user(request):
 	except Exception as exc:
 		return False
 
-def validate_code_qr(user, user_code):
+def validate_code(user, user_code):
 	try:
 		totp = pyotp.TOTP(user.token_2FA)
 		if not (totp.verify(user_code)):
@@ -247,12 +209,6 @@ def validate_code_qr(user, user_code):
 			return True
 	except Exception as exc:
 		return False
-	
-#TODO: Check if the function is correct
-def validate_code_sms(user, code):
-	if user.sms_2FA and TOTP(user.token_2FA).now() == code:
-		return True
-	return False
 
 
 def validate_code_email(user, code):
@@ -260,18 +216,12 @@ def validate_code_email(user, code):
 		return True
 	return False
 
+
 @csrf_protect
 def validate_2fa(request):
 	user = _user_jwt_cookie(request)
 	user_code = request.POST.get('code')
-	
-	if user.email_2FA:
-		is_valid = validate_code_email(user, user_code)
-	elif user.sms_2FA:
-		is_valid = validate_code_sms(user, user_code)
-	elif user.qr_2FA:
-		is_valid = validate_code_qr(user, user_code)
-
+	is_valid = validate_code(user, user_code)
 
 	if is_valid:
 		user.active_2FA = True
