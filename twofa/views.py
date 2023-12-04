@@ -1,17 +1,24 @@
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_protect
+from django.conf import settings
 from API.models import Users 
 from API.views import add_user_API
-from .forms import Form2FA, FormPhone
+from .forms import Form2FA, FormPhone, Form2FAEmail
 from pyotp.totp import TOTP
 import pyotp
 import qrcode
-from django.conf import settings
 import jwt
 import io
 import base64
 from jwt.exceptions import ExpiredSignatureError
 import datetime
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+import os
+import secrets
+import string
+
 
 
 def create_qr_code(user):
@@ -102,6 +109,7 @@ def sms_setup(request, wrong_code=False):
 		error_msg = ''
 	else:
 		error_msg = 'Invalid code, try again.'
+	
 	if user.phone == None and not wrong_code:
 		msg = 'Please enter your phone number:'
 		form = FormPhone()
@@ -110,6 +118,7 @@ def sms_setup(request, wrong_code=False):
 		msg = 'Please enter the code sent to your phone:'
 		form = Form2FA()
 		url = '/validate_2fa_code/'
+	
 	return {
 		"msg": msg,
 		"form": form,
@@ -118,13 +127,54 @@ def sms_setup(request, wrong_code=False):
 		"section": "sms_setup.html",
 	}, token
 
+def send_email(user, code):
+	smtp_server = os.environ.get("SMTP_SERVER")
+	port = os.environ.get("SMTP_PORT")
+
+	from_addr = os.environ.get("EMAIL_2FA")
+	to_addr = user.email
+
+	msg = MIMEMultipart()
+	msg['From'] = from_addr
+	msg['To'] = to_addr
+	msg['Subject'] = 'Validate your account'
+
+	message = "Your verification code is: " + code
+	msg.attach(MIMEText(message, 'plain'))
+
+	server = smtplib.SMTP(smtp_server, port)
+	server.starttls()
+	server.login(from_addr, os.environ.get("EMAIL_PASSWORD"))
+	text = msg.as_string()
+	server.sendmail(from_addr, to_addr, text)
+	server.quit()
+
 def email_setup(request, wrong_code=False):
+	token = request.COOKIES.get('jwt_token')
 	user = _user_jwt_cookie(request)
 	user.qr_2FA = False
 	user.sms_2FA = False
 	user.email_2FA = True
+	code = ''.join(secrets.choice(string.ascii_letters + string.digits) for _ in range(6))
+	user.token_2FA = code
+	send_email(user, code)
 	user.save()
-	return HttpResponse('email_setup')
+	if not wrong_code:
+		error_msg = ''
+	else:
+		error_msg = 'Invalid code, try again.'
+	
+	msg = 'Please enter the code sent to your email:'
+	form = Form2FAEmail()
+	url = '/validate_2fa_code/'
+
+	return {
+		"msg": msg,
+		"form": form,
+		"url": url,
+		"error_msg": error_msg,
+		"section": "email_setup.html",
+	}, token
 
 @csrf_protect
 def twofa(request, wrong_code=False, expired_jwt=False):
@@ -200,7 +250,12 @@ def validate_code_qr(user, user_code):
 		return False
 	
 #TODO: def validate_code_sms(request):
-#TODO: def validate_code_email(request):
+
+
+def validate_code_email(user, code):
+	if user.email_2fa and user.token_2FA == code:
+		return True
+	return False
 
 @csrf_protect
 def validate_2fa(request):
