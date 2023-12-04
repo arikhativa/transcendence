@@ -189,7 +189,7 @@ def validate_user(request):
 	except Exception as exc:
 		return False
 
-def validate_code_qr(user, user_code):
+def validate_code(user, user_code):
 	try:
 		totp = pyotp.TOTP(user.token_2FA)
 		if not (totp.verify(user_code)):
@@ -199,9 +199,6 @@ def validate_code_qr(user, user_code):
 	except Exception as exc:
 		return False
 	
-#TODO: def validate_code_sms(request):
-#TODO: def validate_code_email(request):
-
 @csrf_protect
 def validate_2fa(request):
 
@@ -209,7 +206,7 @@ def validate_2fa(request):
 	
 	user_code = request.POST.get('code') 
 	#TODO: Check which type of 2FA is being used and validate accordingly
-	is_valid = validate_code_qr(user, user_code)
+	is_valid = validate_code(user, user_code)
 
 	if is_valid:
 		user.active_2FA = True
