@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from API.views import authenticate_42
 from twofa.views import twofa, validate_2fa, validate_user
-from django.template.loader import render_to_string
+from django.utils import translation
+from django.shortcuts import redirect
+from django.http import HttpResponseNotFound
 
 def spa_view(request):
     try:
@@ -68,3 +70,16 @@ def api_view(request):
 
 def validate_2fa_code(request):
     return(validate_2fa(request))
+
+def set_language(request, language_code):
+    #cambio las siguientes headers: navigator.language, navigator.languages y Accept-Language para que se refleje el cambio de idioma
+    if translation.check_for_language(language_code):
+        redirect_to = request.META.get('HTTP_REFERER')
+        #cambio los headers
+        request.META['Accept-Language'] = language_code
+        request.META['Navigator-languages'] = language_code
+        request.META['Navigator-language'] = language_code
+        return redirect(redirect_to)
+    else:
+        return HttpResponseNotFound()
+        
