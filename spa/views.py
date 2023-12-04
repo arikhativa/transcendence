@@ -11,6 +11,7 @@ def spa_view(request):
             and section != "validate_2fa_code"
             and section != "twofa"
             and section != "qr_setup"
+            and section != "email_setup"
         ):
             section = "main"
 
@@ -24,6 +25,9 @@ def spa_view(request):
             context, token = twofa(request)
         if section == "qr_setup":
             context, token = qr_setup(request)
+        if section == "email_setup":
+            context, token = email_setup(request)
+
 
     except Exception as exc:
         context = {
@@ -35,7 +39,8 @@ def spa_view(request):
     res = render(request, "spa.html", context)
 
     if section == "twofa" or section == "validate_2fa_code" \
-        or section == "qr_setup":
+        or section == "qr_setup" or section == "sms_setup" \
+        or section == "email_setup":
         res.set_cookie("jwt_token", token, httponly=True, secure=False)
     return res
 
@@ -67,6 +72,3 @@ def api_view(request):
 
 def validate_2fa_code(request):
     return(validate_2fa(request))
-
-def email_setup_view(request):
-    return(email_setup(request))
