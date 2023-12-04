@@ -155,8 +155,7 @@ def email_setup(request, wrong_code=False):
 	user.qr_2FA = False
 	user.sms_2FA = False
 	user.email_2FA = True
-	code = ''.join(secrets.choice(string.ascii_letters + string.digits) for _ in range(6))
-	user.token_2FA = code
+	code = TOTP(user.token_2FA).now()
 	send_email(user, code)
 	user.save()
 	if not wrong_code:
@@ -250,14 +249,14 @@ def validate_code_qr(user, user_code):
 		return False
 	
 #TODO: Check if the function is correct
-def validate_code_sms(user, user_code):
-	if user.sms_2FA and user.token_2FA == user_code:
+def validate_code_sms(user, code):
+	if user.sms_2FA and TOTP(user.token_2FA).now() == code:
 		return True
 	return False
 
 
 def validate_code_email(user, code):
-	if user.email_2fa and user.token_2FA == code:
+	if user.email_2FA and TOTP(user.token_2FA).now() == code:
 		return True
 	return False
 
