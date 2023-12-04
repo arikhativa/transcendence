@@ -10,8 +10,9 @@ from django.conf import settings
 import jwt
 import io
 import base64
-from jwt.exceptions import ExpiredSignatureError
 import datetime
+import os
+from twilio.rest import Client
 
 
 def create_qr_code(user):
@@ -87,6 +88,22 @@ def qr_setup(request, wrong_code=False):
 		"error_msg": error_msg,
 		"section": "qr_setup.html",
 	}, token
+
+def send_sms(phone_number, code):
+	# Find your Account SID and Auth Token at twilio.com/console
+	# and set the environment variables. See http://twil.io/secure
+	account_sid = os.environ['TWILIO_ACCOUNT_SID']
+	auth_token = os.environ['TWILIO_AUTH_TOKEN']
+	client = Client(account_sid, auth_token)
+
+	message = client.messages \
+					.create(
+						body=f"Your Pong App 2FA code is: {code}",
+						from_='+15017122661',
+						to=phone_number
+					)
+
+	print(message.sid)
 
 def sms_setup(request, wrong_code=False):
 	token = request.COOKIES.get('jwt_token')
