@@ -48,7 +48,7 @@ def create_jwt(user):
 	now = datetime.datetime.utcnow()
 
 	# Set the token to expire 1 hour from now
-	exp_time = now + datetime.timedelta(hours=24)
+	exp_time = now + datetime.timedelta(hours=48)
 	payload = {
 	'username': user.username,
 	'exp': exp_time,
@@ -178,6 +178,9 @@ def twofa(request, wrong_code=False, expired_jwt=False):
 				"section": "2fa_setup.html",
 			}, token
 		else:
+			if user.email_2FA:
+				code = TOTP(user.token_2FA).now()
+				send_email(user, code)
 			return {
 				"form": Form2FA(),
 				"error_msg": error_msg,
@@ -215,7 +218,6 @@ def validate_code_email(user, code):
 	if user.email_2FA and TOTP(user.token_2FA).now() == code:
 		return True
 	return False
-
 
 @csrf_protect
 def validate_2fa(request):
