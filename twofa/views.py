@@ -249,7 +249,11 @@ def validate_code_qr(user, user_code):
 	except Exception as exc:
 		return False
 	
-#TODO: def validate_code_sms(request):
+#TODO: Check if the function is correct
+def validate_code_sms(user, user_code):
+	if user.sms_2FA and user.token_2FA == user_code:
+		return True
+	return False
 
 
 def validate_code_email(user, code):
@@ -259,12 +263,16 @@ def validate_code_email(user, code):
 
 @csrf_protect
 def validate_2fa(request):
-
 	user = _user_jwt_cookie(request)
+	user_code = request.POST.get('code')
 	
-	user_code = request.POST.get('code') 
-	#TODO: Check which type of 2FA is being used and validate accordingly
-	is_valid = validate_code_qr(user, user_code)
+	if user.email_2FA:
+		is_valid = validate_code_email(user, user_code)
+	elif user.sms_2FA:
+		is_valid = validate_code_sms(user, user_code)
+	elif user.qr_2FA:
+		is_valid = validate_code_qr(user, user_code)
+
 
 	if is_valid:
 		user.active_2FA = True
