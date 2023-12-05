@@ -4,6 +4,8 @@ from twofa.views import twofa, validate_2fa, validate_user
 from django.utils import translation
 from django.shortcuts import redirect
 from django.http import HttpResponseNotFound
+from rest_framework.response import Response
+from django.conf import settings
 
 def spa_view(request):
     try:
@@ -31,7 +33,7 @@ def spa_view(request):
             "section": "error_page.html"
         }
         token = None
-
+    
     res = render(request, "spa.html", context)
 
     if section == "twofa" or section == "validate_2fa_code":
@@ -72,14 +74,10 @@ def validate_2fa_code(request):
     return(validate_2fa(request))
 
 def set_language(request, language_code):
-    #cambio las siguientes headers: navigator.language, navigator.languages y Accept-Language para que se refleje el cambio de idioma
     if translation.check_for_language(language_code):
-        redirect_to = request.META.get('HTTP_REFERER')
-        #cambio los headers
-        request.META['Accept-Language'] = language_code
-        request.META['Navigator-languages'] = language_code
-        request.META['Navigator-language'] = language_code
-        return redirect(redirect_to)
+        translation.activate(language_code)
+        renderizado = spa_view(request)
+        renderizado.set_cookie(settings.LANGUAGE_COOKIE_NAME, language_code)
+        return renderizado
     else:
         return HttpResponseNotFound()
-        
