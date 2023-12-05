@@ -1,8 +1,7 @@
 export class Player {
     // Constructor method
-    constructor(x, y) {
-        this.x = x;
-        this.y = y;
+    constructor(name) {
+        this.name = name
         this.w = 30;
         this.h = 200;
 
@@ -49,5 +48,11 @@ export class Player {
 
     setControls(controls) {
         this.controls = controls;
-    } 
+    }
+
+    setPosition(x, y) {
+        this.x = x;
+        this.y = y;
+    }
+
   }
