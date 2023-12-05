@@ -13,16 +13,20 @@ DJ := $(PY) manage.py
 DB_HOST := postgres-dev
 DJANGO_HOST := django-dev
 
+COMMON_VOLUME := .docker-volume-mnt/commonlog_data
+ELASTIC_VOLUME := .docker-volume-mnt/elastic_data
 POSTGRES_VOLUME := .docker-volume-mnt/postgres_data
 GRAFANA_VOLUME := .docker-volume-mnt/grafana_data
 PROMETHEUS_VOLUME := .docker-volume-mnt/prometheus_data
+VOLUMES := $(COMMON_VOLUME) $(ELASTIC_VOLUME) $(POSTGRES_VOLUME) $(GRAFANA_VOLUME) $(PROMETHEUS_VOLUME)
+
 CI_DIR := ci
 
 ELK_CONTAINERS := elasticsearch logstash kibana elasticsearch-setup postgres django
 
 .PHONY: all clear fclear re restart
 
-all: $(GRAFANA_VOLUME) $(POSTGRES_VOLUME) $(PROMETHEUS_VOLUME)
+all: $(VOLUMES) 
 	$(DC) $(UP)
 
 basic: $(POSTGRES_VOLUME)
@@ -55,6 +59,10 @@ $(POSTGRES_VOLUME):
 $(PROMETHEUS_VOLUME): 
 	mkdir -p $@ 
 $(GRAFANA_VOLUME): 
+	mkdir -p $@ 
+$(COMMON_VOLUME): 
+	mkdir -p $@ 
+$(ELASTIC_VOLUME): 
 	mkdir -p $@ 
 
 # Python
