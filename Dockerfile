@@ -11,6 +11,7 @@ RUN apt-get install -y python3-pip
 # Utils
 RUN apt-get install -y vim
 RUN apt-get install -y curl
+RUN apt-get install -y gettext
 
 # Enable venv
 ENV PATH="/home/.venv/bin:$PATH"

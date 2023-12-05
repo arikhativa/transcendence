@@ -1,0 +1,118 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-12-05 18:41+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: game/templates/game.html:9 game/templates/game.html:14
+#: header/templates/header.html:8
+msgid "game"
+msgstr "juego"
+
+#: header/templates/header.html:7
+msgid "main"
+msgstr "principal"
+
+#: header/templates/header.html:9
+msgid "tournament"
+msgstr "torneo"
+
+#: main/templates/main.html:10
+msgid "Main Content"
+msgstr "Contenido principal"
+
+#: main/templates/main.html:11
+msgid "Clic here"
+msgstr "Pulsa aquí"
+
+#: main/templates/main.html:16
+msgid "This is the main content"
+msgstr "Este es el contenido principal"
+
+#: navbar/templates/navbar.html:7
+msgid "navbar"
+msgstr "navbar"
+
+#: spa/templates/error_page.html:8
+msgid "ERROR"
+msgstr "ERROR"
+
+#: twofa/templates/2fa_setup.html:7
+msgid "2FA Setup"
+msgstr "Configuracion 2FA"
+
+#: twofa/templates/2fa_setup.html:12 twofa/templates/email_setup.html:13
+#: twofa/templates/qr_setup.html:13
+msgid "Welcome to Two-Factor Authentication Setup"
+msgstr "Bienvenido a la configuración de Two-Factor"
+
+#: twofa/templates/2fa_setup.html:13
+msgid "Please select your prefered option:"
+msgstr "Por favor selecciona tu opción preferida:"
+
+#: twofa/templates/2fa_setup.html:14
+msgid "QR Code"
+msgstr "Codigo QR"
+
+#: twofa/templates/2fa_setup.html:15
+msgid "Email"
+msgstr "Correo"
+
+#: twofa/templates/email_setup.html:8 twofa/templates/qr_setup.html:8
+msgid "First Login"
+msgstr "Primer inicio de sesión"
+
+#: twofa/templates/email_setup.html:18 twofa/templates/qr_setup.html:19
+#: twofa/templates/twofa.html:17
+msgid "Submit"
+msgstr "Enviar"
+
+#: twofa/templates/qr_setup.html:14
+msgid ""
+"Please scan the QR code below with your Google Authenticator app to set up "
+"2FA:"
+msgstr ""
+"Por favor escanea el código QR de abajo con tu app de Google Authenticator "
+"para configurar 2FA:"
+
+#: twofa/templates/temporal_loggedin.html:8
+msgid "Hello"
+msgstr "Hola"
+
+#: twofa/templates/temporal_loggedin.html:13
+msgid "Welcome"
+msgstr "Bienvenido"
+
+#: twofa/templates/twofa.html:8
+msgid "TWO FACTOR AUTHENTICATOR"
+msgstr "Verificador de dos factores"
+
+#: twofa/templates/twofa.html:13
+msgid "Please introduce a valid 2FA code:"
+msgstr "Por favor introduce un código 2FA valido:"
+
+#: twofa/views.py:75 twofa/views.py:158
+msgid "Invalid code, try again."
+msgstr "Codigo invalido, intenta de nuevo."
+
+#: twofa/views.py:93
+msgid "Validate your account"
+msgstr "Valida tu cuenta"
+
+#: twofa/views.py:145
+msgid "User not found"
+msgstr "Usuario no encontrado"

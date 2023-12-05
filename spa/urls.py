@@ -15,5 +15,6 @@ urlpatterns = [
     path("twofa/qr_setup", views.spa_view, name="qr_setup"),
     path("twofa/email_setup", views.spa_view, name="email_setup"),
     path("validate_2fa_code/", views.spa_view, name="validate_2fa_code"),
+    path('set-language/<str:language_code>/', views.set_language, name='set_language'),
     path("<path:catchall>", views.spa_view_catchall, name="spa"),
 ]

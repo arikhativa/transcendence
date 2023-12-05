@@ -1,9 +1,10 @@
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_protect
+from django.utils.translation import gettext as _
 from django.conf import settings
 from API.models import Users 
 from API.views import add_user_API
-from .forms import Form2FA, FormPhone, Form2FAEmail
+from .forms import Form2FA, Form2FAEmail
 from pyotp.totp import TOTP
 import pyotp
 import qrcode
@@ -15,23 +16,9 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import os
-import secrets
-import string
-
 
 
 def create_qr_code(user):
-	"""
-	Create a QR code for the given user.
-
-	The QR code is created using the user's 2FA token and is returned as a base64-encoded string.
-
-	Args:
-		user: The user for whom to create the QR code.
-
-	Returns:
-		A base64-encoded string representing the QR code.
-	"""
 	uri = TOTP(user.token_2FA).provisioning_uri(name=user.username, issuer_name="Pong App")
 	qr_img = qrcode.make(uri)
 	# Create an in-memory buffer using io.BytesIO
@@ -85,7 +72,7 @@ def qr_setup(request, wrong_code=False):
 	if not wrong_code:
 			error_msg = ''
 	else:
-		error_msg = 'Invalid code, try again.'
+		error_msg = _('Invalid code, try again.')
 	return {
 		"form": Form2FA(),
 		"qr_code": qr_code,
@@ -103,7 +90,7 @@ def send_email(user, code):
 	msg = MIMEMultipart()
 	msg['From'] = from_addr
 	msg['To'] = to_addr
-	msg['Subject'] = 'Validate your account'
+	msg['Subject'] = _('Validate your account')
 
 	message = "Your verification code is: " + code
 	msg.attach(MIMEText(message, 'plain'))
@@ -126,9 +113,9 @@ def email_setup(request, wrong_code=False):
 	if not wrong_code:
 		error_msg = ''
 	else:
-		error_msg = 'Invalid code, try again.'
+		error_msg = -('Invalid code, try again.')
 	
-	msg = 'Please enter the code sent to your email:'
+	msg = -('Please enter the code sent to your email:')
 	form = Form2FAEmail()
 	url = '/validate_2fa_code/'
 
@@ -155,7 +142,7 @@ def twofa(request, wrong_code=False, expired_jwt=False):
 		user = _user_jwt_cookie(request)
 	if user is None:
 		return {
-			"error_msg": "User not found",
+			"error_msg": _("User not found"),
 			"section": "error_page.html",
 		}, None
 	if user.active_2FA and not expired_jwt:
@@ -168,7 +155,7 @@ def twofa(request, wrong_code=False, expired_jwt=False):
 		if not wrong_code:
 			error_msg = ''
 		else:
-			error_msg = 'Invalid code, try again.'
+			error_msg = _('Invalid code, try again.')
 		if not (user.active_2FA):
 			if user.qr_2FA and wrong_code:
 				return qr_setup(request, wrong_code)

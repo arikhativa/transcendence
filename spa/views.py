@@ -1,5 +1,10 @@
 from django.shortcuts import render
 from API.views import authenticate_42
+from twofa.views import twofa, validate_2fa, validate_user
+from django.utils import translation
+from django.shortcuts import redirect
+from django.http import HttpResponseNotFound
+from django.conf import settings
 from twofa.views import twofa, validate_2fa, validate_user, qr_setup, email_setup
 
 def spa_view(request):
@@ -35,7 +40,7 @@ def spa_view(request):
             "section": "error_page.html"
         }
         token = None
-
+    
     res = render(request, "spa.html", context)
 
     if section == "twofa" or section == "validate_2fa_code" \
@@ -72,3 +77,12 @@ def api_view(request):
 
 def validate_2fa_code(request):
     return(validate_2fa(request))
+
+def set_language(request, language_code):
+    if translation.check_for_language(language_code):
+        translation.activate(language_code)
+        renderizado = spa_view(request)
+        renderizado.set_cookie(settings.LANGUAGE_COOKIE_NAME, language_code)
+        return renderizado
+    else:
+        return HttpResponseNotFound()

@@ -1,10 +1,10 @@
-<!-- header/templates/header.html -->
+{% load i18n %}
 {% load static %}
 <link rel="stylesheet" href="{% static 'header.css' %}" />
 <script src="{% static 'header.js' %}"></script>
 
 <header id="header">
-  <button class="spa-btn" value="main">main</button>
-  <button class="spa-btn" value="game">game</button>
-  <button class="spa-btn" value="tournament">tournament</button>
+  <button class="spa-btn" value="main">{% trans "main" %}</button>
+  <button class="spa-btn" value="game">{% trans "game" %}</button>
+  <button class="spa-btn" value="tournament">{% trans "tournament" %}</button>
 </header>
