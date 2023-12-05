@@ -1,0 +1,52 @@
+{
+    "index_patterns": [
+        "logstash-*"
+    ],
+    "template": {
+        "settings": {
+            "number_of_shards": 1,
+            "index": {
+                "lifecycle": {
+                    "name": "delete_after_1_day",
+                    "rollover_alias": "logstash"
+                },
+                "mapping": {
+                    "total_fields": {
+                        "limit": "10"
+                    }
+                },
+                "refresh_interval": "5s"
+            }
+        },
+        "mappings": {
+            "properties": {
+                "message": {
+                    "type": "text"
+                },
+                "request": {
+                    "type": "text"
+                },
+                "status_code": {
+                    "type": "keyword"
+                },
+                "response_time": {
+                    "type": "unsigned_long"
+                },
+                "method": {
+                    "type": "keyword"
+                },
+                "log_level": {
+                    "type": "keyword"
+                },
+                "module": {
+                    "type": "keyword"
+                }
+            }
+        }
+    },
+    "priority": 200,
+    "version": 1,
+    "_meta": {
+        "description": "my custom"
+    }
+}

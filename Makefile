@@ -4,6 +4,7 @@ DC_FILE_DEV := docker-compose.yml
 
 DC := docker compose -f $(DC_FILE_DEV)
 DX := docker exec 
+UP := up -d --build
 
 PY := python
 PIP := pip
@@ -12,15 +13,34 @@ DJ := $(PY) manage.py
 DB_HOST := postgres-dev
 DJANGO_HOST := django-dev
 
+COMMON_VOLUME := .docker-volume-mnt/commonlog_data
+ELASTIC_VOLUME := .docker-volume-mnt/elastic_data
 POSTGRES_VOLUME := .docker-volume-mnt/postgres_data
 GRAFANA_VOLUME := .docker-volume-mnt/grafana_data
 PROMETHEUS_VOLUME := .docker-volume-mnt/prometheus_data
+VOLUMES := $(COMMON_VOLUME) $(ELASTIC_VOLUME) $(POSTGRES_VOLUME) $(GRAFANA_VOLUME) $(PROMETHEUS_VOLUME)
+
 CI_DIR := ci
+
+ELK_CONTAINERS := elasticsearch logstash kibana elasticsearch-setup postgres django
 
 .PHONY: all clear fclear re restart
 
-all: $(GRAFANA_VOLUME) $(POSTGRES_VOLUME) $(PROMETHEUS_VOLUME)
-	$(DC) up -d --build
+all: $(VOLUMES) 
+	$(DC) $(UP)
+
+basic: $(POSTGRES_VOLUME)
+	$(DC) $(UP) postgres django
+	
+elk:
+	$(DC) $(UP) $(ELK_CONTAINERS)
+
+elk/basic:
+	$(DC) $(UP) elasticsearch logstash kibana elasticsearch-setup
+
+elk/re: 
+	$(DC) down $(ELK_CONTAINERS)
+	$(DC) $(UP) $(ELK_CONTAINERS)
 
 clear:
 	$(DC) down
@@ -39,6 +59,10 @@ $(POSTGRES_VOLUME):
 $(PROMETHEUS_VOLUME): 
 	mkdir -p $@ 
 $(GRAFANA_VOLUME): 
+	mkdir -p $@ 
+$(COMMON_VOLUME): 
+	mkdir -p $@ 
+$(ELASTIC_VOLUME): 
 	mkdir -p $@ 
 
 # Python
@@ -70,3 +94,8 @@ db/enter:
 # CI
 ci/test:
 	$(CI_DIR)/is_up.sh
+
+
+# TODO Remove this!
+kibana/export:
+	curl -X POST "localhost:5601/api/saved_objects/_export" -u "elastic:pass123123asdasd" -H 'kbn-xsrf: true' -H 'Content-Type: application/json' -d '{"objects": [{"type": "dashboard","id": "f1901610-9351-11ee-8b2f-752b243e3e50"}],"includeReferencesDeep": true}'
