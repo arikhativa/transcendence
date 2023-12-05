@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-03 09:48+0000\n"
+"POT-Creation-Date: 2023-12-05 18:41+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -51,25 +51,43 @@ msgstr "navbar"
 msgid "ERROR"
 msgstr "ERROR"
 
-#: twofa/templates/first_login.html:8
-msgid "First Login"
-msgstr "Primer inicio de sesión"
+#: twofa/templates/2fa_setup.html:7
+msgid "2FA Setup"
+msgstr "Configuracion 2FA"
 
-#: twofa/templates/first_login.html:13
+#: twofa/templates/2fa_setup.html:12 twofa/templates/email_setup.html:13
+#: twofa/templates/qr_setup.html:13
 msgid "Welcome to Two-Factor Authentication Setup"
 msgstr "Bienvenido a la configuración de Two-Factor"
 
-#: twofa/templates/first_login.html:14
+#: twofa/templates/2fa_setup.html:13
+msgid "Please select your prefered option:"
+msgstr "Por favor selecciona tu opción preferida:"
+
+#: twofa/templates/2fa_setup.html:14
+msgid "QR Code"
+msgstr "Codigo QR"
+
+#: twofa/templates/2fa_setup.html:15
+msgid "Email"
+msgstr "Correo"
+
+#: twofa/templates/email_setup.html:8 twofa/templates/qr_setup.html:8
+msgid "First Login"
+msgstr "Primer inicio de sesión"
+
+#: twofa/templates/email_setup.html:18 twofa/templates/qr_setup.html:19
+#: twofa/templates/twofa.html:17
+msgid "Submit"
+msgstr "Enviar"
+
+#: twofa/templates/qr_setup.html:14
 msgid ""
 "Please scan the QR code below with your Google Authenticator app to set up "
 "2FA:"
 msgstr ""
 "Por favor escanea el código QR de abajo con tu app de Google Authenticator "
 "para configurar 2FA:"
-
-#: twofa/templates/first_login.html:19 twofa/templates/twofa.html:17
-msgid "Submit"
-msgstr "Enviar"
 
 #: twofa/templates/temporal_loggedin.html:8
 msgid "Hello"
@@ -87,10 +105,14 @@ msgstr "Verificador de dos factores"
 msgid "Please introduce a valid 2FA code:"
 msgstr "Por favor introduce un código 2FA valido:"
 
-#: twofa/views.py:75
-msgid "User not found"
-msgstr "Usuario no encontrado"
-
-#: twofa/views.py:89
+#: twofa/views.py:75 twofa/views.py:158
 msgid "Invalid code, try again."
 msgstr "Codigo invalido, intenta de nuevo."
+
+#: twofa/views.py:93
+msgid "Validate your account"
+msgstr "Valida tu cuenta"
+
+#: twofa/views.py:145
+msgid "User not found"
+msgstr "Usuario no encontrado"
