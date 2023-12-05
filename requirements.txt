@@ -10,3 +10,7 @@ sqlparse==0.4.4
 oauthlib
 requests
 requests-oauthlib
+qrcode
+pyotp
+djangorestframework-simplejwt
+PyJWT

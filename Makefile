@@ -49,10 +49,10 @@ py/dep:
 db: db/gen db/migration
 
 db/migration:
-	$(DX) $(DJANGO_HOST) $(DJ) migrate
+	$(DX) $(DJANGO_HOST) $(DJ) migrate  --noinput
 
 db/gen:
-	$(DX) $(DJANGO_HOST) $(DJ) makemigrations
+	$(DX) $(DJANGO_HOST) $(DJ) makemigrations  --noinput
 
 db/export:
 	$(DX) $(DJANGO_HOST) $(DJ) dumpdata --output=data.json

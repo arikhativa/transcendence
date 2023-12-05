@@ -6,6 +6,9 @@ import os
 from API.models import Users
 import hashlib
 import requests
+import pyotp
+
+
 
 
 def post42(url, payload):
@@ -28,34 +31,50 @@ def get42(url, payload, token):
 	return response.json()
 
 def get_token(CODE):
-	url = 'https://api.intra.42.fr/oauth/token'
-	UID = os.environ.get("UID_APP")
-	SECRET = os.environ.get("SECRET_KEY_APP")
+	try:
+		url = 'https://api.intra.42.fr/oauth/token'
+		UID = os.environ.get("UID_APP")
+		SECRET = os.environ.get("SECRET_KEY_APP")
 
-	data = {
-		'grant_type': 'authorization_code',
-		'client_id':  UID,
-		'client_secret': SECRET,
-		'code': CODE,
-		'redirect_uri': 'http://localhost:8000/twofa'
-	}
+		data = {
+			'grant_type': 'authorization_code',
+			'client_id':  UID,
+			'client_secret': SECRET,
+			'code': CODE,
+			'redirect_uri': 'http://localhost:8000/twofa'
+		}
 
-	response = requests.post(url, data=data)
-	return response.json()['access_token']
+		response = requests.post(url, data=data)
+	
+		return response.json()['access_token']
+	except:
+		raise Exception("Error get_token") 
 
 def create_user_API(code):
-	token = get_token(code)
-	if Users.objects.filter(token_42=hashlib.md5(token.encode()).hexdigest()).exists():
-		user = Users.objects.get(token_42=hashlib.md5(token.encode()).hexdigest())
+	
+	if Users.objects.filter(code_42=hashlib.md5(code.encode()).hexdigest()).exists():
+		user = Users.objects.get(code_42=hashlib.md5(code.encode()).hexdigest())
 		return user
-
+	token = get_token(code)
 	user_name ,user_email = get_username_email_API(token)
 	if Users.objects.filter(username=user_name).exists():
 		user = Users.objects.get(username=user_name)
-		update_token_API(user, token)
+		update_code_API(user, code)
 		return user
 	
-	new_user = Users(username=user_name, email=user_email, token_42 = hashlib.md5(token.encode()).hexdigest(), wins=0, losses=0)
+	if Users.objects.filter(token_2FA=pyotp.random_base32()).exists():
+		user = Users.objects.get(token_2FA=pyotp.random_base32())
+		update_code_API(user, code)
+		return user
+	
+	new_user = Users(
+		username=user_name,
+		email=user_email,
+		code_42 = hashlib.md5(code.encode()).hexdigest(),
+		token_2FA=pyotp.random_base32(),
+		wins=0,
+		losses=0
+		)
 	new_user.save()
 	return new_user
 
@@ -71,8 +90,8 @@ def get_username_email_API(token):
 	return me['login'], me['email']
 
 
-def update_token_API(user, token):
-	user.token_42 = hashlib.md5(token.encode()).hexdigest()
+def update_code_API(user, code):
+	user.code_42 = hashlib.md5(code.encode()).hexdigest()
 	user.save()
 
 def add_user_API(request):
