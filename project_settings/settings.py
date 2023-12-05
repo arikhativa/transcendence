@@ -139,6 +139,7 @@ LANGUAGES = [
     ('es', 'Spanish'),
     ('en', 'English'),
     ('fr', 'French'),
+    ('he', 'Hebrew'),
 ]
 
 # Static files (CSS, JavaScript, Images)
