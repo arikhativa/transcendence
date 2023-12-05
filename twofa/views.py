@@ -213,12 +213,6 @@ def validate_code(user, user_code):
 	except Exception as exc:
 		return False
 
-
-def validate_code_email(user, code):
-	if user.email_2FA and TOTP(user.token_2FA).now() == code:
-		return True
-	return False
-
 @csrf_protect
 def validate_2fa(request):
 	user = _user_jwt_cookie(request)
