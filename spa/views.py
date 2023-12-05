@@ -4,8 +4,8 @@ from twofa.views import twofa, validate_2fa, validate_user
 from django.utils import translation
 from django.shortcuts import redirect
 from django.http import HttpResponseNotFound
-from rest_framework.response import Response
 from django.conf import settings
+from twofa.views import twofa, validate_2fa, validate_user, qr_setup, email_setup
 
 def spa_view(request):
     try:
@@ -15,6 +15,8 @@ def spa_view(request):
             and section != "tournament"
             and section != "validate_2fa_code"
             and section != "twofa"
+            and section != "qr_setup"
+            and section != "email_setup"
         ):
             section = "main"
 
@@ -26,6 +28,11 @@ def spa_view(request):
             context, token = validate_2fa(request)
         if section == "twofa":
             context, token = twofa(request)
+        if section == "qr_setup":
+            context, token = qr_setup(request)
+        if section == "email_setup":
+            context, token = email_setup(request)
+
 
     except Exception as exc:
         context = {
@@ -36,7 +43,9 @@ def spa_view(request):
     
     res = render(request, "spa.html", context)
 
-    if section == "twofa" or section == "validate_2fa_code":
+    if section == "twofa" or section == "validate_2fa_code" \
+        or section == "qr_setup" or section == "sms_setup" \
+        or section == "email_setup":
         res.set_cookie("jwt_token", token, httponly=True, secure=False)
     return res
 
@@ -63,12 +72,8 @@ def tournament_view(request):
         return render(request, "main.html")
     return render(request, "tournament.html")
 
-def twofa_view(request):
-    return(twofa(request))
-
 def api_view(request):
     return(authenticate_42(request))
-
 
 def validate_2fa_code(request):
     return(validate_2fa(request))
