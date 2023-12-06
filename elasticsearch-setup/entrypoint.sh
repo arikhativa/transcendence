@@ -12,6 +12,7 @@ declare -A users_passwords
 users_passwords=(
 	[logstash_internal]="${LOGSTASH_INTERNAL_PASSWORD:-}"
 	[kibana_system]="${KIBANA_SYSTEM_PASSWORD:-}"
+	[kibana_viewer]="${KIBANA_VIEWER_PASSWORD:-}"
 	# [metricbeat_internal]="${METRICBEAT_INTERNAL_PASSWORD:-}"
 	# [filebeat_internal]="${FILEBEAT_INTERNAL_PASSWORD:-}"
 	# [heartbeat_internal]="${HEARTBEAT_INTERNAL_PASSWORD:-}"
@@ -22,6 +23,7 @@ users_passwords=(
 declare -A users_roles
 users_roles=(
 	[logstash_internal]='logstash_writer'
+	[kibana_viewer]='viewer'
 	# [metricbeat_internal]='metricbeat_writer'
 	# [filebeat_internal]='filebeat_writer'
 	# [heartbeat_internal]='heartbeat_writer'
@@ -51,7 +53,7 @@ templates_files=(
 
 declare -A kibana_files
 kibana_files=(
-	[kibana]='django.ndjson'
+	[django_dashboard]='django.ndjson'
 )
 
 # --------------------------------------------------------
@@ -207,6 +209,6 @@ for d in "${!kibana_files[@]}"; do
 		continue
 	fi
 
-	sublog 'Creating'
+	sublog 'Importing'
 	create_kibana_objects "/kibana/${kibana_files[$d]}"
 done
