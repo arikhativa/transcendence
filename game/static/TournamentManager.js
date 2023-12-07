@@ -28,6 +28,7 @@ export class Tournament {
     this.auxTournament = this.tournament;
     
     this.currentMatch = {p1: 0, p2: 1};
+    this.phaseChange = false;
   }
   
   addPlayer(name) {

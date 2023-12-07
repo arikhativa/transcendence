@@ -18,7 +18,6 @@ let transitionPerc = 1;
 
 let currentScreen = screens.INTRO;
 let nextScreen = screens.GAME;
-let phaseChange = false;
 
 // Define canvas and a context to draw to
 let canvas = document.getElementById("canvas");
@@ -49,19 +48,18 @@ window.addEventListener('keydown', (e) => {
 window.addEventListener('keyup', (e) => {
     handleKeyPress(e, false);
 });
-let test_game_pause = false;
 window.addEventListener('keyup', (e) => {
     if (e.key !== " " || transition)
         return;
     if (currentScreen == screens.GAME) {
-        test_game_pause = !test_game_pause;
+        game.pause = !game.pause;
         return ;
     } else if (currentScreen == screens.INTRO) {
         nextScreen = screens.TOURNAMENTTREE;
     } else if (currentScreen == screens.VSSCREEN) {
         nextScreen = screens.GAME;
     } else if (currentScreen == screens.ENDOFMATCH) {
-        if (phaseChange)
+        if (tournament.phaseChange)
             nextScreen = screens.TOURNAMENTTREE
         else
             nextScreen = screens.VSSCREEN;
@@ -128,7 +126,7 @@ function gameLoop() {
 gameLoop();
 
 function gameScreen(ctx, game) {
-    if (!transition && !test_game_pause)
+    if (!transition && !game.pause)
         game.update();
     game.draw(ctx);
 }
@@ -181,7 +179,7 @@ function endOfMatchScreen(ctx, canvas, winner) {
 }
 
 function tournamentTreeScreen(ctx, tournament) {
-    phaseChange = false;
+    tournament.phaseChange = false;
     let depth = tournament.maxDepth;
     let size = ((2**depth)/2 + 2);
     ctx.fillStyle = 'white';
@@ -247,7 +245,7 @@ function handleTournament() {
 
     let phase = tournament.nextPhase();
     if (phase === true) {
-        phaseChange = true;
+        tournament.phaseChange = true;
     } else if (phase != null) {
         last_winner = phase;
         nextScreen = screens.ENDOFTOURNAMENT;
