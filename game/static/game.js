@@ -82,7 +82,7 @@ tournament.addPlayer("Alvaro");
 tournament.addPlayer("Cristina");
 tournament.addPlayer("Perico");
 tournament.addPlayer("Paco");
-tournament.addPlayer("Ramiro"); // Ramiro should win the first round by default
+tournament.addPlayer("Ramiro"); //Ramiro should win the first round by default
 tournament.closeTournament();
 tournament.list();
 let m = tournament.nextMatch(); //Start tournament
