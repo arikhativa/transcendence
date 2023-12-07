@@ -314,7 +314,7 @@ function create_index_template {
 
 # Poll the 'kibana' service until it responds with HTTP code 200.
 function wait_for_kibana {
-	local -a args=( '-I' '-s' '-D-' '-m15' '-w' '%{http_code}' "http://${KIBANA_HOST}:${KIBANA_PORT}/status" )
+	local -a args=(  -o /dev/null -s -w '%{http_code}' "http://${KIBANA_HOST}:${KIBANA_PORT}/api/features" )
 
 	if [[ -n "${ELASTIC_PASSWORD:-}" ]]; then
 		args+=( '-u' "elastic:${ELASTIC_PASSWORD}" )
@@ -323,7 +323,6 @@ function wait_for_kibana {
 	local -i result=1
 	local output
 
-	# retry for max 300s (60*5s)
 	for _ in $(seq 1 60); do
 		local -i exit_code=0
 		output="$(curl "${args[@]}")" || exit_code=$?
