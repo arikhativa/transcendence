@@ -55,7 +55,6 @@ export class Tournament {
   }
 
   restartTournament() {
-    // TODO reset player score
     this.auxTournament = this.tournament;
     this.maxDepth = getMaxDepth(this.auxTournament.length);
     this.currentDepth = this.maxDepth;
@@ -75,9 +74,9 @@ export class Tournament {
       return null;
     }
     this.lastMatchIsFinished = true;
-    if (winner === this.auxTournament[this.currentMatch.p1])
+    if (winner === this.auxTournament[this.currentMatch.p1].obj)
       this.auxTournament[this.currentMatch.p1].depth -= 1;
-    else if (winner === this.auxTournament[this.currentMatch.p2])
+    else if (winner === this.auxTournament[this.currentMatch.p2].obj)
       this.auxTournament[this.currentMatch.p2].depth -= 1;
     
     this.currentMatch.p1 += 2;
@@ -99,23 +98,16 @@ export class Tournament {
       return null;
     }
     this.lastMatchIsFinished = false;
-    let m = [this.auxTournament[this.currentMatch.p1],
-            this.auxTournament[this.currentMatch.p2]];
+    let m = [this.auxTournament[this.currentMatch.p1].obj,
+            this.auxTournament[this.currentMatch.p2].obj];
     // Left player config
-    m[0].obj.setPosition(30, canvas.height/2);
-    m[0].obj.setControls({
-      up: {state: false, keys: "wW"},
-      down: {state: false, keys: "sS"}});
+    m[0].setLeftPlayer();
     if (m[1] === undefined) return ;
-    if (m[1].obj.name === "") {
+    if (m[1].name === "") {
       this.lastMatchWinner(m[0]);
     }
     // Right player config
-    m[1].obj.setPosition(canvas.width - 30, canvas.height/2);
-    m[1].obj.setControls({
-      up: {state: false, keys: "iI"},
-      down: {state: false, keys: "kK"}
-    });
+    m[1].setRightPlayer();
     return (m);
   }
   
@@ -138,13 +130,21 @@ export class Tournament {
   }
   
   endTournament() {
-    //console.log("The tournament has ended and the winner is:", this.auxTournament[0].obj.name);
+    //console.log("The tournament has ended and the winner is:", this.auxTournament[0].name);
     this.isFinished = true;
     //console.log(this.auxTournament);
-    return this.auxTournament[0];
+    return this.auxTournament[0].obj;
   }
   
   list() {
     console.log(this.auxTournament);
+  }
+
+  tmpFillTournament() {
+    this.addPlayer("Alvaro");
+    this.addPlayer("Cristina");
+    this.addPlayer("Perico");
+    this.addPlayer("Paco");
+    this.addPlayer("Ramiro"); //Ramiro should win the first round by default
   }
 }

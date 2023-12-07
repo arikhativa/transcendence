@@ -13,6 +13,7 @@ export class Player {
             down: {state: false, keys: ""}
         };
         this.dir = 0;
+        this.score = 0;
     }
   
     update(board) {
@@ -24,12 +25,16 @@ export class Player {
                 this.y += this.speed;
     }
     
-    draw(ctx) {
+    draw(ctx, board) {
+		ctx.fillStyle = 'white';
+		ctx.font = "50px Arial";
+        if (this.isLeftPlayer)
+		    ctx.fillText(this.name, board.w / 4, 50);
+        else
+		    ctx.fillText(this.name, 3 * (board.w / 4), 50);
+
         ctx.fillStyle = this.color;
         ctx.fillRect(this.x - this.w/2, this.y - this.h/2, this.w, this.h);
-    }
-
-    on_collision(other) {
     }
 
     move_listener(e, isKeyDown) {
@@ -46,13 +51,23 @@ export class Player {
             this.dir = 0;
     }
 
-    setControls(controls) {
-        this.controls = controls;
+    setLeftPlayer() {
+        this.controls = {
+            up: {state: false, keys: "wW"},
+            down: {state: false, keys: "sS"}};
+        this.x = 30;
+        this.y = canvas.height/2
+        this.isLeftPlayer = true;
+        this.score = 0;
     }
-
-    setPosition(x, y) {
-        this.x = x;
-        this.y = y;
-    }
-
-  }
+    
+    setRightPlayer() {
+        this.controls = {
+            up: {state: false, keys: "iI"},
+            down: {state: false, keys: "kK"}};
+        this.x = canvas.width - 30;
+        this.y = canvas.height/2;
+        this.isLeftPlayer = false;
+        this.score = 0;
+    } 
+}
