@@ -11,9 +11,12 @@ export class ScreenManager {
 		};
 		
 		this.screenHandler = Array(6).fill(null);
+        this.currentScreen = this.screens.INTRO;
+        this.transition = false;
 	}
-
+    
     update() {
+        this.screenHandler[this.currentScreen];
 	}
 
 	draw(ctx) {

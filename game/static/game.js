@@ -95,22 +95,22 @@ function gameLoop() {
     //Draw game
     switch (currentScreen) {
         case screens.INTRO:
-            introScreen();
+            introScreen(ctx, canvas);
             break;
         case screens.GAME:
-            gameScreen();
+            gameScreen(ctx, game);
             break;
         case screens.VSSCREEN:
-            vsScreen(m[0].name, m[1].name);
+            vsScreen(ctx, canvas, game);
             break;
         case screens.ENDOFTOURNAMENT:
-            endOfTournamentScreen();
+            endOfTournamentScreen(ctx, canvas, last_winner);
             break;
         case screens.TOURNAMENTTREE:
-            tournamentTreeScreen();
+            tournamentTreeScreen(ctx, tournament);
             break;
         case screens.ENDOFMATCH:
-            endOfMatchScreen();
+            endOfMatchScreen(ctx, canvas, last_winner);
             break;
     }
     transitionHandler();
@@ -127,13 +127,13 @@ function gameLoop() {
 }
 gameLoop();
 
-function gameScreen() {
+function gameScreen(ctx, game) {
     if (!transition && !test_game_pause)
         game.update();
     game.draw(ctx);
 }
 
-function introScreen() {
+function introScreen(ctx, canvas) {
     // Clear the canvas to render new frame
     ctx.fillStyle = 'black';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -145,7 +145,7 @@ function introScreen() {
     ctx.fillText("Press space to start", canvas.width/2, canvas.height/2 + 100);
 }
 
-function vsScreen(p1, p2) {
+function vsScreen(ctx, canvas, game) {
     // Clear the canvas to render new frame
     ctx.fillStyle = 'black';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -153,10 +153,10 @@ function vsScreen(p1, p2) {
     ctx.font = "100px Arial";
     ctx.fillStyle = "white";
     ctx.textAlign = "center";
-    ctx.fillText(p1 + " VS " + p2, canvas.width/2, canvas.height/2 - 70);
+    ctx.fillText(game.p1.name + " VS " + game.p2.name, canvas.width/2, canvas.height/2 - 70);
 }
 
-function endOfTournamentScreen() {
+function endOfTournamentScreen(ctx, canvas, winner) {
     // Clear the canvas to render new frame
     ctx.fillStyle = 'black';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -164,11 +164,11 @@ function endOfTournamentScreen() {
     ctx.font = "100px Arial";
     ctx.fillStyle = "white";
     ctx.textAlign = "center";
-    ctx.fillText(last_winner.name + " won", canvas.width/2, canvas.height/2 - 70);
+    ctx.fillText(winner.name + " won", canvas.width/2, canvas.height/2 - 70);
     ctx.fillText("the TOURNAMENT!", canvas.width/2, canvas.height/2 + 100);
 }
 
-function endOfMatchScreen() {
+function endOfMatchScreen(ctx, canvas, winner) {
     // Clear the canvas to render new frame
     ctx.fillStyle = 'black';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -176,33 +176,11 @@ function endOfMatchScreen() {
     ctx.font = "100px Arial";
     ctx.fillStyle = "white";
     ctx.textAlign = "center";
-    ctx.fillText(last_winner.name + " won", canvas.width/2, canvas.height/2 - 70);
+    ctx.fillText(winner.name + " won", canvas.width/2, canvas.height/2 - 70);
     ctx.fillText("the match!", canvas.width/2, canvas.height/2 + 100);
 }
 
-function transitionHandler() {
-    let fadeOutSpeed = 0.05;
-    let fadeInSpeed = 0.05;
-    // Handle transition
-    if (transition) {
-        if (!transitionSwitch)
-            transitionPerc -= fadeOutSpeed;
-        else {
-            currentScreen = nextScreen;
-            transitionPerc += fadeInSpeed;
-        }
-        if (transitionPerc <= -0.5) {
-            transitionSwitch = !transitionSwitch;
-        }
-        if (transitionPerc >= 1) {
-            transition = false;
-            transitionPerc = 1;
-            transitionSwitch = !transitionSwitch;
-        }
-    }
-}
-
-function tournamentTreeScreen() {
+function tournamentTreeScreen(ctx, tournament) {
     phaseChange = false;
     let depth = tournament.maxDepth;
     let size = ((2**depth)/2 + 2);
@@ -230,6 +208,28 @@ function tournamentTreeScreen() {
 
             ctx.fillText("Player name", pos_left[0], pos_left[1] + 15);
             ctx.fillStyle = 'white';
+        }
+    }
+}
+
+function transitionHandler() {
+    let fadeOutSpeed = 0.05;
+    let fadeInSpeed = 0.05;
+    // Handle transition
+    if (transition) {
+        if (!transitionSwitch)
+            transitionPerc -= fadeOutSpeed;
+        else {
+            currentScreen = nextScreen;
+            transitionPerc += fadeInSpeed;
+        }
+        if (transitionPerc <= -0.5) {
+            transitionSwitch = !transitionSwitch;
+        }
+        if (transitionPerc >= 1) {
+            transition = false;
+            transitionPerc = 1;
+            transitionSwitch = !transitionSwitch;
         }
     }
 }
