@@ -38,7 +38,7 @@ function removePlayer() {
 // Add new Players using button
 function addNewPlayer() {
     var numOfPlayers = players.getElementsByTagName('li').length;
-    if (numOfPlayers >= 32) {
+    if (numOfPlayers >= 16) {
         console.log("Can not add more players!");
         return ;
     }

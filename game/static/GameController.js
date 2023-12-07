@@ -51,6 +51,11 @@ export class GameController {
 
 	draw(ctx) {
 		this.board.draw(ctx);
+		//TODO THIS SHOULD BE INSIDE PLAYER
+		ctx.fillStyle = 'white';
+		ctx.font = "50px Arial";
+		ctx.fillText(this.p1.name, this.board.w / 4, 50);
+		ctx.fillText(this.p2.name, 3 * (this.board.w / 4), 50);
 		this.p1.draw(ctx);
 		this.p2.draw(ctx);
 		this.ball.draw(ctx);

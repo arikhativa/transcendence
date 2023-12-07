@@ -45,7 +45,18 @@ export class Tournament {
       //console.log("Tournament already closed!");
       return ;
     }
-    this.isClosed = !this.isClosed;
+    this.isClosed = true;
+    this.maxDepth = getMaxDepth(this.auxTournament.length);
+    this.currentDepth = this.maxDepth;
+    this.auxTournament = this.tournament;
+    fillTournament(this.auxTournament, this.maxDepth);
+    this.len = this.auxTournament.length;
+    //console.log(this.tournament);
+  }
+
+  restartTournament() {
+    // TODO reset player score
+    this.auxTournament = this.tournament;
     this.maxDepth = getMaxDepth(this.auxTournament.length);
     this.currentDepth = this.maxDepth;
     this.auxTournament = this.tournament;
@@ -96,6 +107,9 @@ export class Tournament {
       up: {state: false, keys: "wW"},
       down: {state: false, keys: "sS"}});
     if (m[1] === undefined) return ;
+    if (m[1].obj.name === "") {
+      this.lastMatchWinner(m[0]);
+    }
     // Right player config
     m[1].obj.setPosition(canvas.width - 30, canvas.height/2);
     m[1].obj.setControls({
@@ -120,14 +134,14 @@ export class Tournament {
     this.len = this.auxTournament.length;
     if (this.currentDepth === 0)
       return this.endTournament();
-    return null;
+    return true;
   }
   
   endTournament() {
     //console.log("The tournament has ended and the winner is:", this.auxTournament[0].obj.name);
     this.isFinished = true;
     //console.log(this.auxTournament);
-    return this.auxTournament[0].obj;
+    return this.auxTournament[0];
   }
   
   list() {
