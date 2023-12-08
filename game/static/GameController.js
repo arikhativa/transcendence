@@ -1,12 +1,26 @@
+import { Ball } from './Ball.js';
+import { Board } from './Board.js';
+
 export class GameController {
     // Constructor method
-	constructor(board, ball, p1, p2) {
-		this.board = board;
-		this.ball = ball;
-		this.p1 = p1;
-		this.p2 = p2;
-
+	constructor(players) {
 		this.pause = false;
+		this.last_winner = null;
+		this.winner_name = ""
+
+		this.setup();
+		this.setPlayers(players);
+	}
+
+	setup() {
+		this.ball = new Ball(canvas.width/2, canvas.height/2);
+		this.board = new Board(canvas.width, canvas.height);
+	}
+
+	setPlayers(m) {
+		this.p1 = m[0]
+		this.p2 = m[1]
+		this.last_winner = null;
 	}
 
     update() {
@@ -14,6 +28,8 @@ export class GameController {
 		this.p2.update(this.board);
 		this.ball.update();
 		this.board.update(this.p1, this.p2, this.ball);
+
+		this.checkWinner();
 	}
 
 	draw(ctx) {
@@ -23,11 +39,12 @@ export class GameController {
 		this.ball.draw(ctx);
 	}
 
-	isWinner() {
+	checkWinner() {
 		if (this.p1.score == 5)
-			return 0;
-		if (this.p2.score == 5)
-			return 1;
-		return -1;
+			this.last_winner = this.p1;
+		else if (this.p2.score == 5)
+			this.last_winner = this.p2;
+		if (this.last_winner !== null)
+			this.winner_name = this.last_winner.name;
 	}
 }

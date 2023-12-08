@@ -29,6 +29,8 @@ export class Tournament {
     
     this.currentMatch = {p1: 0, p2: 1};
     this.phaseChange = false;
+
+    this.tmpFillTournament();
   }
   
   addPlayer(name) {
@@ -141,11 +143,36 @@ export class Tournament {
     console.log(this.auxTournament);
   }
 
+  handler(game, screenManager) {
+    if (!this.isFinished) {
+        if (game.last_winner !== null) {
+            this.lastMatchWinner(game.last_winner);
+        }
+        let m = this.nextMatch();
+        if (m != null) {
+            screenManager.nextScreen = screenManager.screens.ENDOFMATCH;
+            screenManager.transition = true;
+            game.setPlayers(m);
+        }
+    
+        let phase = this.nextPhase();
+        if (phase === true) {
+            this.phaseChange = true;
+        } else if (phase != null) {
+            game.last_winner = phase;
+            screenManager.nextScreen = screenManager.screens.ENDOFTOURNAMENT;
+            screenManager.transition = true;
+        }
+    }
+  }
+
+  //TODO: remove this function when the user provided list can be used
   tmpFillTournament() {
     this.addPlayer("Alvaro");
     this.addPlayer("Cristina");
-    this.addPlayer("Perico");
-    this.addPlayer("Paco");
-    this.addPlayer("Ramiro"); //Ramiro should win the first round by default
+    this.addPlayer("Juan Jimenez");
+    this.addPlayer("Berto");
+    this.addPlayer("Mateo");
+    this.closeTournament();
   }
 }

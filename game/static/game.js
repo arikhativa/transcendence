@@ -1,23 +1,6 @@
-import { Ball } from './Ball.js';
-import { Board } from './Board.js';
 import { GameController } from './GameController.js';
 import { ScreenManager } from './ScreenManager.js';
 import { Tournament } from './TournamentManager.js';
-
-const screens = {
-    INTRO: 0,
-    GAME: 1,
-    VSSCREEN: 2,
-    ENDOFMATCH: 3,
-    ENDOFTOURNAMENT: 4,
-    TOURNAMENTTREE: 5
-};
-let transition = false;
-let transitionSwitch = false;
-let transitionPerc = 1;
-
-let currentScreen = screens.INTRO;
-let nextScreen = screens.GAME;
 
 // Define canvas and a context to draw to
 let canvas = document.getElementById("canvas");
@@ -37,10 +20,10 @@ window.onresize = onResize;
 
 // Input handler
 function handleKeyPress(e, isKeyDown) {
-    if (m == null)
+    if (game.p1 == null || game.p2 == null)
         return ;
-    m[0].move_listener(e, isKeyDown);
-    m[1].move_listener(e, isKeyDown);
+    game.p1.move_listener(e, isKeyDown);
+    game.p2.move_listener(e, isKeyDown);
 }
 window.addEventListener('keydown', (e) => {
     handleKeyPress(e, true);
@@ -49,206 +32,48 @@ window.addEventListener('keyup', (e) => {
     handleKeyPress(e, false);
 });
 window.addEventListener('keyup', (e) => {
-    if (e.key !== " " || transition)
+    if (e.key !== " " || screenManager.transition)
         return;
-    if (currentScreen == screens.GAME) {
+    if (screenManager.currentScreen == screenManager.screens.GAME) {
         game.pause = !game.pause;
         return ;
-    } else if (currentScreen == screens.INTRO) {
-        nextScreen = screens.TOURNAMENTTREE;
-    } else if (currentScreen == screens.VSSCREEN) {
-        nextScreen = screens.GAME;
-    } else if (currentScreen == screens.ENDOFMATCH) {
+    } else if (screenManager.currentScreen == screenManager.screens.INTRO) {
+        screenManager.nextScreen = screenManager.screens.TOURNAMENTTREE;
+    } else if (screenManager.currentScreen == screenManager.screens.VSSCREEN) {
+        screenManager.nextScreen = screenManager.screens.GAME;
+    } else if (screenManager.currentScreen == screenManager.screens.ENDOFMATCH) {
         if (tournament.phaseChange)
-            nextScreen = screens.TOURNAMENTTREE
+            screenManager.nextScreen = screenManager.screens.TOURNAMENTTREE
         else
-            nextScreen = screens.VSSCREEN;
-    } else if (currentScreen == screens.TOURNAMENTTREE) {
-        nextScreen = screens.VSSCREEN;
-    } else if (currentScreen == screens.ENDOFTOURNAMENT) {
-        //TODO reset tournament
+            screenManager.nextScreen = screenManager.screens.VSSCREEN;
+    } else if (screenManager.currentScreen == screenManager.screens.TOURNAMENTTREE) {
+        screenManager.nextScreen = screenManager.screens.VSSCREEN;
+    } else if (screenManager.currentScreen == screenManager.screens.ENDOFTOURNAMENT) {
+        //TODO: reset tournament
     }
-    transition = true;
+    //TODO: new screens can be added here if you want to switch screens using space
+    screenManager.transition = true;
 });
 document.addEventListener('keydown', handleKeyPress);
 
 //Game SETUP
-let b = new Ball(canvas.width/2, canvas.height/2);
-let board = new Board(canvas.width, canvas.height);
 let  tournament = new Tournament();
-tournament.tmpFillTournament();
-tournament.closeTournament();
-let m = tournament.nextMatch(); //Start tournament
-let last_winner = null;
-let  game = new GameController(board, b, m[0], m[1]);
-// let screenManager = new ScreenManager();
+let  game = new GameController(tournament.nextMatch());
+
+let screenManager = new ScreenManager();
 
 function gameLoop() {
     //Clear Canvas
     ctx.fillStyle = 'black';
     ctx.globalAlpha = 1;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.globalAlpha = Math.min(Math.max(parseFloat(transitionPerc), 0), 1);
 
-    //Draw game
-    switch (currentScreen) {
-        case screens.INTRO:
-            introScreen(ctx, canvas);
-            break;
-        case screens.GAME:
-            gameScreen(ctx, game);
-            break;
-        case screens.VSSCREEN:
-            vsScreen(ctx, canvas, game);
-            break;
-        case screens.ENDOFTOURNAMENT:
-            endOfTournamentScreen(ctx, canvas, last_winner);
-            break;
-        case screens.TOURNAMENTTREE:
-            tournamentTreeScreen(ctx, tournament);
-            break;
-        case screens.ENDOFMATCH:
-            endOfMatchScreen(ctx, canvas, last_winner);
-            break;
-    }
-    transitionHandler();
-    if (!tournament.isFinished) {
-        let winner = game.isWinner();
-        if (winner != -1) {
-            last_winner = m[winner];
-            tournament.lastMatchWinner(m[winner]);
-        }
-        handleTournament();
-    }
+    //Show screens
+    screenManager.loop(ctx, canvas, game, tournament);
+    //Manage the torunament
+    tournament.handler(game, screenManager);
+
     // Request the next frame
     requestAnimationFrame(gameLoop);
 }
 gameLoop();
-
-function gameScreen(ctx, game) {
-    if (!transition && !game.pause)
-        game.update();
-    game.draw(ctx);
-}
-
-function introScreen(ctx, canvas) {
-    // Clear the canvas to render new frame
-    ctx.fillStyle = 'black';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    
-    ctx.font = "100px Arial";
-    ctx.fillStyle = "white";
-    ctx.textAlign = "center";
-    ctx.fillText("PONG", canvas.width/2, canvas.height/2 - 70);
-    ctx.fillText("Press space to start", canvas.width/2, canvas.height/2 + 100);
-}
-
-function vsScreen(ctx, canvas, game) {
-    // Clear the canvas to render new frame
-    ctx.fillStyle = 'black';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    
-    ctx.font = "100px Arial";
-    ctx.fillStyle = "white";
-    ctx.textAlign = "center";
-    ctx.fillText(game.p1.name + " VS " + game.p2.name, canvas.width/2, canvas.height/2 - 70);
-}
-
-function endOfTournamentScreen(ctx, canvas, winner) {
-    // Clear the canvas to render new frame
-    ctx.fillStyle = 'black';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    
-    ctx.font = "100px Arial";
-    ctx.fillStyle = "white";
-    ctx.textAlign = "center";
-    ctx.fillText(winner.name + " won", canvas.width/2, canvas.height/2 - 70);
-    ctx.fillText("the TOURNAMENT!", canvas.width/2, canvas.height/2 + 100);
-}
-
-function endOfMatchScreen(ctx, canvas, winner) {
-    // Clear the canvas to render new frame
-    ctx.fillStyle = 'black';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    
-    ctx.font = "100px Arial";
-    ctx.fillStyle = "white";
-    ctx.textAlign = "center";
-    ctx.fillText(winner.name + " won", canvas.width/2, canvas.height/2 - 70);
-    ctx.fillText("the match!", canvas.width/2, canvas.height/2 + 100);
-}
-
-function tournamentTreeScreen(ctx, tournament) {
-    tournament.phaseChange = false;
-    let depth = tournament.maxDepth;
-    let size = ((2**depth)/2 + 2);
-    ctx.fillStyle = 'white';
-
-    let tile_width = canvas.width / size;
-    for (let i = 0; i < size/2; i++) {
-        let ammount = 2**(depth - 1 - i);
-        let tile_height = canvas.height / ammount;
-        let h = tile_width * (9/18);
-        for (let k = 0; k < ammount; k++) {
-            let pos_left = [(i * tile_width) + tile_width/2, (k * tile_height) + tile_height/2];
-            let pos_right = [((size - i - 1) * tile_width) + tile_width/2, (k * tile_height) + tile_height/2];
-            //Player Boxes
-            let h = tile_width / 2;
-            ctx.lineWidth = 8;
-            ctx.strokeStyle = "white";
-            ctx.strokeRect(pos_left[0] - tile_width/2 + 10, pos_left[1] - h/2, tile_width - 20, h);
-            ctx.strokeRect(pos_right[0] - tile_width/2 + 10, pos_right[1] - h/2, tile_width - 20, h);
-
-            //Player Names
-            ctx.fillStyle = 'white';
-            ctx.font = "30px Arial";
-            ctx.fillText("Player name", pos_right[0], pos_right[1] + 15);
-
-            ctx.fillText("Player name", pos_left[0], pos_left[1] + 15);
-            ctx.fillStyle = 'white';
-        }
-    }
-}
-
-function transitionHandler() {
-    let fadeOutSpeed = 0.05;
-    let fadeInSpeed = 0.05;
-    // Handle transition
-    if (transition) {
-        if (!transitionSwitch)
-            transitionPerc -= fadeOutSpeed;
-        else {
-            currentScreen = nextScreen;
-            transitionPerc += fadeInSpeed;
-        }
-        if (transitionPerc <= -0.5) {
-            transitionSwitch = !transitionSwitch;
-        }
-        if (transitionPerc >= 1) {
-            transition = false;
-            transitionPerc = 1;
-            transitionSwitch = !transitionSwitch;
-        }
-    }
-}
-
-// TODO: THINK WHERE THIS FUNCTION SHOULD GO
-function handleTournament() {
-    let m_tmp = tournament.nextMatch();
-    if (m_tmp != null) {
-        m = m_tmp;
-        nextScreen = screens.ENDOFMATCH;
-        transition = true;
-        game.p1 = m[0];
-        game.p2 = m[1];
-    }
-
-    let phase = tournament.nextPhase();
-    if (phase === true) {
-        tournament.phaseChange = true;
-    } else if (phase != null) {
-        last_winner = phase;
-        nextScreen = screens.ENDOFTOURNAMENT;
-        transition = true;
-    }
-}
