@@ -7,7 +7,8 @@ export class ScreenManager {
 			VSSCREEN: 2,
 			ENDOFMATCH: 3,
 			ENDOFTOURNAMENT: 4,
-			TOURNAMENTTREE: 5
+			TOURNAMENTTREE: 5,
+            TEST: 6
 		};
 		
         this.currentScreen = this.screens.INTRO;

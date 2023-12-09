@@ -3,10 +3,11 @@ import { Board } from './Board.js';
 
 export class GameController {
     // Constructor method
-	constructor(players) {
+	constructor(players, settings) {
 		this.pause = false;
 		this.last_winner = null;
 		this.winner_name = ""
+		this.settings = settings
 
 		this.setup();
 		this.setPlayers(players);

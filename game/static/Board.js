@@ -1,6 +1,6 @@
 export class Board {
     // Constructor method
-    constructor(w, h) {
+    constructor(w, h, {barriers = true, ballSpeed = 1} = {}) {
         this.x = w/2
         this.y = h/2;
         this.w = w;
@@ -12,7 +12,21 @@ export class Board {
         {
             p1: this.goal_size,
             p2: this.w - this.goal_size
-        }; 
+        };
+        this.haveBarriers = barriers;
+        if (this.haveBarriers) {
+            this.barriers = [];
+            for (let i = 0; i < 10; i++) {  // Generate 10 random barriers
+                let barrier = {
+                    x: Math.random() * w,
+                    y: Math.random() * h,
+                    w: 20,  // Fixed width for barriers
+                    h: 20  // Fixed height for barriers
+                };
+                this.barriers.push(barrier);
+            }
+        }
+        this.ballSpeed = ballSpeed;
     }
     
     //TODO: Draw and update can be changed in order to create new boards with new obstacles 
@@ -48,6 +62,17 @@ export class Board {
             if (p2.dir)
                 ball.dir.y = p2.dir;
         }
+
+        // Barriers collision
+        if (this.haveBarriers) {
+            for (let barrier of this.barriers) {
+                if (ball.x + ball.w/2 > barrier.x - barrier.w/2 && ball.x - ball.w/2 < barrier.x + barrier.w/2 &&
+                    ball.y + ball.h/2 > barrier.y - barrier.h/2 && ball.y - ball.h/2 < barrier.y + barrier.h/2) {
+                    ball.dir.x *= -1 + (Math.random() - 0.5);
+                    ball.dir.y *= -1 + (Math.random() - 0.5);
+                }
+            }
+        }
         // -------------------------------------------------------------------------------------
     }
     
@@ -66,5 +91,13 @@ export class Board {
         ctx.fillStyle = this.goal_color;
         ctx.fillRect(0 + 4, 0 + 4, this.goal.p1 - 4, this.h - 8);
         ctx.fillRect(this.goal.p2, 0 + 4, this.goal_size - 4, this.h - 8);
+
+        if (this.haveBarriers) {
+            // Draw barriers
+            ctx.fillStyle = 'red';
+            for (let barrier of this.barriers) {
+                ctx.fillRect(barrier.x - barrier.w/2, barrier.y - barrier.h/2, barrier.w, barrier.h);
+            }
+        }
     }
   }
