@@ -79,6 +79,15 @@ export class Board {
     draw(ctx) {
         ctx.lineWidth = 8;
         ctx.strokeStyle = "white";
+
+        // Draw barriers
+        if (this.haveBarriers) {
+            ctx.fillStyle = 'green';
+            for (let barrier of this.barriers) {
+                ctx.fillRect(barrier.x - barrier.w/2, barrier.y - barrier.h/2, barrier.w, barrier.h);
+            }
+        }
+
         //Border
         ctx.strokeRect(0, 0, this.w, this.h);
         ctx.fillStyle = 'white';
@@ -92,12 +101,5 @@ export class Board {
         ctx.fillRect(0 + 4, 0 + 4, this.goal.p1 - 4, this.h - 8);
         ctx.fillRect(this.goal.p2, 0 + 4, this.goal_size - 4, this.h - 8);
 
-        if (this.haveBarriers) {
-            // Draw barriers
-            ctx.fillStyle = 'red';
-            for (let barrier of this.barriers) {
-                ctx.fillRect(barrier.x - barrier.w/2, barrier.y - barrier.h/2, barrier.w, barrier.h);
-            }
-        }
     }
   }
