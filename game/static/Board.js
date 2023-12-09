@@ -1,6 +1,6 @@
 export class Board {
     // Constructor method
-    constructor(w, h, {barriers = true, ballSpeed = 1} = {}) {
+    constructor(w, h, settings) {
         this.x = w/2
         this.y = h/2;
         this.w = w;
@@ -13,7 +13,7 @@ export class Board {
             p1: this.goal_size,
             p2: this.w - this.goal_size
         };
-        this.haveBarriers = barriers;
+        this.haveBarriers = settings.barriers;
         if (this.haveBarriers) {
             this.barriers = [];
             for (let i = 0; i < 10; i++) {  // Generate 10 random barriers
@@ -26,7 +26,6 @@ export class Board {
                 this.barriers.push(barrier);
             }
         }
-        this.ballSpeed = ballSpeed;
     }
     
     //TODO: Draw and update can be changed in order to create new boards with new obstacles 

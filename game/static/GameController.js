@@ -14,8 +14,8 @@ export class GameController {
 	}
 
 	setup() {
-		this.ball = new Ball(canvas.width/2, canvas.height/2);
-		this.board = new Board(canvas.width, canvas.height);
+		this.ball = new Ball(canvas.width/2, canvas.height/2, this.settings.ballSpeed);
+		this.board = new Board(canvas.width, canvas.height, this.settings);
 	}
 
 	setPlayers(m) {
