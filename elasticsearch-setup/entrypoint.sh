@@ -16,7 +16,7 @@ users_passwords=(
 	# [metricbeat_internal]="${METRICBEAT_INTERNAL_PASSWORD:-}"
 	# [filebeat_internal]="${FILEBEAT_INTERNAL_PASSWORD:-}"
 	# [heartbeat_internal]="${HEARTBEAT_INTERNAL_PASSWORD:-}"
-	# [monitoring_internal]="${MONITORING_INTERNAL_PASSWORD:-}"
+	[monitoring_internal]="${MONITORING_INTERNAL_PASSWORD:-}"
 	# [beats_system]="${BEATS_SYSTEM_PASSWORD=:-}"
 )
 
@@ -27,7 +27,7 @@ users_roles=(
 	# [metricbeat_internal]='metricbeat_writer'
 	# [filebeat_internal]='filebeat_writer'
 	# [heartbeat_internal]='heartbeat_writer'
-	# [monitoring_internal]='remote_monitoring_collector'
+	[monitoring_internal]='remote_monitoring_collector'
 )
 
 # --------------------------------------------------------
