@@ -2,19 +2,21 @@
 {% load static %}
 <!DOCTYPE html>
 <link rel="stylesheet" href="{% static 'game.css' %}" />
-<script src="{% static 'game.js' %}"></script>
-<script src="{% static 'Ball.js' %}"></script>
+<script type="module" src="{% static 'game.js' %}"></script>
+<script type="module" src="{% static 'Ball.js' %}"></script>
+<script type="module" src="{% static 'Board.js' %}"></script>
+<script type="module" src="{% static 'GameController.js' %}"></script>
+<script type="module" src="{% static 'Player.js' %}"></script>
+<script type="module" src="{% static 'ScreenManager.js' %}"></script>
+<script type="module" src="{% static 'TournamentManager.js' %}"></script>
 
 <main id="main">
   <h1 id="main-title">
     {% block main_title %}
-      {% trans 'Main Content' %}
-      <button type="button"><a href="/API/authenticate_42">{% trans 'Clic here' %}</a></button>
+      {% trans 'Game' %}
     {% endblock %}
   </h1>
-  <p id="main-p">
-    {% block main_content %}
-      {% trans 'This is the main content' %}.
-    {% endblock %}
-  </p>
+  {% block main_content %}
+    <canvas id="canvas" class="bg-white"></canvas>
+  {% endblock %}
 </main>
