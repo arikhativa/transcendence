@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-05 18:41+0000\n"
+"POT-Creation-Date: 2023-12-11 16:12+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,17 +19,20 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: game/templates/game.html:9 game/templates/game.html:14
-#: header/templates/header.html:8
 msgid "game"
 msgstr "juego"
 
-#: header/templates/header.html:7
-msgid "main"
-msgstr "principal"
+#: header/templates/header.html:42
+msgid "Home"
+msgstr "Inicio"
 
-#: header/templates/header.html:9
-msgid "tournament"
-msgstr "torneo"
+#: header/templates/header.html:47
+msgid "Profile"
+msgstr "Perfil"
+
+#: header/templates/header.html:52
+msgid "Log Out"
+msgstr "Desconexion"
 
 #: main/templates/main.html:10
 msgid "Main Content"
@@ -43,9 +46,21 @@ msgstr "Pulsa aquí"
 msgid "This is the main content"
 msgstr "Este es el contenido principal"
 
-#: navbar/templates/navbar.html:7
-msgid "navbar"
-msgstr "navbar"
+#: navbar/templates/navbar.html:19
+msgid "Opponent's Name"
+msgstr "Nombre del rival"
+
+#: navbar/templates/navbar.html:23
+msgid "PLAY"
+msgstr "JUGAR"
+
+#: navbar/templates/navbar.html:31
+msgid "Play against IA"
+msgstr "Jugar contra IA"
+
+#: navbar/templates/navbar.html:37
+msgid "Create Tournament"
+msgstr "Crear Torneo"
 
 #: spa/templates/error_page.html:8
 msgid "ERROR"
@@ -116,3 +131,9 @@ msgstr "Valida tu cuenta"
 #: twofa/views.py:145
 msgid "User not found"
 msgstr "Usuario no encontrado"
+
+#~ msgid "main"
+#~ msgstr "principal"
+
+#~ msgid "navbar"
+#~ msgstr "navbar"

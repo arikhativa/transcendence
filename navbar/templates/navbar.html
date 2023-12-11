@@ -16,20 +16,26 @@
   <row>    
     <div class="grid gap-0 column-gap-3">
       <div class="p-2 g-col-6 d-flex align-items-center justify-content-center">
-        <input type="text" class="form-control" placeholder="Opponent Name" aria-label="Username" aria-describedby="addon-wrapping">
+        <input type="text" class="form-control" placeholder="{% trans "Opponent's Name" %}" aria-label="Username" aria-describedby="addon-wrapping">
       </div>
       <div class="p-2 g-col-6 d-flex align-items-center justify-content-center">
-        <button type="submit" class="btn btn-primary" type="button">PLAY</button>
+        <button type="submit" class="btn btn-primary" type="button">
+          {% trans "PLAY" %}
+        </button>
       </div>
     </div>
   </row>
 
   <row class="d-flex align-items-center justify-content-center">
-    <button class="btn btn-primary" type="button">Play against IA</button>
+    <button class="btn btn-primary" type="button">
+      {% trans "Play against IA" %}
+    </button>
   </row>
   
   <row class="d-flex align-items-center justify-content-center">    
-    <button class="btn btn-primary" type="button">Create Turnament</button>
+    <button class="btn btn-primary" type="button">
+      {% trans "Create Tournament" %}
+    </button>
   </row>
 
   

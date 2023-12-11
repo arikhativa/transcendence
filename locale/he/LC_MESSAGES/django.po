@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-05 18:45+0000\n"
+"POT-Creation-Date: 2023-12-11 16:13+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,18 +18,22 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % "
 "1 == 0) ? 1: (n % 10 == 0 && n % 1 == 0 && n > 10) ? 2 : 3;\n"
+
 #: game/templates/game.html:9 game/templates/game.html:14
-#: header/templates/header.html:8
 msgid "game"
 msgstr "מִשְׂחָק"
 
-#: header/templates/header.html:7
-msgid "main"
-msgstr "רָאשִׁי"
+#: header/templates/header.html:42
+msgid "Home"
+msgstr "בית"
 
-#: header/templates/header.html:9
-msgid "tournament"
-msgstr "טורניר"
+#: header/templates/header.html:47
+msgid "Profile"
+msgstr "פּרוֹפִיל"
+
+#: header/templates/header.html:52
+msgid "Log Out"
+msgstr "התנתקות"
 
 #: main/templates/main.html:10
 msgid "Main Content"
@@ -43,9 +47,21 @@ msgstr "לחץ כאן"
 msgid "This is the main content"
 msgstr "זה התוכן העיקרי"
 
-#: navbar/templates/navbar.html:7
-msgid "navbar"
-msgstr "navbar"
+#: navbar/templates/navbar.html:19
+msgid "Opponent's Name"
+msgstr "שם היריב"
+
+#: navbar/templates/navbar.html:23
+msgid "PLAY"
+msgstr "לְשַׂחֵק"
+
+#: navbar/templates/navbar.html:31
+msgid "Play against IA"
+msgstr "שחקו נגד IA"
+
+#: navbar/templates/navbar.html:37
+msgid "Create Tournament"
+msgstr "צור טורניר"
 
 #: spa/templates/error_page.html:8
 msgid "ERROR"
@@ -85,7 +101,9 @@ msgstr "שלח"
 msgid ""
 "Please scan the QR code below with your Google Authenticator app to set up "
 "2FA:"
-msgstr "אנא סרוק את קוד ה-QR למטה עם אפליקציית Google Authenticator שלך כדי להגדיר 2FA:"
+msgstr ""
+"אנא סרוק את קוד ה-QR למטה עם אפליקציית Google Authenticator שלך כדי להגדיר "
+"2FA:"
 
 #: twofa/templates/temporal_loggedin.html:8
 msgid "Hello"
@@ -114,3 +132,9 @@ msgstr "אמת את חשבונך"
 #: twofa/views.py:145
 msgid "User not found"
 msgstr "המשתמש לא נמצא"
+
+#~ msgid "main"
+#~ msgstr "רָאשִׁי"
+
+#~ msgid "navbar"
+#~ msgstr "navbar"
