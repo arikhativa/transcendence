@@ -1,0 +1,48 @@
+<!-- tournament/templates/tournament.html -->
+{% load static %}
+<link rel="stylesheet" href="{% static 'tournament.css' %}" />
+<script type="module" src="{% static 'tournament.js' %}"></script>
+
+<div class="container-fluid d-flex flex-column">
+  <div class="row p-5">
+      <div class="col-7 d-flex align-items-center justify-content-center">
+        <!---->
+          <div class="container text-center">
+
+            <div class="row">
+                <div class="col">
+                    <h1 class="fw-bolder">New Tournament</h1>
+              </div>
+            </div>
+        
+            <div class="row d-flex align-items-center justify-content-center">
+              <div class="col-12 p-5">
+                <div class="input-group">
+                    <span class="input-group-text" id="addon-wrapping">@</span>
+                    <input id="new-player-name" type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="addon-wrapping">
+                    <span>
+                      <button id="player-submit-button" class="btn btn-primary" type="submit">Add</button>
+                    </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        <!---->
+      </div>
+      <div class="col-5 d-flex align-items-center justify-content-center">
+        <!-- Comment to add a different page -->
+        <div style="display: flex; flex-direction: column;">
+          <h1 class="fw-bolder">Players: <span id="num-of-players">0</span></h1>
+          <p>(max players: 16)</p>
+          <ul id="tournament-players" class="list-group overflow-auto" style="max-height: 20vh">
+            
+          </ul>
+      </div>
+      </div>
+  </div>
+  <div class="row">
+    <div class="col-12 d-flex align-items-center justify-content-center">
+          <button id="tournament-start-button" class="btn btn-primary" type="submit">Start Tournament</button>
+    </div>
+  </div>
+</div>
