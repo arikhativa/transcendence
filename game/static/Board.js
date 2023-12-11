@@ -13,15 +13,17 @@ export class Board {
             p1: this.goal_size,
             p2: this.w - this.goal_size
         };
-        this.haveBarriers = settings.barriers;
-        if (this.haveBarriers) {
+
+        this.settings = settings;
+
+        if (this.settings.barriers) {
             this.barriers = [];
-            for (let i = 0; i < 10; i++) {  // Generate 10 random barriers
+            for (let i = 0; i < 5; i++) {  // Generate 10 random barriers
                 let barrier = {
                     x: Math.random() * w,
                     y: Math.random() * h,
                     w: 20,  // Fixed width for barriers
-                    h: 20  // Fixed height for barriers
+                    h: 40  // Fixed height for barriers
                 };
                 this.barriers.push(barrier);
             }
@@ -63,7 +65,7 @@ export class Board {
         }
 
         // Barriers collision
-        if (this.haveBarriers) {
+        if (this.settings.barriers) {
             for (let barrier of this.barriers) {
                 if (ball.x + ball.w/2 > barrier.x - barrier.w/2 && ball.x - ball.w/2 < barrier.x + barrier.w/2 &&
                     ball.y + ball.h/2 > barrier.y - barrier.h/2 && ball.y - ball.h/2 < barrier.y + barrier.h/2) {
@@ -80,7 +82,7 @@ export class Board {
         ctx.strokeStyle = "white";
 
         // Draw barriers
-        if (this.haveBarriers) {
+        if (this.settings.barriers) {
             ctx.fillStyle = 'green';
             for (let barrier of this.barriers) {
                 ctx.fillRect(barrier.x - barrier.w/2, barrier.y - barrier.h/2, barrier.w, barrier.h);
