@@ -7,6 +7,7 @@ from django.http import HttpResponseNotFound
 from django.conf import settings
 from twofa.views import twofa, validate_2fa, validate_user, qr_setup, email_setup
 
+
 def spa_view(request):
     try:
         section = request.resolver_match.url_name
@@ -33,19 +34,19 @@ def spa_view(request):
         if section == "email_setup":
             context, token = email_setup(request)
 
-
     except Exception as exc:
-        context = {
-            "error_msg": exc,
-            "section": "error_page.html"
-        }
+        context = {"error_msg": exc, "section": "error_page.html"}
         token = None
-    
+
     res = render(request, "spa.html", context)
 
-    if section == "twofa" or section == "validate_2fa_code" \
-        or section == "qr_setup" or section == "sms_setup" \
-        or section == "email_setup":
+    if (
+        section == "twofa"
+        or section == "validate_2fa_code"
+        or section == "qr_setup"
+        or section == "sms_setup"
+        or section == "email_setup"
+    ):
         res.set_cookie("jwt_token", token, httponly=True, secure=False)
     return res
 
@@ -62,8 +63,8 @@ def main_view(request):
 
 
 def game_view(request):
-    if not validate_user(request):
-        return render(request, "main.html")
+    # if not validate_user(request):
+    #     return render(request, "main.html")
     return render(request, "game.html")
 
 
@@ -72,11 +73,14 @@ def tournament_view(request):
         return render(request, "main.html")
     return render(request, "tournament.html")
 
+
 def api_view(request):
-    return(authenticate_42(request))
+    return authenticate_42(request)
+
 
 def validate_2fa_code(request):
-    return(validate_2fa(request))
+    return validate_2fa(request)
+
 
 def set_language(request, language_code):
     if translation.check_for_language(language_code):
