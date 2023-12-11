@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-11 16:13+0000\n"
+"POT-Creation-Date: 2023-12-11 16:22+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -55,10 +55,6 @@ msgid "PLAY"
 msgstr "PLAY"
 
 #: navbar/templates/navbar.html:31
-msgid "Play against IA"
-msgstr "Play against IA"
-
-#: navbar/templates/navbar.html:37
 msgid "Create Tournament"
 msgstr "Create Tournament"
 
