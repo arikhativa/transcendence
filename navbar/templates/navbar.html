@@ -3,15 +3,34 @@
 <link rel="stylesheet" href="{% static 'navbar.css' %}" />
 <script src="{% static 'navbar.js' %}"></script>
 
-<div id="navbar">
-  <button>{% trans "navbar" %}</button>
-  <select onchange="location = this.value;">
-    {% get_current_language as LANGUAGE_CODE %}
-    {% get_available_languages as LANGUAGES %}
-    {% for lang in LANGUAGES %}
-      <option value="{% url 'set_language' lang.0 %}" {% if lang.0 == LANGUAGE_CODE %}selected{% endif %}>
-        {{ lang.1 }}
-      </option>
-    {% endfor %}
-  </select>
+
+<div class="container d-grid gap-5 col-12">
+  <row>
+    <div class="col-12">
+      <img src="https://play-lh.googleusercontent.com/YIkkBYzbvSDjqF3VHe6zVD2v2bMA0qpp7uIYlh1vDPuFwPjHbd4P9wsC6AJTQrZRHlxL" class="img-fluid" alt="Image">
+    </div>
+  </row>
+    
+  </row>
+
+  <row>    
+    <div class="grid gap-0 column-gap-3">
+      <div class="p-2 g-col-6 d-flex align-items-center justify-content-center">
+        <input type="text" class="form-control" placeholder="Opponent Name" aria-label="Username" aria-describedby="addon-wrapping">
+      </div>
+      <div class="p-2 g-col-6 d-flex align-items-center justify-content-center">
+        <button type="submit" class="btn btn-primary" type="button">PLAY</button>
+      </div>
+    </div>
+  </row>
+
+  <row class="d-flex align-items-center justify-content-center">
+    <button class="btn btn-primary" type="button">Play against IA</button>
+  </row>
+  
+  <row class="d-flex align-items-center justify-content-center">    
+    <button class="btn btn-primary" type="button">Create Turnament</button>
+  </row>
+
+  
 </div>
