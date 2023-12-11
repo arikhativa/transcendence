@@ -16,6 +16,15 @@ export class Board {
 
         this.settings = settings;
 
+        if (this.settings.bonus) {
+            this.bonus = {
+                x: w/2 + Math.random() * w/4 - w/8,  // Random position in the middle of the board
+                y: h/2 + Math.random() * h/4 - h/8,
+                s: 40,  // Size of the bonus square
+                active: true  // Whether the bonus is active
+            };
+        }
+
         if (this.settings.barriers) {
             this.barriers = [];
             for (let i = 0; i < 5; i++) {  // Generate 10 random barriers
@@ -74,6 +83,13 @@ export class Board {
                 }
             }
         }
+
+        // Check for collision with the 2x bonus
+        if (this.settings.bonus && this.bonus.active &&
+            Math.abs(ball.x - this.bonus.x) <= ball.r + this.bonus.s/2 &&
+            Math.abs(ball.y - this.bonus.y) <= ball.r + this.bonus.s/2) {
+            this.bonus.active = false;
+        }
         // -------------------------------------------------------------------------------------
     }
     
@@ -88,6 +104,18 @@ export class Board {
                 ctx.fillRect(barrier.x - barrier.w/2, barrier.y - barrier.h/2, barrier.w, barrier.h);
             }
         }
+
+        if (this.settings.bonus && this.bonus.active) {
+            // Draw the 2x bonus
+            ctx.fillStyle = 'yellow';
+            ctx.fillRect(this.bonus.x - this.bonus.s/2, this.bonus.y - this.bonus.s/2, this.bonus.s, this.bonus.s);
+
+            ctx.fillStyle = 'black';
+            ctx.font = '30px Arial';
+            ctx.textBaseline = 'middle';
+            ctx.textAlign = 'center';
+            ctx.fillText('2x', this.bonus.x, this.bonus.y);
+        }   
 
         //Border
         ctx.strokeRect(0, 0, this.w, this.h);

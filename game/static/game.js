@@ -58,7 +58,7 @@ document.addEventListener('keydown', handleKeyPress);
 
 //Game SETUP
 let  tournament = new Tournament();
-let  game = new GameController(tournament.nextMatch(), {barriers: true, ballSpeed: 3});
+let  game = new GameController(tournament.nextMatch(), {barriers: true, ballSpeed: 3, bonus: true});
 
 let screenManager = new ScreenManager();
 
