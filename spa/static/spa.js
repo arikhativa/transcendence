@@ -20,8 +20,15 @@ function showSection(section) {
         .then(response => response.text())
         .then(html => {
             // Inject HTML content
-            
             document.querySelector('#dynamic-content').innerHTML = html;
+
+            // Inject scripts
+            const scripts = document.querySelectorAll('#dynamic-content script');
+            scripts.forEach((script) => {
+                const newScript = document.createElement('script');
+                newScript.src = script.src;
+                script.parentNode.replaceChild(newScript, script);
+            });
         })
         .catch(error => console.error('Error loading HTML:', error));
 }
