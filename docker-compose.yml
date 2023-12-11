@@ -104,6 +104,8 @@ services:
     image: prometheuscommunity/postgres-exporter:v0.15.0
     container_name: postgres-exporter-dev
     restart: unless-stopped
+    depends_on:
+      - postgres
     networks:
       - transcendence
     env_file:

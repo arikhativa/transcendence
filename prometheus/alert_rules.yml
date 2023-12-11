@@ -1,12 +1,42 @@
 groups:
-  - name: example
+  - name: Services Up/Down
     rules:
-      - alert: MaxHTTPReq
-        expr: sum(django_http_requests_total_by_method_total) > 10
+      - alert: DjangoIsDown
+        expr: up{instance="django-dev:8000"} == 0
         for: 1s
         labels:
           severity: critical
         annotations:
-          summary: "High Req usage detected"
-          description: "The Req usage on instance {{ $labels.instance }} is very high."
+          summary: "Exporter is down: {{ $labels.instance }}"
+          description: "The endpoint {{ $labels.instance }} is not able to be scraped by Prometheus."
 
+      - alert: PostgresIsDown
+        expr: up{instance="postgres-exporter:9187"} == 0
+        for: 1s
+        labels:
+          severity: critical
+        annotations:
+          summary: "Exporter is down: {{ $labels.instance }}"
+          description: "The endpoint {{ $labels.instance }} is not able to be scraped by Prometheus."
+        
+  - name: Django Alerts
+    rules:
+      - alert: too many 5XX status
+        expr: increase(django_http_responses_total_by_status_total{status=~"5.."}[1m]) > 0
+        for: 1s
+        labels:
+          severity: critical
+        annotations:
+          summary: "Django 5XX"
+          description: "Django is replaying many 5XX statuses"
+  
+  - name: Postgres Alerts
+    rules:
+      - alert: db size to large
+        expr: sum(pg_database_size_bytes) > 104857600
+        for: 1s
+        labels:
+          severity: critical
+        annotations:
+          summary: "DB Max Size"
+          description: "Postgres is reaching over 100Mb"
