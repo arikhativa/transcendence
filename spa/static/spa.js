@@ -27,6 +27,7 @@ function showSection(section) {
             scripts.forEach((script) => {
                 const newScript = document.createElement('script');
                 newScript.src = script.src;
+                newScript.type = 'module';
                 script.parentNode.replaceChild(newScript, script);
             });
         })
