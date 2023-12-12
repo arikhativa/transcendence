@@ -2,6 +2,19 @@ import { GameController } from './GameController.js';
 import { ScreenManager } from './ScreenManager.js';
 import { Tournament } from './TournamentManager.js';
 
+const playersDataElement = document.getElementById('players-data');
+const playersDataString = playersDataElement ? playersDataElement.dataset.players : null;
+
+if (playersDataString) {
+
+    const playersParam = new URLSearchParams(playersDataString).get('players');
+    
+    const playersArray = playersParam ? decodeURIComponent(playersParam).split(',') : [];
+    
+    console.log("playersArray", playersArray);
+}
+
+
 // Define canvas and a context to draw to
 let canvas = document.getElementById("canvas");
 setCanvasSize();

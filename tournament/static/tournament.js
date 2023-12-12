@@ -8,6 +8,8 @@ function getTournamentPlayers() {
     for (var i = 0; i < names.length; i++) {
         console.log(names[i].innerText);
     }
+    // TODO change this
+    showSection('game', {"players": ["asd1", "asd2"]});
 }
 
 function playerExists(name) {
