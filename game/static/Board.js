@@ -86,10 +86,14 @@ export class Board {
 
         // Check for collision with the 2x bonus
         if (this.settings.bonus && this.bonus.active &&
-            Math.abs(ball.x - this.bonus.x) <= ball.r + this.bonus.s/2 &&
-            Math.abs(ball.y - this.bonus.y) <= ball.r + this.bonus.s/2) {
-            this.bonus.active = false;
-        }
+			ball.x + ball.w/2 > this.bonus.x - this.bonus.w/2 &&
+			ball.x - ball.w/2 < this.bonus.x + this.bonus.w/2 &&
+			ball.y + ball.h/2 > this.bonus.y - this.bonus.h/2 &&
+			ball.y - ball.h/2 < this.bonus.y + this.bonus.h/2) {
+			this.bonus.active = false;
+			ball.dir.x *= -1 + (Math.random() - 0.5);
+			ball.dir.y *= -1 + (Math.random() - 0.5);
+		}
         // -------------------------------------------------------------------------------------
     }
     
