@@ -42,10 +42,12 @@ INSTALLED_APPS = [
     "bootstrap5",
     "rest_framework_simplejwt",
     "header",
+    "footer",
     "navbar",
     "main",
     "spa",
     "game",
+    "tournament",
     "API",
     "twofa",
 ]
