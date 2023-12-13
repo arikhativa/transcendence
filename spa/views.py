@@ -65,15 +65,14 @@ def main_view(request):
 
 
 def game_view(request):
-    # if not validate_user(request):
-    #     return render(request, "main.html")
-    context = game_setup(request)
-    return render(request, "game.html", context)
+    if not validate_user(request):
+        return render(request, "main.html")
+    return render(request, "game.html")
 
 
 def tournament_view(request):
-    # if not validate_user(request):
-    #     return render(request, "main.html")
+    if not validate_user(request):
+        return render(request, "main.html")
     return render(request, "tournament.html")
 
 def api_view(request):
