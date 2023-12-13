@@ -10,6 +10,7 @@ urlpatterns = [
     # these are to ALL of the page
     path("", views.spa_view, name="spa"),
     path("main/", views.spa_view, name="main"),
+    path("game/", views.spa_view, name="game"),
     path("tournament/", views.spa_view, name="tournament"),
     path("twofa", views.spa_view, name="twofa"),
     path("API/authenticate_42", views.api_view, name="api"),
