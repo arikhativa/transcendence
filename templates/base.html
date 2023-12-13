@@ -18,22 +18,35 @@
     {% endblock %}
   </head>
   <body>
-    <!-- Navbar -->
-    {% block navbar %}
 
-    {% endblock %}
+		<div class="container-fluid min-vh-100 d-flex flex-column">
+			<div class="row">
+					<div class="col m-0 p-0 bg-info">
+						{% block header %}
+						{% endblock %}
+					</div>
+			</div>
+			<div class="row flex-grow-1">
+					<div class="col-md-2 bg-danger d-flex align-items-center justify-content-center">
+						{% block navbar %}
+						{% endblock %}
+					</div>
+					<div class="col-md-10 d-flex align-items-center justify-content-center bg-warning">
+            {% block content %}
+            {% comment %}TODO{% endcomment %}
+            {% block dynamic_content %}
+      
+            {% endblock %}
+          {% endblock %}
+					</div>
+			</div>
+			<div class="row">
+				<div class="col m-0 p-0">
+					{% block footer %}
+					{% endblock %}
+				</div>
+		</div>
+	</div>
 
-    <!-- Header Section -->
-    {% block header %}
-
-    {% endblock %}
-
-    <!-- Main Content Section -->
-    {% block content %}
-      {% comment %}TODO{% endcomment %}
-      {% block dynamic_content %}
-
-      {% endblock %}
-    {% endblock %}
   </body>
 </html>
