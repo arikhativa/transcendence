@@ -1,6 +1,7 @@
 
 window.addEventListener('popstate', function(event) {
-    showSection(event.state.path);
+    if (event && event.state && event.state.path)
+        showSection(event.state.path);
 });
 
 function showSection(section, paramObject) {
