@@ -4,14 +4,13 @@ import { Tournament } from './TournamentManager.js';
 
 const playersDataElement = document.getElementById('players-data');
 const playersDataString = playersDataElement ? playersDataElement.dataset.players : null;
+let playersList = [];
 
 if (playersDataString) {
 
     const playersParam = new URLSearchParams(playersDataString).get('players');
     
-    const playersArray = playersParam ? decodeURIComponent(playersParam).split(',') : [];
-    
-    console.log("playersArray", playersArray);
+    playersList = playersParam ? decodeURIComponent(playersParam).split(',') : [];
 }
 
 
@@ -70,7 +69,7 @@ window.addEventListener('keyup', (e) => {
 document.addEventListener('keydown', handleKeyPress);
 
 //Game SETUP
-let  tournament = new Tournament();
+let  tournament = new Tournament(playersList);
 let  game = new GameController(tournament.nextMatch());
 
 let screenManager = new ScreenManager();

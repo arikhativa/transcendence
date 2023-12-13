@@ -6,6 +6,7 @@ from django.shortcuts import redirect
 from django.http import HttpResponseNotFound
 from django.conf import settings
 from twofa.views import twofa, validate_2fa, validate_user, qr_setup, email_setup
+from game.views import game_setup
 
 def spa_view(request):
     try:
@@ -32,6 +33,8 @@ def spa_view(request):
             context, token = qr_setup(request)
         if section == "email_setup":
             context, token = email_setup(request)
+        if section == "game":
+            context = game_setup(request, context)
 
 
     except Exception as exc:
@@ -64,10 +67,7 @@ def main_view(request):
 def game_view(request):
     # if not validate_user(request):
     #     return render(request, "main.html")
-    players = request.GET.urlencode()
-    context = {
-        "players": players,
-    }
+    context = game_setup(request)
     return render(request, "game.html", context)
 
 

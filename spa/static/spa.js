@@ -11,10 +11,6 @@ function showSection(section, paramObject) {
     var url = new URL(window.location.href);
     url.pathname = section + "/";
     
-    // TODO maybe add params to this
-    history.pushState(null, null, url.href);
-
-    url.pathname = `section/${section}/`;
 
     if (paramObject !== undefined)
     {
@@ -25,6 +21,10 @@ function showSection(section, paramObject) {
         }
         url.search = params.toString();
     }
+
+    history.pushState(null, null, url.href);
+
+    url.pathname = `section/${section}/`;
 
     fetch(url.href)
         .then(response => response.text())
