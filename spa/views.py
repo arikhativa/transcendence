@@ -1,11 +1,10 @@
 from django.shortcuts import render
 from API.views import authenticate_42
-from twofa.views import twofa, validate_2fa, validate_user
 from django.utils import translation
 from django.shortcuts import redirect
-from django.http import HttpResponseNotFound
+from django.http import HttpResponse, HttpResponseNotFound
 from django.conf import settings
-from twofa.views import twofa, validate_2fa, validate_user, qr_setup, email_setup
+from twofa.views import twofa, validate_2fa, qr_setup, email_setup
 from game.views import game_setup
 
 def spa_view(request):
@@ -65,15 +64,11 @@ def main_view(request):
 
 
 def game_view(request):
-    if not validate_user(request):
-        return render(request, "main.html")
     context = game_setup(request, {})
     return render(request, "game.html", context)
 
 
 def tournament_view(request):
-    if not validate_user(request):
-        return render(request, "main.html")
     return render(request, "tournament.html")
 
 def api_view(request):
