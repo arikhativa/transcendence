@@ -10,13 +10,14 @@ function showSection(section, paramObject) {
     }
 
     var url = new URL(window.location.href);
+    url.search = "";
     url.pathname = section + "/";
     
 
     if (paramObject !== undefined)
     {
         const l = Object.entries(paramObject)
-        const params = new URLSearchParams(url.search);
+        const params = new URLSearchParams();
         for (const [key, value] of l) {
             params.set(key, value);
         }
