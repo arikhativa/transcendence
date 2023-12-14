@@ -1,13 +1,12 @@
 var players = document.getElementById('tournament-players');
 
 function getTournamentPlayers() {
-    // Get list of player on turnament
-    // Log the entire list to the console
-    // // Loop through the list items and log each item
+    const playerList = [];
     var names = players.getElementsByTagName('li');
     for (var i = 0; i < names.length; i++) {
-        console.log(names[i].innerText);
+        playerList.push(names[i].innerText);
     }
+    showSection('game', {"players": playerList});
 }
 
 function playerExists(name) {

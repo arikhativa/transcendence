@@ -2,6 +2,18 @@ import { GameController } from './GameController.js';
 import { ScreenManager } from './ScreenManager.js';
 import { Tournament } from './TournamentManager.js';
 
+const playersDataElement = document.getElementById('players-data');
+const playersDataString = playersDataElement ? playersDataElement.dataset.players : null;
+let playersList = [];
+
+if (playersDataString) {
+
+    const playersParam = new URLSearchParams(playersDataString).get('players');
+    
+    playersList = playersParam ? decodeURIComponent(playersParam).split(',') : [];
+}
+
+
 // Define canvas and a context to draw to
 let canvas = document.getElementById("canvas");
 setCanvasSize();
@@ -57,7 +69,7 @@ window.addEventListener('keyup', (e) => {
 document.addEventListener('keydown', handleKeyPress);
 
 //Game SETUP
-let  tournament = new Tournament();
+let  tournament = new Tournament(playersList);
 let  game = new GameController(tournament.nextMatch());
 
 let screenManager = new ScreenManager();

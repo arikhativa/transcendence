@@ -3,7 +3,7 @@ window.addEventListener('popstate', function(event) {
     showSection(event.state.path);
 });
 
-function showSection(section) {
+function showSection(section, paramObject) {
     if (section == undefined) {
         return;
     }
@@ -11,11 +11,21 @@ function showSection(section) {
     var url = new URL(window.location.href);
     url.pathname = section + "/";
     
+
+    if (paramObject !== undefined)
+    {
+        const l = Object.entries(paramObject)
+        const params = new URLSearchParams(url.search);
+        for (const [key, value] of l) {
+            params.set(key, value);
+        }
+        url.search = params.toString();
+    }
+
     history.pushState(null, null, url.href);
 
     url.pathname = `section/${section}/`;
 
-    // Fetch HTML content
     fetch(url.href)
         .then(response => response.text())
         .then(html => {

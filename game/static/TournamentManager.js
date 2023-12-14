@@ -19,7 +19,7 @@ function getMaxDepth(len) {
 }
   
 export class Tournament {
-  constructor() {
+  constructor(playerList) {
     this.isFinished = false;
     this.isClosed = false;
     this.lastMatchIsFinished = true;
@@ -30,7 +30,7 @@ export class Tournament {
     this.currentMatch = {p1: 0, p2: 1};
     this.phaseChange = false;
 
-    this.tmpFillTournament();
+    this.fillTournament(playerList);
   }
   
   addPlayer(name) {
@@ -166,13 +166,10 @@ export class Tournament {
     }
   }
 
-  //TODO: remove this function when the user provided list can be used
-  tmpFillTournament() {
-    this.addPlayer("Alvaro");
-    this.addPlayer("Cristina");
-    this.addPlayer("Juan Jimenez");
-    this.addPlayer("Berto");
-    this.addPlayer("Mateo");
+  fillTournament(players = []) {
+    for (let i = 0; i < players.length; i++) {
+      this.addPlayer(players[i]);
+    }
     this.closeTournament();
   }
 }
