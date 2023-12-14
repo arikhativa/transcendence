@@ -22,12 +22,17 @@ function showSection(section, paramObject) {
         url.search = params.toString();
     }
 
-    history.pushState(null, null, url.href);
+    const historyURL = new URL(url);
 
     url.pathname = `section/${section}/`;
 
     fetch(url.href)
-        .then(response => response.text())
+        .then(response => {
+            if (!response.ok || response.status != 200) {
+                throw new Error('Network response was not ok');
+            }
+            return response.text();
+        })
         .then(html => {
             // Inject HTML content
             document.querySelector('#dynamic-content').innerHTML = html;
@@ -40,8 +45,10 @@ function showSection(section, paramObject) {
                 newScript.type = 'module';
                 script.parentNode.replaceChild(newScript, script);
             });
+            history.pushState(null, null, historyURL.href);
         })
-        .catch(error => console.error('Error loading HTML:', error));
+        .catch(error => console.debug('Error loading HTML:', error));
+    
 }
 
 document.addEventListener("DOMContentLoaded", function() {
