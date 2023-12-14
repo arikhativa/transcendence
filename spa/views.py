@@ -67,7 +67,8 @@ def main_view(request):
 def game_view(request):
     if not validate_user(request):
         return render(request, "main.html")
-    return render(request, "game.html")
+    context = game_setup(request, {})
+    return render(request, "game.html", context)
 
 
 def tournament_view(request):
