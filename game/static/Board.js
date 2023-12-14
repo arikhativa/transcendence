@@ -21,7 +21,8 @@ export class Board {
                 x: w/2 + Math.random() * w/4 - w/8,  // Random position in the middle of the board
                 y: h/2 + Math.random() * h/4 - h/8,
                 s: 40,  // Size of the bonus square
-                active: true  // Whether the bonus is active
+                active: true,  // Whether the bonus is active
+				playerWithBonus: null // The player who has the bonus
             };
         }
 
@@ -50,12 +51,16 @@ export class Board {
             ball.x = this.x;
             ball.y = this.y;
             p2.score++;
+			if (this.settings.bonus && this.bonus.playerWithBonus == p2)
+            	p2.score++;
         }
         if (ball.x + ball.w/2 >= p2.x - p2.w/2 && !(ball.y > p2.y - p2.h/2 && ball.y < p2.y + p2.h/2))
         {
             ball.x = this.x;
             ball.y = this.y;
             p1.score++;
+			if (this.settings.bonus && this.bonus.playerWithBonus == p1)
+            	p1.score++;
         }
 
         // Ball collision with Player1
@@ -64,6 +69,7 @@ export class Board {
             ball.dir.x *= -1;
             if (p1.dir)
                 ball.dir.y = p1.dir;
+			ball.hitBy = p1;
         }
         // Ball collision with Player2
         if (ball.x + ball.w/2 >= p2.x - p2.w/2 && (ball.y > p2.y - p2.h/2 && ball.y < p2.y + p2.h/2))
@@ -71,6 +77,7 @@ export class Board {
             ball.dir.x *= -1;
             if (p2.dir)
                 ball.dir.y = p2.dir;
+			ball.hitBy = p2;
         }
 
         // Barriers collision
@@ -85,14 +92,16 @@ export class Board {
         }
 
         // Check for collision with the 2x bonus
-        if (this.settings.bonus && this.bonus.active &&
-			ball.x + ball.w/2 > this.bonus.x - this.bonus.w/2 &&
-			ball.x - ball.w/2 < this.bonus.x + this.bonus.w/2 &&
-			ball.y + ball.h/2 > this.bonus.y - this.bonus.h/2 &&
-			ball.y - ball.h/2 < this.bonus.y + this.bonus.h/2) {
+        if (ball.hitBy != null && this.settings.bonus && this.bonus.active &&
+			ball.x + ball.w/2 > this.bonus.x - this.bonus.s/2 &&
+			ball.x - ball.w/2 < this.bonus.x + this.bonus.s/2 &&
+			ball.y + ball.h/2 > this.bonus.y - this.bonus.s/2 &&
+			ball.y - ball.h/2 < this.bonus.y + this.bonus.s/2) {
 			this.bonus.active = false;
-			ball.dir.x *= -1 + (Math.random() - 0.5);
-			ball.dir.y *= -1 + (Math.random() - 0.5);
+			if (ball.hitBy == p1)
+				this.bonus.playerWithBonus = p1;
+			else
+				this.bonus.playerWithBonus = p2;
 		}
         // -------------------------------------------------------------------------------------
     }
@@ -109,8 +118,8 @@ export class Board {
             }
         }
 
+		// Draw the 2x bonus
         if (this.settings.bonus && this.bonus.active) {
-            // Draw the 2x bonus
             ctx.fillStyle = 'yellow';
             ctx.fillRect(this.bonus.x - this.bonus.s/2, this.bonus.y - this.bonus.s/2, this.bonus.s, this.bonus.s);
 

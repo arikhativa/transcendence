@@ -12,6 +12,8 @@ export class Ball {
             x: 2/Math.sqrt(3),
             y: 1/Math.sqrt(3)
         };
+        
+        this.hitBy = null;
     }
   
     update() {
