@@ -4,12 +4,13 @@ from django.utils import translation
 from django.shortcuts import redirect
 from django.http import HttpResponse, HttpResponseNotFound
 from django.conf import settings
-from twofa.views import twofa, validate_2fa, qr_setup, email_setup
+from twofa.views import twofa, validate_2fa, qr_setup, email_setup, delete_jwt
 from game.views import game_setup
 
 def spa_view(request):
     try:
         section = request.resolver_match.url_name
+
         if (
             section != "game"
             and section != "tournament"
@@ -33,7 +34,7 @@ def spa_view(request):
         if section == "email_setup":
             context, token = email_setup(request)
         if section == "game":
-            context = game_setup(request, context)
+            context = game_setup(request, context)           
 
 
     except Exception as exc:
@@ -51,8 +52,12 @@ def spa_view(request):
         res.set_cookie("jwt_token", token, httponly=True, secure=False)
     return res
 
-
 def spa_view_catchall(request, catchall):
+    if (catchall == "section/logout/"):
+        delete_jwt(request)
+        response = main_view(request)
+        response.delete_cookie("jwt_token")
+        return response
     context = {
         "section": "main.html",
     }

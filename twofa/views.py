@@ -135,6 +135,7 @@ def twofa(request, wrong_code=False, expired_jwt=False):
 
 		user = add_user_API(request)
 		token = create_jwt(user)
+		expired_jwt = True
 	else:
 		token = request.COOKIES.get('jwt_token')
 		if _jwt_is_expired(token):
@@ -218,3 +219,12 @@ def validate_2fa(request):
 		}, user.jwt
 	else:
 		return twofa(request, wrong_code=True)
+	
+def delete_jwt(request):
+	token = request.COOKIES.get('jwt_token')
+	options = {'verify_exp': False}
+	payload = jwt.decode(token, settings.SECRET_KEY, algorithms=['HS256'], options=options)
+	user = Users.objects.get(username=payload['username'])
+	user.jwt = None
+	user.save()
+	return
