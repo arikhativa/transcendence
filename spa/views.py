@@ -34,7 +34,7 @@ def spa_view(request):
         if section == "email_setup":
             context, token = email_setup(request)
         if section == "game":
-            context = game_setup(request, context)           
+            context = game_setup(request, context)
 
 
     except Exception as exc:
