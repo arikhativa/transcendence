@@ -1,23 +1,40 @@
 
 window.addEventListener('popstate', function(event) {
-    showSection(event.state.path);
+    if (event && event.state && event.state.path)
+        showSection(event.state.path);
 });
 
-function showSection(section) {
+function showSection(section, paramObject) {
     if (section == undefined) {
         return;
     }
 
     var url = new URL(window.location.href);
+    url.search = "";
     url.pathname = section + "/";
     
-    history.pushState(null, null, url.href);
+
+    if (paramObject !== undefined)
+    {
+        const l = Object.entries(paramObject)
+        const params = new URLSearchParams();
+        for (const [key, value] of l) {
+            params.set(key, value);
+        }
+        url.search = params.toString();
+    }
+
+    const historyURL = new URL(url);
 
     url.pathname = `section/${section}/`;
 
-    // Fetch HTML content
     fetch(url.href)
-        .then(response => response.text())
+        .then(response => {
+            if (!response.ok || response.status != 200) {
+                throw new Error('Network response was not ok');
+            }
+            return response.text();
+        })
         .then(html => {
             // Inject HTML content
             document.querySelector('#dynamic-content').innerHTML = html;
@@ -30,8 +47,10 @@ function showSection(section) {
                 newScript.type = 'module';
                 script.parentNode.replaceChild(newScript, script);
             });
+            history.pushState(null, null, historyURL.href);
         })
-        .catch(error => console.error('Error loading HTML:', error));
+        .catch(error => console.debug('Error loading HTML:', error));
+    
 }
 
 document.addEventListener("DOMContentLoaded", function() {
