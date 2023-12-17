@@ -11,7 +11,16 @@ groups:
           description: "The endpoint {{ $labels.instance }} is not able to be scraped by Prometheus."
 
       - alert: PostgresIsDown
-        expr: up{instance="postgres-exporter:9187"} == 0
+        expr: up{instance="postgres-exporter-dev:9187"} == 0
+        for: 1s
+        labels:
+          severity: critical
+        annotations:
+          summary: "Exporter is down: {{ $labels.instance }}"
+          description: "The endpoint {{ $labels.instance }} is not able to be scraped by Prometheus."
+
+      - alert: ElasticIsDown
+        expr: elasticsearch_node_stats_up == 0
         for: 1s
         labels:
           severity: critical
