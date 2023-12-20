@@ -38,21 +38,24 @@ volumes:
 
 
 services:
-  postgres:
-    container_name: postgres-dev
+# Enrtypoint
+  nginx:
+    build: ./nginx
+    container_name: nginx
     restart: unless-stopped
-    image: postgres:16
     networks:
       - transcendence
     ports:
-      - 5432:5432
+      - 80:80
+      - 443:443
+      - 3000:3000
+      - 5601:5601
     env_file:
       - .env
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
 
+# Backend
   django:
-    container_name: django-dev
+    container_name: django
     restart: unless-stopped
     build: .
     networks:
@@ -61,22 +64,29 @@ services:
       - postgres
     env_file:
       - .env
-    ports:
-      - 8000:8000
     volumes:
       - .:/home:delegated
       - common-log-data:/var/log/django/
 
+# DB
+  postgres:
+    container_name: postgres
+    restart: unless-stopped
+    image: postgres:16
+    networks:
+      - transcendence
+    env_file:
+      - .env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
 
 # Monitoring
   prometheus:
-    container_name: prometheus-dev
+    container_name: prometheus
     image:  prom/prometheus:v2.47.2
     restart: unless-stopped
     networks:
       - transcendence
-    ports:
-      - 9090:9090
     volumes:
       - ./prometheus:/etc/prometheus:ro
       - prometheus_data:/prometheus
@@ -85,13 +95,11 @@ services:
 
   grafana:
     image: grafana/grafana:10.2.1
-    container_name: grafana-dev
+    container_name: grafana
     env_file:
       - .env
     networks:
       - transcendence
-    ports:
-      - 3000:3000
     volumes:
       - grafana-data:/var/lib/grafana
       - ./grafana/dashboards:/etc/grafana/custom-dashboards:ro
@@ -103,7 +111,7 @@ services:
 # Exporters
   postgres-exporter:
     image: prometheuscommunity/postgres-exporter:v0.15.0
-    container_name: postgres-exporter-dev
+    container_name: postgres-exporter
     restart: unless-stopped
     depends_on:
       - postgres
@@ -114,9 +122,9 @@ services:
 
   es-exporter:
     image: prometheuscommunity/elasticsearch-exporter:v1.6.0
-    container_name: es-exporter-dev
+    container_name: es-exporter
     command:
-      - '--es.uri=http://elasticsearch-dev:9200'
+      - '--es.uri=http://elasticsearch:9200'
     restart: unless-stopped
     depends_on:
       - elasticsearch-setup
@@ -131,14 +139,11 @@ services:
 # ELK
   elasticsearch:
     image: elasticsearch:8.11.1
-    container_name: elasticsearch-dev
+    container_name: elasticsearch
     restart: unless-stopped
     volumes:
       - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
       - elastic-data:/usr/share/elasticsearch/data/
-    ports:
-    - 9200:9200
-    - 9300:9300
     networks:
       - transcendence
     env_file:
@@ -147,7 +152,7 @@ services:
 
   logstash:
     image: logstash:8.11.1
-    container_name: logstash-dev
+    container_name: logstash
     restart: unless-stopped
     volumes:
     - ./logstash/logstash.conf:/logstash/logstash.conf
@@ -155,9 +160,6 @@ services:
     command: logstash -f /logstash/logstash.conf --config.reload.automatic
     depends_on:
       - elasticsearch
-    ports:
-    - 9600:9600
-    - 50000:50000
     env_file:
       - .env
     networks:
@@ -166,12 +168,10 @@ services:
 
   kibana:
     image: kibana:8.11.1
-    container_name: kibana-dev
+    container_name: kibana
     restart: unless-stopped
     volumes:
       - ./kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml:ro
-    ports:
-    - 5601:5601
     env_file:
       - .env
     depends_on:
@@ -180,7 +180,7 @@ services:
       - transcendence
 
   elasticsearch-setup:
-    container_name: elasticsearch-setup-dev
+    container_name: elasticsearch-setup
     build: ./elasticsearch-setup
     volumes:
       - ./elasticsearch-setup/kibana:/kibana:ro
@@ -197,7 +197,8 @@ services:
     env_file:
       - .env
 
-# Only for Dev:
+
+# TODO remove
   adminer:
     container_name: adminer
     image: adminer:latest
@@ -209,5 +210,5 @@ services:
     ports:
       - 9001:8080
     environment:
-      - ADMINER_DEFAULT_SERVER=postgres-dev
+      - ADMINER_DEFAULT_SERVER=postgres
 

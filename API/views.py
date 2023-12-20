@@ -35,13 +35,14 @@ def get_token(CODE):
 		url = 'https://api.intra.42.fr/oauth/token'
 		UID = os.environ.get("UID_APP")
 		SECRET = os.environ.get("SECRET_KEY_APP")
+		REDIRECT_URI = os.environ.get("REDIRECT_URI")
 
 		data = {
 			'grant_type': 'authorization_code',
 			'client_id':  UID,
 			'client_secret': SECRET,
 			'code': CODE,
-			'redirect_uri': 'http://localhost:8000/twofa'
+			'redirect_uri': REDIRECT_URI
 		}
 
 		response = requests.post(url, data=data)
@@ -103,7 +104,8 @@ def add_user_API(request):
 def authenticate_42(request):
 	UID = os.environ.get("UID_APP")
 	authorization_base_url = 'https://api.intra.42.fr/oauth/authorize'
-	client_app = OAuth2Session(client_id=UID,  redirect_uri=request.build_absolute_uri('/twofa'))
+	REDIRECT_URI = os.environ.get("REDIRECT_URI")
+	client_app = OAuth2Session(client_id=UID,  redirect_uri=REDIRECT_URI)
 	authorization_url, _ = client_app.authorization_url(authorization_base_url)
 	return HttpResponseRedirect(authorization_url)
  

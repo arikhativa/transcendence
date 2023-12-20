@@ -1,5 +1,4 @@
 
-DC_FILE_PROD := docker-compose-prod.yml
 DC_FILE_DEV := docker-compose.yml
 
 DC := docker compose -f $(DC_FILE_DEV)
@@ -10,8 +9,8 @@ PY := python
 PIP := pip
 DJ := $(PY) manage.py 
 
-DB_HOST := postgres-dev
-DJANGO_HOST := django-dev
+DB_HOST := postgres
+DJANGO_HOST := django
 
 COMMON_VOLUME := .docker-volume-mnt/commonlog_data
 ELASTIC_VOLUME := .docker-volume-mnt/elastic_data
