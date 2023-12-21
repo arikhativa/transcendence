@@ -26,7 +26,7 @@ jobs:
         make
         docker ps
         echo -------------------------------------------------------------------
-        docker logs django-dev
+        docker logs django
         echo -------------------------------------------------------------------
 
     - name: Run Tests
