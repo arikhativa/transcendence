@@ -21,17 +21,17 @@
 
 		<div class="container-fluid min-vh-100 d-flex flex-column">
 			<div class="row">
-					<div class="col m-0 p-0 bg-info">
+					<div class="col m-0 p-0 bg-info border border-dark border-5">
 						{% block header %}
 						{% endblock %}
 					</div>
 			</div>
 			<div class="row flex-grow-1">
-					<div class="col-md-2 bg-danger d-flex align-items-center justify-content-center">
+					<div class="col-md-2 bg-danger d-flex align-items-center justify-content-center border border-dark border-5">
 						{% block navbar %}
 						{% endblock %}
 					</div>
-					<div class="col-md-10 d-flex align-items-center justify-content-center bg-warning">
+					<div class="col-md-10 d-flex align-items-center justify-content-center bg-warning border border-dark border-5">
             {% block content %}
             {% comment %}TODO{% endcomment %}
             {% block dynamic_content %}
@@ -41,7 +41,7 @@
 					</div>
 			</div>
 			<div class="row">
-				<div class="col m-0 p-0">
+				<div class="col m-0 p-0 border border-dark border-5">
 					{% block footer %}
 					{% endblock %}
 				</div>
