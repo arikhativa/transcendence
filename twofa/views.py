@@ -222,6 +222,8 @@ def validate_2fa(request):
 	
 def delete_jwt(request):
 	token = request.COOKIES.get('jwt_token')
+	if token is None:
+		return
 	options = {'verify_exp': False}
 	payload = jwt.decode(token, settings.SECRET_KEY, algorithms=['HS256'], options=options)
 	user = Users.objects.get(username=payload['username'])
