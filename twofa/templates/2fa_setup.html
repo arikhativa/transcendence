@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="{% static 'twofa.css' %}" />
 
 <div class="card text-center border border-dark border-5 bg-info">
-  <div class="card-header">
+  <div class="card-header bg-white">
     <h1>{% trans "Welcome to Two-Factor Authentication Setup" %}</h1>
   </div>
   <div class="card-body">
@@ -13,7 +13,7 @@
   <!-- Two options -->
   <div class="row">
     <div class="col-sm-6 mb-3 mb-sm-0">
-      <div class="card bg-info">
+      <div class="card bg-info border border-white border-2">
         <div class="card-body">
           <h5 class="card-title">{% trans "QR Code" %}</h5>
           <p class="card-text">Utiliza esta opción si prefieres iniciar sesión escaneando un codigo QR en Google Authenticator</p>
@@ -22,7 +22,7 @@
       </div>
     </div>
     <div class="col-sm-6">
-      <div class="card bg-info">
+      <div class="card bg-info border border-white border-2">
         <div class="card-body">
           <h5 class="card-title">{% trans "Email" %}</h5>
           <p class="card-text">Utiliza esta opción si prefieres iniciar sesión con un código numérico que recibirás en tu correo.</p>
