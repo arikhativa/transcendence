@@ -41,6 +41,11 @@ elk/re:
 	$(DC) down $(ELK_CONTAINERS)
 	$(DC) $(UP) $(ELK_CONTAINERS)
 
+# TODO
+kibana/export:
+	curl --insecure -X POST "https://localhost:5601/api/saved_objects/_export" -u "elastic:pass123123asdasd" -H 'kbn-xsrf: true' -H 'Content-Type: application/json' -d '{  "objects": [    {      "type": "dashboard",      "id": "f1901610-9351-11ee-8b2f-752b243e3e50"    }  ],    "includeReferencesDeep": true}'
+
+
 clear:
 	$(DC) down
 
