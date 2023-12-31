@@ -3,16 +3,11 @@ FROM debian:buster
 # Install nginx
 RUN apt update 
 RUN apt install nginx -y openssl
-
-# Remove redandent files
-RUN apt-get clean && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
-# Set Logs
-RUN ln -sf /dev/stdout /var/log/nginx/access.log && ln -sf /dev/stderr /var/log/nginx/error.log
+RUN apt update --fix-missing
+RUN apt install curl -y
 
 # Copy nginx config
-COPY ./nginx.conf /etc/nginx/conf.d
+COPY ./nginx.conf /etc/nginx/
 
 # Create SSL pair
 RUN mkdir -p /etc/nginx/ssl
@@ -25,6 +20,9 @@ RUN chmod 600 /etc/nginx/ssl/yrabby.key /etc/nginx/ssl/yrabby.crt
 
 WORKDIR /var/www/html
 
-EXPOSE 443
+COPY entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+ENTRYPOINT [ "/usr/local/bin/entrypoint.sh" ]
 
 CMD ["nginx", "-g", "daemon off;"]

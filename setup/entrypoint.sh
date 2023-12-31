@@ -44,6 +44,7 @@ templates_files=(
 declare -A kibana_files
 kibana_files=(
 	[django_dashboard]='django.ndjson'
+	[nginx_dashboard]='nginx.ndjson'
 )
 
 # --------------------------------------------------------

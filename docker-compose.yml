@@ -35,6 +35,12 @@ volumes:
       type: none
       device: ./.docker-volume-mnt/commonlog_data
       o: bind
+  nginx-logs-data:
+    driver: local
+    driver_opts:
+      type: none
+      device: ./.docker-volume-mnt/nginx-logs-data
+      o: bind
 
 
 services:
@@ -52,6 +58,8 @@ services:
       - 5601:5601
     env_file:
       - .env
+    volumes:
+      - nginx-logs-data:/var/log/nginx
 
 # Backend
   django:
@@ -152,9 +160,10 @@ services:
     container_name: logstash
     restart: unless-stopped
     volumes:
-    - ./logstash/logstash.conf:/logstash/logstash.conf
+    - ./logstash/config:/usr/share/logstash/config:ro
+    - ./logstash/pipeline:/usr/share/logstash/pipeline:ro
     - common-log-data:/var/log/django/:ro
-    command: logstash -f /logstash/logstash.conf
+    - nginx-logs-data:/var/log/nginx/:ro
     depends_on:
       - elasticsearch
     env_file:
