@@ -94,7 +94,7 @@ services:
       - --config.file=/etc/prometheus/prometheus.yml
 
   grafana:
-    image: grafana/grafana:10.2.1
+    build: ./grafana
     container_name: grafana
     env_file:
       - .env
@@ -102,9 +102,6 @@ services:
       - transcendence
     volumes:
       - grafana-data:/var/lib/grafana
-      - ./grafana/dashboards:/etc/grafana/custom-dashboards:ro
-      - ./grafana/main.yaml:/etc/grafana/provisioning/dashboards/main.yaml:ro
-      - ./grafana/datasources.yml:/etc/grafana/provisioning/datasources/datasources.yml:ro
 
     restart: unless-stopped
 
@@ -127,7 +124,7 @@ services:
       - '--es.uri=http://elasticsearch:9200'
     restart: unless-stopped
     depends_on:
-      - elasticsearch-setup
+      - setup
       - elasticsearch
       - kibana
       - logstash
@@ -179,16 +176,16 @@ services:
     networks:
       - transcendence
 
-  elasticsearch-setup:
-    container_name: elasticsearch-setup
-    build: ./elasticsearch-setup
+  setup:
+    container_name: setup
+    build: ./setup
     volumes:
-      - ./elasticsearch-setup/kibana:/kibana:ro
-      - ./elasticsearch-setup/templates:/templates:ro
-      - ./elasticsearch-setup/policies:/policies:ro
-      - ./elasticsearch-setup/roles:/roles:ro
-      - ./elasticsearch-setup/entrypoint.sh:/entrypoint.sh:ro
-      - ./elasticsearch-setup/lib.sh:/lib.sh:ro
+      - ./setup/kibana:/kibana:ro
+      - ./setup/templates:/templates:ro
+      - ./setup/policies:/policies:ro
+      - ./setup/roles:/roles:ro
+      - ./setup/entrypoint.sh:/entrypoint.sh:ro
+      - ./setup/lib.sh:/lib.sh:ro
     depends_on:
       - elasticsearch  
     restart: no

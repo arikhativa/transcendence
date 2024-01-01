@@ -21,7 +21,7 @@ VOLUMES := $(COMMON_VOLUME) $(ELASTIC_VOLUME) $(POSTGRES_VOLUME) $(GRAFANA_VOLUM
 
 CI_DIR := ci
 
-ELK_CONTAINERS := elasticsearch logstash kibana elasticsearch-setup postgres django
+ELK_CONTAINERS := elasticsearch logstash kibana setup postgres django
 
 .PHONY: all clear fclear re restart
 
@@ -35,7 +35,7 @@ elk:
 	$(DC) $(UP) $(ELK_CONTAINERS)
 
 elk/basic:
-	$(DC) $(UP) elasticsearch logstash kibana elasticsearch-setup
+	$(DC) $(UP) elasticsearch logstash kibana setup
 
 elk/re: 
 	$(DC) down $(ELK_CONTAINERS)
