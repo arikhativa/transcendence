@@ -17,7 +17,8 @@ ELASTIC_VOLUME := .docker-volume-mnt/elastic_data
 POSTGRES_VOLUME := .docker-volume-mnt/postgres_data
 GRAFANA_VOLUME := .docker-volume-mnt/grafana_data
 PROMETHEUS_VOLUME := .docker-volume-mnt/prometheus_data
-VOLUMES := $(COMMON_VOLUME) $(ELASTIC_VOLUME) $(POSTGRES_VOLUME) $(GRAFANA_VOLUME) $(PROMETHEUS_VOLUME)
+NGINX_VOLUME := .docker-volume-mnt/nginx-logs-data
+VOLUMES := $(COMMON_VOLUME) $(ELASTIC_VOLUME) $(POSTGRES_VOLUME) $(GRAFANA_VOLUME) $(PROMETHEUS_VOLUME) $(NGINX_VOLUME)
 
 CI_DIR := ci
 
