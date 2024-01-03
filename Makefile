@@ -64,6 +64,8 @@ $(COMMON_VOLUME):
 	mkdir -p $@ 
 $(ELASTIC_VOLUME): 
 	mkdir -p $@ 
+$(NGINX_VOLUME): 
+	mkdir -p $@ 
 
 # Python
 py/dep:
