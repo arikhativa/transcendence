@@ -13,20 +13,13 @@ users_passwords=(
 	[logstash_internal]="${LOGSTASH_INTERNAL_PASSWORD:-}"
 	[kibana_system]="${KIBANA_SYSTEM_PASSWORD:-}"
 	[kibana_viewer]="${KIBANA_VIEWER_PASSWORD:-}"
-	# [metricbeat_internal]="${METRICBEAT_INTERNAL_PASSWORD:-}"
-	# [filebeat_internal]="${FILEBEAT_INTERNAL_PASSWORD:-}"
-	# [heartbeat_internal]="${HEARTBEAT_INTERNAL_PASSWORD:-}"
 	[monitoring_internal]="${MONITORING_INTERNAL_PASSWORD:-}"
-	# [beats_system]="${BEATS_SYSTEM_PASSWORD=:-}"
 )
 
 declare -A users_roles
 users_roles=(
 	[logstash_internal]='logstash_writer'
 	[kibana_viewer]='viewer'
-	# [metricbeat_internal]='metricbeat_writer'
-	# [filebeat_internal]='filebeat_writer'
-	# [heartbeat_internal]='heartbeat_writer'
 	[monitoring_internal]='remote_monitoring_collector'
 )
 
@@ -36,9 +29,6 @@ users_roles=(
 declare -A roles_files
 roles_files=(
 	[logstash_writer]='logstash_writer.json'
-	# [metricbeat_writer]='metricbeat_writer.json'
-	# [filebeat_writer]='filebeat_writer.json'
-	# [heartbeat_writer]='heartbeat_writer.json'
 )
 
 declare -A policy_files
@@ -54,6 +44,7 @@ templates_files=(
 declare -A kibana_files
 kibana_files=(
 	[django_dashboard]='django.ndjson'
+	[nginx_dashboard]='nginx.ndjson'
 )
 
 # --------------------------------------------------------
@@ -212,3 +203,37 @@ for d in "${!kibana_files[@]}"; do
 	sublog 'Importing'
 	create_kibana_objects "/kibana/${kibana_files[$d]}"
 done
+
+
+# ------------------------------------------------------------------------------
+# -------------------------------- Grafana -------------------------------------
+# ------------------------------------------------------------------------------
+
+
+log 'Waiting for availability of Grafana. This can take several minutes.'
+
+exit_code=0
+wait_for_grafana || exit_code=$?
+
+if ((exit_code)); then
+	case $exit_code in
+		6)
+			suberr 'Could not resolve host. Is Grafana running?'
+			;;
+		7)
+			suberr 'Failed to connect to host. Is Grafana healthy?'
+			;;
+		28)
+			suberr 'Timeout connecting to host. Is Grafana healthy?'
+			;;
+		*)
+			suberr "Connection to Grafana failed. Exit code: ${exit_code}"
+			;;
+	esac
+
+	exit $exit_code
+fi
+
+sublog 'Creating'
+create_view_user
+log 'Done'

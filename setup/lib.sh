@@ -345,6 +345,7 @@ function wait_for_kibana {
 
 	return $result
 }
+
 # Create the given Kibana objects.
 function create_kibana_objects {
 	local path_ndjson=$1
@@ -358,6 +359,55 @@ function create_kibana_objects {
 
 	if [[ -n "${ELASTIC_PASSWORD:-}" ]]; then
 		args+=( '-u' "elastic:${ELASTIC_PASSWORD}" )
+	fi
+
+	local -i result=1
+	local output
+
+	output="$(curl "${args[@]}")"
+	if [[ "${output: -3}" -eq 200 ]]; then
+		result=0
+	fi
+
+	if ((result)); then
+		echo -e "\n${output::-3}\n"
+	fi
+
+	return $result
+}
+
+# Grafana
+
+function wait_for_grafana {
+	local -a args=( '-s' '-D-' '-m15' '-w' '%{http_code}'
+		"http://${GRAFANA_HOST}:${GRAFANA_PORT}/api/health"
+		)
+
+	local -i result=1
+	local output
+
+	output="$(curl "${args[@]}")"
+	if [[ "${output: -3}" -eq 200 ]]; then
+		result=0
+	fi
+
+	if ((result)); then
+		echo -e "\n${output::-3}\n"
+	fi
+
+	return $result
+}
+
+function create_view_user {
+	local -a args=( '-s' '-D-' '-m15' '-w' '%{http_code}'
+		"http://$GRAFANA_HOST:$GRAFANA_PORT/api/admin/users"
+		'-X' 'POST'
+		'-H' 'Content-Type: application/json'
+		'-d' "{\"login\":\"$GUEST_USERNAME\", \"password\":\"$GUEST_PASSWORD\", \"OrgId\": 1}"
+		)
+
+	if [[ -n "${GF_SECURITY_ADMIN_USER:-}" ]]; then
+		args+=( '-u' "$GF_SECURITY_ADMIN_USER:$GF_SECURITY_ADMIN_PASSWORD" )
 	fi
 
 	local -i result=1

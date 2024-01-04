@@ -17,11 +17,12 @@ ELASTIC_VOLUME := .docker-volume-mnt/elastic_data
 POSTGRES_VOLUME := .docker-volume-mnt/postgres_data
 GRAFANA_VOLUME := .docker-volume-mnt/grafana_data
 PROMETHEUS_VOLUME := .docker-volume-mnt/prometheus_data
-VOLUMES := $(COMMON_VOLUME) $(ELASTIC_VOLUME) $(POSTGRES_VOLUME) $(GRAFANA_VOLUME) $(PROMETHEUS_VOLUME)
+NGINX_VOLUME := .docker-volume-mnt/nginx-logs-data
+VOLUMES := $(COMMON_VOLUME) $(ELASTIC_VOLUME) $(POSTGRES_VOLUME) $(GRAFANA_VOLUME) $(PROMETHEUS_VOLUME) $(NGINX_VOLUME)
 
 CI_DIR := ci
 
-ELK_CONTAINERS := elasticsearch logstash kibana elasticsearch-setup postgres django
+ELK_CONTAINERS := elasticsearch logstash kibana setup postgres django
 
 .PHONY: all clear fclear re restart
 
@@ -35,7 +36,7 @@ elk:
 	$(DC) $(UP) $(ELK_CONTAINERS)
 
 elk/basic:
-	$(DC) $(UP) elasticsearch logstash kibana elasticsearch-setup
+	$(DC) $(UP) elasticsearch logstash kibana setup
 
 elk/re: 
 	$(DC) down $(ELK_CONTAINERS)
@@ -62,6 +63,8 @@ $(GRAFANA_VOLUME):
 $(COMMON_VOLUME): 
 	mkdir -p $@ 
 $(ELASTIC_VOLUME): 
+	mkdir -p $@ 
+$(NGINX_VOLUME): 
 	mkdir -p $@ 
 
 # Python
@@ -96,5 +99,8 @@ ci/test:
 
 
 # TODO Remove this!
-kibana/export:
-	curl -X POST "localhost:5601/api/saved_objects/_export" -u "elastic:pass123123asdasd" -H 'kbn-xsrf: true' -H 'Content-Type: application/json' -d '{"objects": [{"type": "dashboard","id": "f1901610-9351-11ee-8b2f-752b243e3e50"}],"includeReferencesDeep": true}'
+kibana/export/django:
+	curl --insecure -X POST "https://localhost:5601/api/saved_objects/_export" -u "elastic:pass123123asdasd" -H 'kbn-xsrf: true' -H 'Content-Type: application/json' -d '{"objects": [{"type": "dashboard","id": "f1901610-9351-11ee-8b2f-752b243e3e50"}],"includeReferencesDeep": true}'
+
+kibana/export/nginx:
+	curl --insecure -X POST "https://localhost:5601/api/saved_objects/_export" -u "elastic:pass123123asdasd" -H 'kbn-xsrf: true' -H 'Content-Type: application/json' -d '{"objects": [{"type": "dashboard","id": "95149ca0-aa47-11ee-bc45-731c84aeed46"}],"includeReferencesDeep": true}'

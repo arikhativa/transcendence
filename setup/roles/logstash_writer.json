@@ -9,6 +9,8 @@
       "names": [
         "logs-generic-default",
         "logstash-*",
+        "nginx-*",
+        "django-*",
         "ecs-logstash-*"
       ],
       "privileges": [
@@ -21,6 +23,8 @@
     },
     {
       "names": [
+        "nginx",
+        "django",
         "logstash",
         "ecs-logstash"
       ],

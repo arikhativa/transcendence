@@ -1,6 +1,6 @@
 {
     "index_patterns": [
-        "logstash-*"
+        "django-*"
     ],
     "template": {
         "settings": {
@@ -8,7 +8,7 @@
             "index": {
                 "lifecycle": {
                     "name": "delete_after_1_day",
-                    "rollover_alias": "logstash"
+                    "rollover_alias": "django"
                 },
                 "mapping": {
                     "total_fields": {
@@ -47,6 +47,6 @@
     "priority": 200,
     "version": 1,
     "_meta": {
-        "description": "my custom"
+        "description": "Custom Django"
     }
 }
