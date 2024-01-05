@@ -4,16 +4,12 @@
 <link rel="stylesheet" href="{% static 'main.css' %}" />
 <script src="{% static 'main.js' %}"></script>
 
-<main id="">
-  <h1 id="">
-    {% block main_title %}
-    {% trans "Main Content" %}
-    <button type="button"> <a  href="/API/authenticate_42">{% trans "Clic here" %}</a></button>
-    {% endblock %}
-  </h1>
-  <p id="main-p">
-    {% block main_content %}
-    {% trans "This is the main content" %}.
-    {% endblock %}
-  </p>
-</main>
+<div class="card text-center border border-dark border-5 bg-info">
+  <div class="card-header bg-white">
+    <h1>{% trans "Welcome to our Transcendence" %}</h1>
+  </div>
+  <div class="card-body">
+    <p class="card-text"> {% trans "In order to feel the experience you should first log in" %}.</p>
+    <a class="btn btn-primary" href="/API/authenticate_42">{% trans "Clic here" %}</a>
+  </div>
+</div>

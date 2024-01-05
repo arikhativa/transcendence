@@ -14,5 +14,4 @@ def auth(get_response):
             return HttpResponse('Unauthorized', status=401)
         else:
             return get_response(request)
-
     return middleware

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-11 16:22+0000\n"
+"POT-Creation-Date: 2024-01-05 09:15+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,33 +19,25 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % "
 "1 == 0) ? 1: (n % 10 == 0 && n % 1 == 0 && n > 10) ? 2 : 3;\n"
 
-#: game/templates/game.html:9 game/templates/game.html:14
-msgid "game"
-msgstr "מִשְׂחָק"
-
-#: header/templates/header.html:42
+#: header/templates/header.html:43
 msgid "Home"
 msgstr "בית"
 
-#: header/templates/header.html:47
-msgid "Profile"
-msgstr "פּרוֹפִיל"
-
-#: header/templates/header.html:52
+#: header/templates/header.html:49
 msgid "Log Out"
 msgstr "התנתקות"
 
-#: main/templates/main.html:10
-msgid "Main Content"
-msgstr "תוכן עיקרי"
+#: main/templates/main.html:9
+msgid "Welcome to our Transcendence"
+msgstr "ברוכים הבאים להתעלות שלנו"
 
-#: main/templates/main.html:11
+#: main/templates/main.html:12
+msgid "In order to feel the experience you should first log in"
+msgstr "על מנת להרגיש את החוויה יש להיכנס תחילה"
+
+#: main/templates/main.html:13
 msgid "Clic here"
 msgstr "לחץ כאן"
-
-#: main/templates/main.html:16
-msgid "This is the main content"
-msgstr "זה התוכן העיקרי"
 
 #: navbar/templates/navbar.html:19
 msgid "Opponent's Name"
@@ -63,37 +55,40 @@ msgstr "צור טורניר"
 msgid "ERROR"
 msgstr "שְׁגִיאָה"
 
-#: twofa/templates/2fa_setup.html:7
-msgid "2FA Setup"
-msgstr "הגדרת 2FA"
-
-#: twofa/templates/2fa_setup.html:12 twofa/templates/email_setup.html:13
-#: twofa/templates/qr_setup.html:13
+#: twofa/templates/2fa_setup.html:7 twofa/templates/email_setup.html:13
 msgid "Welcome to Two-Factor Authentication Setup"
 msgstr "ברוכים הבאים להגדרת אימות דו-גורמי"
 
-#: twofa/templates/2fa_setup.html:13
+#: twofa/templates/2fa_setup.html:10
 msgid "Please select your prefered option:"
 msgstr "אנא בחר באפשרות המועדפת עליך:"
 
-#: twofa/templates/2fa_setup.html:14
+#: twofa/templates/2fa_setup.html:18 twofa/templates/2fa_setup.html:20
 msgid "QR Code"
 msgstr "קוד QR"
 
-#: twofa/templates/2fa_setup.html:15
+#: twofa/templates/2fa_setup.html:19
+msgid "Use this option if you prefer to log in by scanning a QR code in Google Authenticator"
+msgstr "השתמש באפשרות זו אם אתה מעדיף להיכנס על ידי סריקת קוד QR ב-Google Authenticator"
+
+#: twofa/templates/2fa_setup.html:27 twofa/templates/2fa_setup.html:29
 msgid "Email"
 msgstr "אימייל"
 
-#: twofa/templates/email_setup.html:8 twofa/templates/qr_setup.html:8
+#: twofa/templates/2fa_setup.html:28
+msgid "Use this option if you prefer to log in with a numerical code that you will receive in your email"
+msgstr "השתמש באפשרות זו אם אתה מעדיף להיכנס עם קוד מספרי שתקבל בדוא"ל שלך"
+
+#: twofa/templates/email_setup.html:8
 msgid "First Login"
 msgstr "כניסה ראשונה"
 
-#: twofa/templates/email_setup.html:18 twofa/templates/qr_setup.html:19
-#: twofa/templates/twofa.html:17
+#: twofa/templates/email_setup.html:18 twofa/templates/email_setup.html:32
+#: twofa/templates/qr_setup.html:17 twofa/templates/twofa.html:17
 msgid "Submit"
 msgstr "שלח"
 
-#: twofa/templates/qr_setup.html:14
+#: twofa/templates/qr_setup.html:12
 msgid ""
 "Please scan the QR code below with your Google Authenticator app to set up "
 "2FA:"
@@ -115,9 +110,9 @@ msgstr "מאמת שני גורמים"
 
 #: twofa/templates/twofa.html:13
 msgid "Please introduce a valid 2FA code:"
-msgstr ""
+msgstr "נא להציג קוד 2FA חוקי:"
 
-#: twofa/views.py:75 twofa/views.py:158
+#: twofa/views.py:75 twofa/views.py:116 twofa/views.py:159
 msgid "Invalid code, try again."
 msgstr "נא להציג קוד 2FA חוקי:"
 
@@ -125,9 +120,28 @@ msgstr "נא להציג קוד 2FA חוקי:"
 msgid "Validate your account"
 msgstr "אמת את חשבונך"
 
-#: twofa/views.py:145
+#: twofa/views.py:118
+msgid "Please enter the code sent to your email:"
+msgstr "נא להזין את הקוד שנשלח למייל שלך:"
+
+#: twofa/views.py:146
 msgid "User not found"
 msgstr "המשתמש לא נמצא"
+
+#~ msgid "game"
+#~ msgstr "מִשְׂחָק"
+
+#~ msgid "Profile"
+#~ msgstr "פּרוֹפִיל"
+
+#~ msgid "Main Content"
+#~ msgstr "תוכן עיקרי"
+
+#~ msgid "This is the main content"
+#~ msgstr "זה התוכן העיקרי"
+
+#~ msgid "2FA Setup"
+#~ msgstr "הגדרת 2FA"
 
 #~ msgid "main"
 #~ msgstr "רָאשִׁי"
