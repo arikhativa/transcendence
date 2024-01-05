@@ -113,9 +113,9 @@ def email_setup(request, wrong_code=False):
 	if not wrong_code:
 		error_msg = ''
 	else:
-		error_msg = -('Invalid code, try again.')
+		error_msg = _('Invalid code, try again.')
 	
-	msg = -('Please enter the code sent to your email:')
+	msg = _('Please enter the code sent to your email:')
 	form = Form2FAEmail()
 	url = '/validate_2fa_code/'
 
