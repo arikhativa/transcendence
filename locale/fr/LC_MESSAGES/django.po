@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-11 16:22+0000\n"
+"POT-Creation-Date: 2024-01-05 09:15+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,33 +18,25 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: game/templates/game.html:9 game/templates/game.html:14
-msgid "game"
-msgstr "jeu"
-
-#: header/templates/header.html:42
+#: header/templates/header.html:43
 msgid "Home"
 msgstr "Accueil"
 
-#: header/templates/header.html:47
-msgid "Profile"
-msgstr "Profil"
-
-#: header/templates/header.html:52
+#: header/templates/header.html:49
 msgid "Log Out"
 msgstr "Se déconnecter"
 
-#: main/templates/main.html:10
-msgid "Main Content"
-msgstr "Contenu principal"
+#: main/templates/main.html:9
+msgid "Welcome to our Transcendence"
+msgstr "Bienvenue dans notre Transcendance"
 
-#: main/templates/main.html:11
+#: main/templates/main.html:12
+msgid "In order to feel the experience you should first log in"
+msgstr "Pour en faire l'expérience, vous devez d'abord vous connecter"
+
+#: main/templates/main.html:13
 msgid "Clic here"
 msgstr "Cliquez ici"
-
-#: main/templates/main.html:16
-msgid "This is the main content"
-msgstr "Voici le contenu principal"
 
 #: navbar/templates/navbar.html:19
 msgid "Opponent's Name"
@@ -62,37 +54,40 @@ msgstr "Créer un tournoi"
 msgid "ERROR"
 msgstr "ERREUR"
 
-#: twofa/templates/2fa_setup.html:7
-msgid "2FA Setup"
-msgstr "Configuration de 2FA"
-
-#: twofa/templates/2fa_setup.html:12 twofa/templates/email_setup.html:13
-#: twofa/templates/qr_setup.html:13
+#: twofa/templates/2fa_setup.html:7 twofa/templates/email_setup.html:13
 msgid "Welcome to Two-Factor Authentication Setup"
 msgstr "Bienvenue dans la configuration de l'authentification à deux facteurs"
 
-#: twofa/templates/2fa_setup.html:13
+#: twofa/templates/2fa_setup.html:10
 msgid "Please select your prefered option:"
 msgstr "Veuillez sélectionner l'option que vous préférez :"
 
-#: twofa/templates/2fa_setup.html:14
+#: twofa/templates/2fa_setup.html:18 twofa/templates/2fa_setup.html:20
 msgid "QR Code"
 msgstr "Code QR"
 
-#: twofa/templates/2fa_setup.html:15
+#: twofa/templates/2fa_setup.html:19
+msgid "Use this option if you prefer to log in by scanning a QR code in Google Authenticator"
+msgstr "Utilisez cette option si vous préférez vous connecter en scannant un code QR dans Google Authenticator."
+
+#: twofa/templates/2fa_setup.html:27 twofa/templates/2fa_setup.html:29
 msgid "Email"
 msgstr "courriel"
 
-#: twofa/templates/email_setup.html:8 twofa/templates/qr_setup.html:8
+#: twofa/templates/2fa_setup.html:28
+msgid "Use this option if you prefer to log in with a numerical code that you will receive in your email"
+msgstr "Utilisez cette option si vous préférez vous connecter à l'aide d'un code numérique que vous recevrez par courrier électronique."
+
+#: twofa/templates/email_setup.html:8
 msgid "First Login"
 msgstr "Première connexion"
 
-#: twofa/templates/email_setup.html:18 twofa/templates/qr_setup.html:19
-#: twofa/templates/twofa.html:17
+#: twofa/templates/email_setup.html:18 twofa/templates/email_setup.html:32
+#: twofa/templates/qr_setup.html:17 twofa/templates/twofa.html:17
 msgid "Submit"
 msgstr "Soumettre"
 
-#: twofa/templates/qr_setup.html:14
+#: twofa/templates/qr_setup.html:12
 msgid ""
 "Please scan the QR code below with your Google Authenticator app to set up "
 "2FA:"
@@ -116,7 +111,7 @@ msgstr "AUTHENTIFICATEUR À DEUX FACTEURS"
 msgid "Please introduce a valid 2FA code:"
 msgstr "Veuillez introduire un code 2FA valide :"
 
-#: twofa/views.py:75 twofa/views.py:158
+#: twofa/views.py:75 twofa/views.py:116 twofa/views.py:159
 msgid "Invalid code, try again."
 msgstr "Code invalide, réessayez."
 
@@ -124,9 +119,28 @@ msgstr "Code invalide, réessayez."
 msgid "Validate your account"
 msgstr "Validez votre compte"
 
-#: twofa/views.py:145
+#: twofa/views.py:118
+msgid "Please enter the code sent to your email:"
+msgstr "Veuillez saisir le code qui vous a été envoyé par courrier électronique :"
+
+#: twofa/views.py:146
 msgid "User not found"
 msgstr "Utilisateur non trouvé"
+
+#~ msgid "game"
+#~ msgstr "jeu"
+
+#~ msgid "Profile"
+#~ msgstr "Profil"
+
+#~ msgid "Main Content"
+#~ msgstr "Contenu principal"
+
+#~ msgid "This is the main content"
+#~ msgstr "Voici le contenu principal"
+
+#~ msgid "2FA Setup"
+#~ msgstr "Configuration de 2FA"
 
 #~ msgid "main"
 #~ msgstr "principal"

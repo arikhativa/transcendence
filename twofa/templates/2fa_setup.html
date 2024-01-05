@@ -16,7 +16,7 @@
       <div class="card bg-info border border-white border-2">
         <div class="card-body">
           <h5 class="card-title">{% trans "QR Code" %}</h5>
-          <p class="card-text">Utiliza esta opción si prefieres iniciar sesión escaneando un codigo QR en Google Authenticator</p>
+          <p class="card-text">{% trans "Use this option if you prefer to log in by scanning a QR code in Google Authenticator" %}.</p>
           <a href="/twofa/qr_setup" class="btn btn-primary">{% trans "QR Code" %}</a>
         </div>
       </div>
@@ -25,7 +25,7 @@
       <div class="card bg-info border border-white border-2">
         <div class="card-body">
           <h5 class="card-title">{% trans "Email" %}</h5>
-          <p class="card-text">Utiliza esta opción si prefieres iniciar sesión con un código numérico que recibirás en tu correo.</p>
+          <p class="card-text">{% trans "Use this option if you prefer to log in with a numerical code that you will receive in your email" %}.</p>
           <a href="/twofa/email_setup" class="btn btn-primary">{% trans "Email" %}</a>
         </div>
       </div>
