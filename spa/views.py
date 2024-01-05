@@ -4,12 +4,15 @@ from django.utils import translation
 from django.shortcuts import redirect
 from django.http import HttpResponse, HttpResponseNotFound
 from django.conf import settings
-from twofa.views import twofa, validate_2fa, qr_setup, email_setup, delete_jwt
+from twofa.views import twofa, validate_2fa, qr_setup, email_setup, delete_jwt, _jwt_is_expired
 from game.views import game_setup
 
 def spa_view(request):
 	try:
 		section = request.resolver_match.url_name
+
+		""" if section != "login" and _jwt_is_expired(request.COOKIES.get('jwt_token')):
+			return redirect("login") """
 
 		if (
 			section != "game"
@@ -91,3 +94,6 @@ def logout_view(request):
 	response = spa_view(request)
 	response.delete_cookie("jwt_token")
 	return response
+
+def login_view(request):
+	return render(request, "login.html")
