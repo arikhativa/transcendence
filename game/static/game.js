@@ -1,6 +1,7 @@
 import { GameController } from './GameController.js';
 import { ScreenManager } from './ScreenManager.js';
 import { Tournament } from './TournamentManager.js';
+import { Customization } from './Customization.js';
 
 // Define canvas and a context to draw to
 let canvas = document.getElementById("canvas");
@@ -17,6 +18,12 @@ function onResize() {
     setCanvasSize();
 }
 window.onresize = onResize;
+
+//Game SETUP
+let  tournament = new Tournament();
+let  game = new GameController(tournament.nextMatch(), {barriers: true, ballSpeed: 3, bonus: true});
+let custom = new Customization(game, canvas);
+let screenManager = new ScreenManager();
 
 // Input handler
 function handleKeyPress(e, isKeyDown) {
@@ -38,6 +45,10 @@ window.addEventListener('keyup', (e) => {
         game.pause = !game.pause;
         return ;
     } else if (screenManager.currentScreen == screenManager.screens.INTRO) {
+        window.addEventListener('click',  function(event) {custom.listener(event, custom)});
+        screenManager.nextScreen = screenManager.screens.CUSTOMIZATION;
+    } else if (screenManager.currentScreen == screenManager.screens.CUSTOMIZATION) {
+        window.removeEventListener('click', custom.listener);
         screenManager.nextScreen = screenManager.screens.TOURNAMENTTREE;
     } else if (screenManager.currentScreen == screenManager.screens.VSSCREEN) {
         screenManager.nextScreen = screenManager.screens.GAME;
@@ -56,12 +67,6 @@ window.addEventListener('keyup', (e) => {
 });
 document.addEventListener('keydown', handleKeyPress);
 
-//Game SETUP
-let  tournament = new Tournament();
-let  game = new GameController(tournament.nextMatch(), {barriers: true, ballSpeed: 3, bonus: true});
-
-let screenManager = new ScreenManager();
-
 function gameLoop() {
     //Clear Canvas
     ctx.fillStyle = 'black';
@@ -69,7 +74,7 @@ function gameLoop() {
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     //Show screens
-    screenManager.loop(ctx, canvas, game, tournament);
+    screenManager.loop(ctx, canvas, game, tournament, custom);
     //Manage the torunament
     tournament.handler(game, screenManager);
 

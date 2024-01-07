@@ -7,7 +7,7 @@ export class Ball {
         this.h = 30;
 
         this.speed = ballSpeed;
-        this.color = 'red';
+        this.color = 'white';
         this.dir = {
             x: 2/Math.sqrt(3),
             y: 1/Math.sqrt(3)
