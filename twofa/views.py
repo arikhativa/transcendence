@@ -134,6 +134,8 @@ def twofa(request, wrong_code=False, expired_jwt=False):
 		or request.COOKIES.get('jwt_token') == 'None':
 		user = add_user_API(request)
 		token = create_jwt(user)
+		user.validated_2fa = False
+		user.save()
 		expired_jwt = True
 	else:
 		token = request.COOKIES.get('jwt_token')
