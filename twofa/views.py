@@ -132,7 +132,6 @@ def twofa(request, wrong_code=False, expired_jwt=False):
 	token = None
 	if not request.COOKIES.get('jwt_token') \
 		or request.COOKIES.get('jwt_token') == 'None':
-
 		user = add_user_API(request)
 		token = create_jwt(user)
 		expired_jwt = True
@@ -146,7 +145,8 @@ def twofa(request, wrong_code=False, expired_jwt=False):
 			"error_msg": _("User not found"),
 			"section": "error_page.html",
 		}, None
-	if user.active_2FA and not expired_jwt:
+	
+	if user.active_2FA and not expired_jwt and user.validated_2fa:
 		return {
 			"username": user.username,
 			"email": user.email,
@@ -209,6 +209,7 @@ def validate_2fa(request):
 
 	if is_valid:
 		user.active_2FA = True
+		user.validated_2fa = True
 		if _jwt_is_expired(request.COOKIES.get('jwt_token')):
 			user.jwt = create_jwt(user)
 		user.save()
@@ -218,6 +219,8 @@ def validate_2fa(request):
 			"section": "temporal_loggedin.html", 
 		}, user.jwt
 	else:
+		user.validated_2fa = False
+		user.save()
 		return twofa(request, wrong_code=True)
 	
 def delete_jwt(request):
@@ -228,5 +231,6 @@ def delete_jwt(request):
 	payload = jwt.decode(token, settings.SECRET_KEY, algorithms=['HS256'], options=options)
 	user = Users.objects.get(username=payload['username'])
 	user.jwt = None
+	user.validated_2fa = False
 	user.save()
 	return
