@@ -3,6 +3,18 @@ import { ScreenManager } from './ScreenManager.js';
 import { Tournament } from './TournamentManager.js';
 import { Customization } from './Customization.js';
 
+// TOURNAMENT LIST
+// const playersDataElement = document.getElementById('players-data');
+// const playersDataString = playersDataElement ? playersDataElement.dataset.players : null;
+// let playersList = [];
+
+// if (playersDataString) {
+
+//     const playersParam = new URLSearchParams(playersDataString).get('players');
+    
+//     playersList = playersParam ? decodeURIComponent(playersParam).split(',') : [];
+// }
+
 // Define canvas and a context to draw to
 let canvas = document.getElementById("canvas");
 setCanvasSize();
