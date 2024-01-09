@@ -1,16 +1,6 @@
-{% load i18n %}
+<!-- game/templates/game.html -->
 {% load static %}
-<!DOCTYPE html>
 <link rel="stylesheet" href="{% static 'game.css' %}" />
 <script type="module" src="{% static 'game.js' %}"></script>
-<script type="module" src="{% static 'Ball.js' %}"></script>
-<script type="module" src="{% static 'Board.js' %}"></script>
-<script type="module" src="{% static 'GameController.js' %}"></script>
-<script type="module" src="{% static 'Player.js' %}"></script>
-<script type="module" src="{% static 'ScreenManager.js' %}"></script>
-<script type="module" src="{% static 'TournamentManager.js' %}"></script>
 
-{% block main_content %}
-  <div id="players-data" data-players="{{ players|safe }}"></div>
-  <canvas id="canvas" class="bg-white"></canvas>
-{% endblock %}
+<canvas id="canvas" class="bg-white"></canvas>

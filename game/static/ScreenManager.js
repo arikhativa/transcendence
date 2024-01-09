@@ -7,7 +7,9 @@ export class ScreenManager {
 			VSSCREEN: 2,
 			ENDOFMATCH: 3,
 			ENDOFTOURNAMENT: 4,
-			TOURNAMENTTREE: 5
+			TOURNAMENTTREE: 5,
+            TEST: 6,
+			CUSTOMIZATION: 7,
 		};
 		
         this.currentScreen = this.screens.INTRO;
@@ -17,7 +19,7 @@ export class ScreenManager {
         this.transitionPerc = 1;
 	}
     
-    loop(ctx, canvas, game, tournament) {
+    loop(ctx, canvas, game, tournament, custom) {
         ctx.globalAlpha = Math.min(Math.max(parseFloat(this.transitionPerc), 0), 1);
         //Draw game
         switch (this.currentScreen) {
@@ -39,11 +41,11 @@ export class ScreenManager {
             case this.screens.ENDOFMATCH:
                 this.endOfMatchScreen(ctx, canvas, game);
                 break;
+            case this.screens.CUSTOMIZATION:
+                this.customizationScreen(ctx, canvas, game, custom);
+                break;
         }
         this.transitionHandler();
-	}
-
-	draw(ctx) {
 	}
 
     //Screen Handlers
@@ -76,6 +78,10 @@ export class ScreenManager {
         ctx.fillText(game.p1.name + " VS " + game.p2.name, canvas.width/2, canvas.height/2 - 70);
     }
     
+    customizationScreen(ctx, canvas, game, custom) {
+        custom.draw(ctx, canvas, game, custom);
+    }
+
     endOfTournamentScreen(ctx, canvas, game) {
         // Clear the canvas to render new frame
         ctx.fillStyle = 'black';
