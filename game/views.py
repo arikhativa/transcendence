@@ -1,3 +1,6 @@
 from django.shortcuts import render
 
-# Create your views here.
+def game_setup(request, context={}):
+    players = request.GET.urlencode()
+    context['players'] = players
+    return context
