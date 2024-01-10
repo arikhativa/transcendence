@@ -4,7 +4,7 @@ from django.utils import translation
 from django.shortcuts import redirect
 from django.http import HttpResponse, HttpResponseNotFound
 from django.conf import settings
-from twofa.views import twofa, validate_2fa, qr_setup, email_setup, delete_jwt
+from twofa.views import twofa, validate_2fa, qr_setup, email_setup, delete_jwt, _jwt_is_expired, _user_jwt_cookie
 from game.views import game_setup
 
 def spa_view(request):
@@ -36,6 +36,13 @@ def spa_view(request):
 		if section == "game":
 			context = game_setup(request, context)
 
+		if section == "main":
+			jwt_token = request.COOKIES.get('jwt_token')
+			if jwt_token is not None and not _jwt_is_expired(jwt_token):
+				user = _user_jwt_cookie(request)
+				if user.validated_2fa:
+					context, token = loged_page(request, user)
+					section = "temporal_loggedin"
 
 	except Exception as exc:
 		context = {
@@ -48,7 +55,7 @@ def spa_view(request):
 
 	if section == "twofa" or section == "validate_2fa_code" \
 		or section == "qr_setup" or section == "sms_setup" \
-		or section == "email_setup":
+		or section == "email_setup" or section == "temporal_loggedin" :
 		res.set_cookie("jwt_token", token, httponly=True, secure=False)
 	return res
 
@@ -91,3 +98,10 @@ def logout_view(request):
 	response = render(request, "main.html")
 	response.delete_cookie("jwt_token")
 	return response
+
+def loged_page(request, user):
+	return {
+		"username": user.username,
+		"email": user.email,
+		"section": "temporal_loggedin.html",
+	}, request.COOKIES.get('jwt_token')
