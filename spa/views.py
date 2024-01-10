@@ -41,7 +41,7 @@ def spa_view(request):
 			if jwt_token is not None and not _jwt_is_expired(jwt_token):
 				user = _user_jwt_cookie(request)
 				if user is not None and user.validated_2fa:
-					context, token = loged_page(request, user)
+					context, token = logged_page(request, user)
 					section = "temporal_loggedin"
 
 	except Exception as exc:
@@ -99,7 +99,7 @@ def logout_view(request):
 	response.delete_cookie("jwt_token")
 	return response
 
-def loged_page(request, user):
+def logged_page(request, user):
 	return {
 		"username": user.username,
 		"email": user.email,
