@@ -9,5 +9,7 @@ class Users(models.Model):
     active_2FA = models.BooleanField(default=False)
     email_2FA = models.BooleanField(default=False)
     qr_2FA = models.BooleanField(default=False)
+    validated_2fa = models.BooleanField(default=False)
     wins = models.IntegerField()
     losses = models.IntegerField()
+

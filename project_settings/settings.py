@@ -28,6 +28,7 @@ SECRET_KEY = "django-insecure-^lvtu$oa(bj77kc5^fh_76^!m+ixgo&)-*8p6xv&5*ei8#1ld+
 DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
+CSRF_TRUSTED_ORIGINS = ['https://localhost']
 
 # Application definition
 
@@ -67,7 +68,6 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = "project_settings.urls"
-
 
 TEMPLATES = [
     {

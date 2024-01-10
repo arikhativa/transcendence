@@ -88,6 +88,6 @@ def set_language(request, language_code):
 
 def logout_view(request):
 	delete_jwt(request)
-	response = spa_view(request)
+	response = render(request, "main.html")
 	response.delete_cookie("jwt_token")
 	return response
