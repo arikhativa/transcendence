@@ -40,7 +40,7 @@ def spa_view(request):
 			jwt_token = request.COOKIES.get('jwt_token')
 			if jwt_token is not None and not _jwt_is_expired(jwt_token):
 				user = _user_jwt_cookie(request)
-				if user.validated_2fa:
+				if user is not None and user.validated_2fa:
 					context, token = loged_page(request, user)
 					section = "temporal_loggedin"
 
