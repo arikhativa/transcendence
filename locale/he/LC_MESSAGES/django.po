@@ -80,7 +80,6 @@ msgid "Email"
 msgstr "אימייל"
 
 #: twofa/templates/2fa_setup.html:28
-#, fuzzy
 #| msgid ""
 #| "Use this option if you prefer to log in by scanning a QR code in Google "
 #| "Authenticator"
@@ -102,13 +101,11 @@ msgid "Submit"
 msgstr "שלח"
 
 #: twofa/templates/qr_setup.html:12
-#, fuzzy
 #| msgid "Welcome to Two-Factor Authentication Setup"
 msgid "Two-Factor Authentication Setup"
 msgstr "ברוכים הבאים להגדרת אימות דו-גורמי"
 
 #: twofa/templates/qr_setup.html:13
-#, fuzzy
 #| msgid ""
 #| "Please scan the QR code below with your Google Authenticator app to set "
 #| "up 2FA:"

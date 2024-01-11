@@ -35,7 +35,6 @@ msgid "In order to feel the experience you should first log in"
 msgstr "Pour en faire l'expérience, vous devez d'abord vous connecter"
 
 #: main/templates/main.html:13
-#, fuzzy
 #| msgid "First Login"
 msgid "Login"
 msgstr "Première connexion"
@@ -99,13 +98,11 @@ msgid "Submit"
 msgstr "Soumettre"
 
 #: twofa/templates/qr_setup.html:12
-#, fuzzy
 #| msgid "Welcome to Two-Factor Authentication Setup"
 msgid "Two-Factor Authentication Setup"
 msgstr "Bienvenue dans la configuration de l'authentification à deux facteurs"
 
 #: twofa/templates/qr_setup.html:13
-#, fuzzy
 #| msgid ""
 #| "Please scan the QR code below with your Google Authenticator app to set "
 #| "up 2FA:"
