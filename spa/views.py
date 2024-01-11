@@ -10,6 +10,7 @@ from game.views import game_setup
 def spa_view(request):
 	try:
 		section = request.resolver_match.url_name
+		logged_in, user = is_logged_in(request)
 
 		if (
 			section != "game"
@@ -18,6 +19,7 @@ def spa_view(request):
 			and section != "twofa"
 			and section != "qr_setup"
 			and section != "email_setup"
+			or not logged_in and (section == "game" or section == "tournament")
 		):
 			section = "main"
 
@@ -33,16 +35,12 @@ def spa_view(request):
 			context, token = qr_setup(request)
 		if section == "email_setup":
 			context, token = email_setup(request)
-		if section == "game":
+		if section == "game" and logged_in:
 			context = game_setup(request, context)
 
-		if section == "main":
-			jwt_token = request.COOKIES.get('jwt_token')
-			if jwt_token is not None and not _jwt_is_expired(jwt_token):
-				user = _user_jwt_cookie(request)
-				if user is not None and user.validated_2fa:
-					context, token = logged_page(request, user)
-					section = "temporal_loggedin"
+		if section == "main" and logged_in:
+			context, token = loged_page(request, user)
+			section = "temporal_loggedin"
 
 	except Exception as exc:
 		context = {
@@ -59,23 +57,32 @@ def spa_view(request):
 		res.set_cookie("jwt_token", token, httponly=True, secure=False)
 	return res
 
+def is_logged_in(request):
+	jwt_token = request.COOKIES.get('jwt_token')
+	if jwt_token is not None and not _jwt_is_expired(jwt_token):
+		user = _user_jwt_cookie(request)
+		if user is not None and user.validated_2fa:
+			return True, user
+	return False, None
+
 def spa_view_catchall(request, catchall):
 	context = {
 		"section": "main.html",
 	}
 	return render(request, "spa.html", context)
 
-
 def main_view(request):
 	return render(request, "main.html")
 
-
 def game_view(request):
+	if not is_logged_in(request)[0]:
+		return render(request, "main.html")
 	context = game_setup(request, {})
 	return render(request, "game.html", context)
 
-
 def tournament_view(request):
+	if not is_logged_in(request)[0]:
+		return render(request, "main.html")
 	return render(request, "tournament.html")
 
 def api_view(request):
