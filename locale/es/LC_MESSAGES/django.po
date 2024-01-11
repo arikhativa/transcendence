@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-10 13:56+0000\n"
+"POT-Creation-Date: 2024-01-11 11:51+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -99,20 +99,13 @@ msgid "Submit"
 msgstr "Enviar"
 
 #: twofa/templates/qr_setup.html:12
-#, fuzzy
 #| msgid "Welcome to Two-Factor Authentication Setup"
 msgid "Two-Factor Authentication Setup"
 msgstr "Bienvenido a la configuración de Two-Factor"
 
 #: twofa/templates/qr_setup.html:13
-#, fuzzy
-#| msgid ""
-#| "Please scan the QR code below with your Google Authenticator app to set "
-#| "up 2FA:"
 msgid "Scan the QR code with Google Authenticator app to set up 2FA:"
-msgstr ""
-"Por favor escanea el código QR de abajo con tu app de Google Authenticator "
-"para configurar 2FA:"
+msgstr "Escanea el código QR con la aplicación Google Authenticator para configurar 2FA:"
 
 #: twofa/templates/temporal_loggedin.html:5
 #: twofa/templates/temporal_loggedin.html:15
