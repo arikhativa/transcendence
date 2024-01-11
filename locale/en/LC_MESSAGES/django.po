@@ -36,9 +36,9 @@ msgstr "In order to feel the experience you should first log in"
 
 #: main/templates/main.html:13
 #, fuzzy
-#| msgid "First Login"
+#| msgid "Login"
 msgid "Login"
-msgstr "First Login"
+msgstr "Login"
 
 #: navbar/templates/navbar.html:19
 msgid "Opponent's Name"

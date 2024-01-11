@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-11 11:51+0000\n"
+"POT-Creation-Date: 2024-01-11 12:23+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -35,9 +35,8 @@ msgid "In order to feel the experience you should first log in"
 msgstr "Para sentir la experiencia, primero debes conectarte"
 
 #: main/templates/main.html:13
-#| msgid "First Login"
 msgid "Login"
-msgstr "Primer inicio de sesión"
+msgstr "Iniciar sesión"
 
 #: navbar/templates/navbar.html:19
 msgid "Opponent's Name"
@@ -88,8 +87,10 @@ msgstr ""
 "recibirás en tu correo"
 
 #: twofa/templates/email_setup.html:8
+#, fuzzy
+#| msgid "Login"
 msgid "First Login"
-msgstr "Primer inicio de sesión"
+msgstr "Iniciar Sesión"
 
 #: twofa/templates/email_setup.html:18 twofa/templates/email_setup.html:36
 #: twofa/templates/qr_setup.html:22 twofa/templates/twofa.html:17
@@ -98,13 +99,14 @@ msgid "Submit"
 msgstr "Enviar"
 
 #: twofa/templates/qr_setup.html:12
-#| msgid "Welcome to Two-Factor Authentication Setup"
 msgid "Two-Factor Authentication Setup"
 msgstr "Bienvenido a la configuración de Two-Factor"
 
 #: twofa/templates/qr_setup.html:13
 msgid "Scan the QR code with Google Authenticator app to set up 2FA:"
-msgstr "Escanea el código QR con la aplicación Google Authenticator para configurar 2FA:"
+msgstr ""
+"Escanea el código QR con la aplicación Google Authenticator para configurar "
+"2FA:"
 
 #: twofa/templates/temporal_loggedin.html:5
 #: twofa/templates/temporal_loggedin.html:15

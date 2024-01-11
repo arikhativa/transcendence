@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-10 13:56+0000\n"
+"POT-Creation-Date: 2024-01-11 12:18+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -35,7 +35,6 @@ msgid "In order to feel the experience you should first log in"
 msgstr "Pour en faire l'expérience, vous devez d'abord vous connecter"
 
 #: main/templates/main.html:13
-#| msgid "First Login"
 msgid "Login"
 msgstr "Première connexion"
 
@@ -98,14 +97,10 @@ msgid "Submit"
 msgstr "Soumettre"
 
 #: twofa/templates/qr_setup.html:12
-#| msgid "Welcome to Two-Factor Authentication Setup"
 msgid "Two-Factor Authentication Setup"
 msgstr "Bienvenue dans la configuration de l'authentification à deux facteurs"
 
 #: twofa/templates/qr_setup.html:13
-#| msgid ""
-#| "Please scan the QR code below with your Google Authenticator app to set "
-#| "up 2FA:"
 msgid "Scan the QR code with Google Authenticator app to set up 2FA:"
 msgstr ""
 "Veuillez scanner le code QR ci-dessous avec votre application Google "
