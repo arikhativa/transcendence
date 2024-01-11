@@ -35,7 +35,6 @@ msgid "In order to feel the experience you should first log in"
 msgstr "Para sentir la experiencia, primero debes conectarte"
 
 #: main/templates/main.html:13
-#, fuzzy
 #| msgid "First Login"
 msgid "Login"
 msgstr "Primer inicio de sesión"
