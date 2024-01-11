@@ -36,7 +36,7 @@ msgstr "Pour en faire l'expérience, vous devez d'abord vous connecter"
 
 #: main/templates/main.html:13
 msgid "Login"
-msgstr "Première connexion"
+msgstr "Se connecter"
 
 #: navbar/templates/navbar.html:19
 msgid "Opponent's Name"
