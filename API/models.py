@@ -12,6 +12,8 @@ class Users(models.Model):
     validated_2fa = models.BooleanField(default=False)
     bonus = models.BooleanField(default=False)
     walls = models.BooleanField(default=False)
+    player_1_color = models.CharField(max_length=80, null=True, default='white')
+    player_2_color = models.CharField(max_length=80, null=True, default='white')
     wins = models.IntegerField()
     losses = models.IntegerField()
 

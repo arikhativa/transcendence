@@ -3,11 +3,13 @@
 <link rel="stylesheet" href="{% static 'game_settings.css' %}" />
 <body>
 	<div class="card text-center border border-dark border-5 bg-info">
+		<div class="card-header bg-white">
+			<h1 class="card-title">{% trans "Game Settings" %}</h1>
+		</div>
 		<div class="card-body">
-			<h1 class="card-title">Game Settings</h1>
 			<form id="settings-form" method="post" action="/game_settings/">
 				{% csrf_token %}
-				<div>
+				<div class="mb-3">
 					<div class="form-check form-switch center-switch">
 						<input name="bonus" class="form-check-input" type="checkbox" role="switch" id="{{ switch_type_bonus }}" {{ check_mode_bonus }}>
 						<label class="form-check-label" for="{{ switch_type_bonus }}">{% trans "2X Bonus" %}</label>
@@ -16,6 +18,24 @@
 						<input name="walls" class="form-check-input" type="checkbox" role="switch" id="{{ switch_type_walls }}" {{ check_mode_walls }}>
 						<label class="form-check-label" for="{{ switch_type_walls }}">{% trans "Walls" %}</label>
 					</div>
+				</div>
+				<div class="mb-3">
+					<p class="select-label">{% trans "Player 1 color selector:" %}</p>
+					<select name="player1" class="form-select" aria-label="Player 1 color selector">
+						<option {{ player1_white_selected }} value="white">{% trans "White" %}</option>
+						<option {{ player1_red_selected }} value="red">{% trans "Red" %}</option>
+						<option {{ player1_green_selected }} value="green">{% trans "Green" %}</option>
+						<option {{ player1_blue_selected }} value="blue">{% trans "Blue" %}</option>
+					  </select>
+				</div>
+				<div>
+					  <p class="select-label">{% trans "Player 2 color selector:" %}</p>
+					  <select name="player2" class="form-select" aria-label="Player 2 color selector">
+						<option {{ player2_white_selected }} value="white">{% trans "White" %}</option>
+						<option {{ player2_red_selected }} value="red">{% trans "Red" %}</option>
+						<option {{ player2_green_selected }} value="green">{% trans "Green" %}</option>
+						<option {{ player2_blue_selected }} value="blue">{% trans "Blue" %}</option>
+					  </select>
 				</div>
 				<div class="text-center mt-3">
 					<button class="btn btn-primary" type="submit">{% trans "Save" %}</button>

@@ -1,5 +1,4 @@
 #settings-form {
-    display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
@@ -10,7 +9,7 @@
 .center-switch {
     display: flex;
     justify-content: left;
-    align-items: center;
+    align-items: left;
 }
 
 .form-check-input[type="checkbox"] {
@@ -24,4 +23,10 @@
 
 .form-check {
     margin-bottom: 10px;
+}
+
+.select-label {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
 }
