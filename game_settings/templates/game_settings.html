@@ -1,0 +1,26 @@
+{% load i18n %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'game_settings.css' %}" />
+<body>
+	<div class="card text-center border border-dark border-5 bg-info">
+		<div class="card-body">
+			<h1>Game Settings</h1>
+			<form id="settings-form" method="post" action="/save_settings/">
+				{% csrf_token %}
+				<div>
+					<div class="form-check form-switch center-switch">
+						<input class="form-check-input" type="checkbox" role="switch" id="{{ switch_type_bonus }}">
+						<label class="form-check-label" for="{{ switch_type_bonus }}">{% trans "2X Bonus" %}</label>
+					</div>
+					<div class="form-check form-switch center-switch">
+						<input class="form-check-input" type="checkbox" role="switch" id="{{ switch_type_barriers }}">
+						<label class="form-check-label" for="{{ switch_type_barriers }}">{% trans "Walls" %}</label>
+					</div>
+				</div>
+				<div class="text-center mt-3">
+					<button class="btn btn-primary" type="submit">{% trans "Save" %}</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>

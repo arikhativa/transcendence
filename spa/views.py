@@ -6,6 +6,7 @@ from django.http import HttpResponse, HttpResponseNotFound
 from django.conf import settings
 from twofa.views import twofa, validate_2fa, qr_setup, email_setup, delete_jwt, _jwt_is_expired, _user_jwt_cookie
 from game.views import game_setup
+#from game_settings.views import game_settings
 
 def spa_view(request):
 	try:
@@ -14,12 +15,13 @@ def spa_view(request):
 
 		if (
 			section != "game"
+			and section != "game-settings"
 			and section != "tournament"
 			and section != "validate_2fa_code"
 			and section != "twofa"
 			and section != "qr_setup"
 			and section != "email_setup"
-			or not logged_in and (section == "game" or section == "tournament")
+			or not logged_in and (section == "game" or section == "tournament" or section == "game_settings")
 		):
 			section = "main"
 
@@ -79,6 +81,12 @@ def game_view(request):
 		return render(request, "main.html")
 	context = game_setup(request, {})
 	return render(request, "game.html", context)
+
+def game_settings_view(request):
+	if not is_logged_in(request)[0]:
+		return render(request, "main.html")
+	#context = game_settings(request)
+	return render(request, "game_settings.html")
 
 def tournament_view(request):
 	if not is_logged_in(request)[0]:

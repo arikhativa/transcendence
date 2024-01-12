@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     "tournament",
     "API",
     "twofa",
+    "game_settings",
 ]
 
 MIDDLEWARE = [

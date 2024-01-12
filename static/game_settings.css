@@ -1,0 +1,27 @@
+#settings-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 300px;
+    margin: auto;
+}
+
+.center-switch {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+
+.form-check-input[type="checkbox"] {
+    transform: scale(1.5);
+}
+
+.form-check-label {
+    margin-left: 15px;
+    font-size: 20px;
+}
+
+.form-check {
+    margin-bottom: 10px;
+}
