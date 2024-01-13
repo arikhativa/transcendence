@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-13 17:01+0000\n"
+"POT-Creation-Date: 2024-01-13 17:14+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,27 +20,43 @@ msgstr ""
 
 #: game_settings/templates/game_settings.html:7 navbar/templates/navbar.html:37
 msgid "Game Settings"
-msgstr ""
+msgstr "Ajustes de partida"
 
 #: game_settings/templates/game_settings.html:15
 msgid "2X Bonus"
-msgstr ""
+msgstr "Bonus 2X"
 
 #: game_settings/templates/game_settings.html:19
 msgid "Walls"
-msgstr ""
+msgstr "Muros"
 
 #: game_settings/templates/game_settings.html:23
 msgid "Player 1 color selector:"
-msgstr ""
+msgstr "Selector de color Jugador 1:"
 
 #: game_settings/templates/game_settings.html:35
 msgid "Player 2 color selector:"
-msgstr ""
+msgstr "Selector de color Jugador 2:"
 
 #: game_settings/templates/game_settings.html:47
 msgid "Save"
-msgstr ""
+msgstr "Guardar"
+
+#: game_settings/views.py:13
+msgid "white"
+msgstr "blanco"
+
+#: game_settings/views.py:14
+msgid "red"
+msgstr "rojo"
+
+#: game_settings/views.py:15
+msgid "green"
+msgstr "verde"
+
+#: game_settings/views.py:16
+msgid "blue"
+msgstr "azul"
 
 #: header/templates/header.html:43
 msgid "Home"

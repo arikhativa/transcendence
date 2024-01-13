@@ -1,5 +1,6 @@
 from twofa.views import _user_jwt_cookie
 from django.views.decorators.csrf import csrf_protect
+from django.utils.translation import gettext as _
 
 @csrf_protect
 def game_settings(request):
@@ -8,10 +9,16 @@ def game_settings(request):
 	walls_switch_type = "flexSwitchCheckDefault"
 	check_mode_bonus = ""
 	check_mode_walls = ""
+	color_translations = {
+		"white": _("white"),
+		"red": _("red"),
+		"green": _("green"),
+		"blue": _("blue"),
+	}
 
 	if request.method == 'POST':
 		save_game_settings(request, user)
-		
+
 	player1_color = user.player_1_color
 	player2_color = user.player_2_color
 
@@ -31,6 +38,7 @@ def game_settings(request):
 		"player1_color": player1_color,
 		"player2_color": player2_color,
 		"color_list": ["white", "red", "green", "blue"],
+		"color_translations": color_translations,
 		"section": "game_settings.html",
 	}
 

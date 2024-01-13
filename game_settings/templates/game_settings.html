@@ -22,11 +22,11 @@
 				<div class="mb-3">
 					<p class="select-label">{% trans "Player 1 color selector:" %}</p>
 					<select name="player1" class="form-select" aria-label="Player 1 color selector">
-						{% for color in color_list %}
-							{% if player1_color == color %}
-								<option selected value="{{ color }}">{% trans color|capfirst %}</option>
+						{% for key, value in color_translations.items %}
+							{% if player1_color == key %}
+								<option selected value="{{ key }}">{{ value|capfirst }}</option>
 							{% else %}
-								<option value="{{ color }}">{% trans color|capfirst %}</option>
+								<option value="{{ key }}">{{ value|capfirst }}</option>
 							{% endif %}
 						{% endfor %}
 					  </select>
@@ -34,11 +34,11 @@
 				<div>
 					  <p class="select-label">{% trans "Player 2 color selector:" %}</p>
 					  <select name="player2" class="form-select" aria-label="Player 2 color selector">
-						{% for color in color_list %}
-							{% if player2_color == color %}
-								<option selected value="{{ color }}">{% trans color|capfirst %}</option>
+						{% for key, value in color_translations.items %}
+							{% if player2_color == key %}
+								<option selected value="{{ key }}">{{ value|capfirst }}</option>
 							{% else %}
-								<option value="{{ color }}">{% trans color|capfirst %}</option>
+								<option value="{{ key }}">{{ value|capfirst }}</option>
 							{% endif %}
 						{% endfor %}
 					  </select>
