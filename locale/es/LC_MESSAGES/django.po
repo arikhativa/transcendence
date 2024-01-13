@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-05 09:15+0000\n"
+"POT-Creation-Date: 2024-01-13 17:01+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,30 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: game_settings/templates/game_settings.html:7 navbar/templates/navbar.html:37
+msgid "Game Settings"
+msgstr ""
+
+#: game_settings/templates/game_settings.html:15
+msgid "2X Bonus"
+msgstr ""
+
+#: game_settings/templates/game_settings.html:19
+msgid "Walls"
+msgstr ""
+
+#: game_settings/templates/game_settings.html:23
+msgid "Player 1 color selector:"
+msgstr ""
+
+#: game_settings/templates/game_settings.html:35
+msgid "Player 2 color selector:"
+msgstr ""
+
+#: game_settings/templates/game_settings.html:47
+msgid "Save"
+msgstr ""
 
 #: header/templates/header.html:43
 msgid "Home"
@@ -70,7 +94,9 @@ msgstr "Codigo QR"
 msgid ""
 "Use this option if you prefer to log in by scanning a QR code in Google "
 "Authenticator"
-msgstr "Utiliza esta opción si prefieres iniciar sesión escaneando un codigo QR en Google Authenticator"
+msgstr ""
+"Utiliza esta opción si prefieres iniciar sesión escaneando un codigo QR en "
+"Google Authenticator"
 
 #: twofa/templates/2fa_setup.html:27 twofa/templates/2fa_setup.html:29
 msgid "Email"
@@ -80,7 +106,9 @@ msgstr "Correo"
 msgid ""
 "Use this option if you prefer to log in with a numerical code that you will "
 "receive in your email"
-msgstr "Utiliza esta opción si prefieres iniciar sesión con un código numérico que recibirás en tu correo"
+msgstr ""
+"Utiliza esta opción si prefieres iniciar sesión con un código numérico que "
+"recibirás en tu correo"
 
 #: twofa/templates/email_setup.html:8
 msgid "First Login"
@@ -88,6 +116,7 @@ msgstr "Primer inicio de sesión"
 
 #: twofa/templates/email_setup.html:18 twofa/templates/email_setup.html:32
 #: twofa/templates/qr_setup.html:17 twofa/templates/twofa.html:17
+#: twofa/templates/twofa.html:30
 msgid "Submit"
 msgstr "Enviar"
 
@@ -99,23 +128,24 @@ msgstr ""
 "Por favor escanea el código QR de abajo con tu app de Google Authenticator "
 "para configurar 2FA:"
 
-#: twofa/templates/temporal_loggedin.html:8
-msgid "Hello"
-msgstr "Hola"
-
-#: twofa/templates/temporal_loggedin.html:13
+#: twofa/templates/temporal_loggedin.html:5
+#: twofa/templates/temporal_loggedin.html:15
 msgid "Welcome"
 msgstr "Bienvenido"
+
+#: twofa/templates/temporal_loggedin.html:10
+msgid "Hello"
+msgstr "Hola"
 
 #: twofa/templates/twofa.html:8
 msgid "TWO FACTOR AUTHENTICATOR"
 msgstr "Verificador de dos factores"
 
-#: twofa/templates/twofa.html:13
+#: twofa/templates/twofa.html:13 twofa/templates/twofa.html:26
 msgid "Please introduce a valid 2FA code:"
 msgstr "Por favor introduce un código 2FA valido:"
 
-#: twofa/views.py:75 twofa/views.py:116 twofa/views.py:159
+#: twofa/views.py:75 twofa/views.py:116 twofa/views.py:161
 msgid "Invalid code, try again."
 msgstr "Codigo invalido, intenta de nuevo."
 
@@ -127,7 +157,7 @@ msgstr "Valida tu cuenta"
 msgid "Please enter the code sent to your email:"
 msgstr "Introduzca el código enviado a su correo electrónico:"
 
-#: twofa/views.py:146
+#: twofa/views.py:147
 msgid "User not found"
 msgstr "Usuario no encontrado"
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-05 09:15+0000\n"
+"POT-Creation-Date: 2024-01-13 17:01+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,6 +18,30 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % "
 "1 == 0) ? 1: (n % 10 == 0 && n % 1 == 0 && n > 10) ? 2 : 3;\n"
+
+#: game_settings/templates/game_settings.html:7 navbar/templates/navbar.html:37
+msgid "Game Settings"
+msgstr ""
+
+#: game_settings/templates/game_settings.html:15
+msgid "2X Bonus"
+msgstr ""
+
+#: game_settings/templates/game_settings.html:19
+msgid "Walls"
+msgstr ""
+
+#: game_settings/templates/game_settings.html:23
+msgid "Player 1 color selector:"
+msgstr ""
+
+#: game_settings/templates/game_settings.html:35
+msgid "Player 2 color selector:"
+msgstr ""
+
+#: game_settings/templates/game_settings.html:47
+msgid "Save"
+msgstr ""
 
 #: header/templates/header.html:43
 msgid "Home"
@@ -68,16 +92,22 @@ msgid "QR Code"
 msgstr "קוד QR"
 
 #: twofa/templates/2fa_setup.html:19
-msgid "Use this option if you prefer to log in by scanning a QR code in Google Authenticator"
-msgstr "השתמש באפשרות זו אם אתה מעדיף להיכנס על ידי סריקת קוד QR ב-Google Authenticator"
+msgid ""
+"Use this option if you prefer to log in by scanning a QR code in Google "
+"Authenticator"
+msgstr ""
+"השתמש באפשרות זו אם אתה מעדיף להיכנס על ידי סריקת קוד QR ב-Google "
+"Authenticator"
 
 #: twofa/templates/2fa_setup.html:27 twofa/templates/2fa_setup.html:29
 msgid "Email"
 msgstr "אימייל"
 
 #: twofa/templates/2fa_setup.html:28
-msgid "Use this option if you prefer to log in with a numerical code that you will receive in your email"
-msgstr "השתמש באפשרות זו אם אתה מעדיף להיכנס עם קוד מספרי שתקבל בדוא"ל שלך"
+msgid ""
+"Use this option if you prefer to log in with a numerical code that you will "
+"receive in your email"
+msgstr "השתמש באפשרות זו אם אתה מעדיף להיכנס עם קוד מספרי שתקבל בדואל שלך"
 
 #: twofa/templates/email_setup.html:8
 msgid "First Login"
@@ -85,6 +115,7 @@ msgstr "כניסה ראשונה"
 
 #: twofa/templates/email_setup.html:18 twofa/templates/email_setup.html:32
 #: twofa/templates/qr_setup.html:17 twofa/templates/twofa.html:17
+#: twofa/templates/twofa.html:30
 msgid "Submit"
 msgstr "שלח"
 
@@ -96,23 +127,24 @@ msgstr ""
 "אנא סרוק את קוד ה-QR למטה עם אפליקציית Google Authenticator שלך כדי להגדיר "
 "2FA:"
 
-#: twofa/templates/temporal_loggedin.html:8
-msgid "Hello"
-msgstr "שלום"
-
-#: twofa/templates/temporal_loggedin.html:13
+#: twofa/templates/temporal_loggedin.html:5
+#: twofa/templates/temporal_loggedin.html:15
 msgid "Welcome"
 msgstr "ברוך הבא"
+
+#: twofa/templates/temporal_loggedin.html:10
+msgid "Hello"
+msgstr "שלום"
 
 #: twofa/templates/twofa.html:8
 msgid "TWO FACTOR AUTHENTICATOR"
 msgstr "מאמת שני גורמים"
 
-#: twofa/templates/twofa.html:13
+#: twofa/templates/twofa.html:13 twofa/templates/twofa.html:26
 msgid "Please introduce a valid 2FA code:"
 msgstr "נא להציג קוד 2FA חוקי:"
 
-#: twofa/views.py:75 twofa/views.py:116 twofa/views.py:159
+#: twofa/views.py:75 twofa/views.py:116 twofa/views.py:161
 msgid "Invalid code, try again."
 msgstr "נא להציג קוד 2FA חוקי:"
 
@@ -124,7 +156,7 @@ msgstr "אמת את חשבונך"
 msgid "Please enter the code sent to your email:"
 msgstr "נא להזין את הקוד שנשלח למייל שלך:"
 
-#: twofa/views.py:146
+#: twofa/views.py:147
 msgid "User not found"
 msgstr "המשתמש לא נמצא"
 
