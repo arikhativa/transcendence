@@ -22,19 +22,25 @@
 				<div class="mb-3">
 					<p class="select-label">{% trans "Player 1 color selector:" %}</p>
 					<select name="player1" class="form-select" aria-label="Player 1 color selector">
-						<option {{ player1_white_selected }} value="white">{% trans "White" %}</option>
-						<option {{ player1_red_selected }} value="red">{% trans "Red" %}</option>
-						<option {{ player1_green_selected }} value="green">{% trans "Green" %}</option>
-						<option {{ player1_blue_selected }} value="blue">{% trans "Blue" %}</option>
+						{% for color in color_list %}
+							{% if player1_color == color %}
+								<option selected value="{{ color }}">{% trans color|capfirst %}</option>
+							{% else %}
+								<option value="{{ color }}">{% trans color|capfirst %}</option>
+							{% endif %}
+						{% endfor %}
 					  </select>
 				</div>
 				<div>
 					  <p class="select-label">{% trans "Player 2 color selector:" %}</p>
 					  <select name="player2" class="form-select" aria-label="Player 2 color selector">
-						<option {{ player2_white_selected }} value="white">{% trans "White" %}</option>
-						<option {{ player2_red_selected }} value="red">{% trans "Red" %}</option>
-						<option {{ player2_green_selected }} value="green">{% trans "Green" %}</option>
-						<option {{ player2_blue_selected }} value="blue">{% trans "Blue" %}</option>
+						{% for color in color_list %}
+							{% if player2_color == color %}
+								<option selected value="{{ color }}">{% trans color|capfirst %}</option>
+							{% else %}
+								<option value="{{ color }}">{% trans color|capfirst %}</option>
+							{% endif %}
+						{% endfor %}
 					  </select>
 				</div>
 				<div class="text-center mt-3">
