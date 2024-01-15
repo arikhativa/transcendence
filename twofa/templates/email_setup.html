@@ -26,11 +26,15 @@
   <div class="card-body">
     <h5 class="card-title">{{ msg }}</h5>
 
-    <form method="post" action="{{ url }}">
+    <form id="twofa-form" method="post" action="{{ url }}">
       {% csrf_token %}
-      {{ form }}
-      <button class="btn btn-primary" type="submit">{% trans "Submit" %}</button>
-      <p>{{ error_msg }}</p>
+      <div>
+        {{ form }}
+        <p>{{ error_msg }}</p>
+      </div>
+      <div class="text-center mt-3">
+        <button class="btn btn-primary" type="submit">{% trans "Submit" %}</button>
+      </div>
     </form>
   </div>
 </div>
