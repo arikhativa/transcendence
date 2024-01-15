@@ -45,6 +45,8 @@ function showSection(section, paramObject) {
                 const newScript = document.createElement('script');
                 newScript.src = script.src;
                 newScript.type = 'module';
+                // Adding timestamp to script to force reload of the js files
+                newScript.src = script.src + '?v=' + new Date().getTime();
                 script.parentNode.replaceChild(newScript, script);
             });
             history.pushState(null, null, historyURL.href);
@@ -57,7 +59,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     document.querySelectorAll('.spa-btn').forEach(button => {
         if (button.value == undefined) {
-            console.log("Error: button.value is undefined");
+            // console.error("Error: button.value is undefined");
             return;
         }
         button.onclick = function() {
