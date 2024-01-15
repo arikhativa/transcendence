@@ -26,3 +26,9 @@ img, form {
     max-width: 25%;
     height: auto;
 }
+
+#twofa-form {
+    width: 100%;
+    max-width: 300px;
+    margin: auto;
+}

@@ -39,7 +39,7 @@ def spa_view(request):
 			context = game_setup(request, context)
 
 		if section == "main" and logged_in:
-			context, token = loged_page(request, user)
+			context, token = logged_page(request, user)
 			section = "temporal_loggedin"
 
 	except Exception as exc:
@@ -106,7 +106,7 @@ def logout_view(request):
 	response.delete_cookie("jwt_token")
 	return response
 
-def loged_page(request, user):
+def logged_page(request, user):
 	return {
 		"username": user.username,
 		"email": user.email,

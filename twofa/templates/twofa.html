@@ -22,13 +22,17 @@
 </main> -->
 
 <div class="card text-center border border-dark border-5 bg-info">
-  <div class="card-body">
+  <div class="card-body d-flex flex-column align-items-center">
     <h5 class="card-title ">{% trans "Please introduce a valid 2FA code:" %}</h5>
-    <form method="post" action="/validate_2fa_code/">
+    <form id="twofa-form" method="post" action="/validate_2fa_code/">
       {% csrf_token %}
-      {{ form }}
-      <button class="btn btn-primary" type="submit">{% trans "Submit" %}</button>
-      <p>{{ error_msg }}</p>
+      <div>
+        {{ form }}
+        <p>{{ error_msg }}</p>
+      </div>
+      <div class="text-center mt-3">
+        <button class="btn btn-primary" type="submit">{% trans "Submit" %}</button>
+      </div>
     </form>
   </div>
 </div>
