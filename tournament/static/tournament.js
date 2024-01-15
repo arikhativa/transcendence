@@ -12,7 +12,6 @@ function getTournamentPlayers() {
 function playerExists(name) {
     var names = players.getElementsByTagName('li');
     for (var i = 0; i < names.length; i++) {
-        console.log(names[i].innerText);
         if (names[i].getAttribute('id') === name) {
             return true;
         }
@@ -24,13 +23,13 @@ var tournamentStartButton = document.getElementById('tournament-start-button');
 tournamentStartButton.onclick = getTournamentPlayers;
 
 function removePlayer() {
-    console.log(this);
-    console.log("Player ", this.textContent, "was deleted.");
+    // console.log(this);
+    // console.log("Player ", this.textContent, "was deleted.");
     players.removeChild(this);
 
     // Update num of players on HTML
     var numOfPlayers = document.getElementById('num-of-players');
-    console.log(numOfPlayers);
+    // console.log(numOfPlayers);
     numOfPlayers.textContent = parseInt(numOfPlayers.textContent) - 1;
 }
 
@@ -38,7 +37,7 @@ function removePlayer() {
 function addNewPlayer() {
     var numOfPlayers = players.getElementsByTagName('li').length;
     if (numOfPlayers >= 16) {
-        console.log("Can not add more players!");
+        // console.log("Can not add more players!");
         return ;
     }
 
@@ -47,13 +46,13 @@ function addNewPlayer() {
     var newPlayerName = document.getElementById('new-player-name').value.trim();
     // Username field must not be empty
     if (newPlayerName.trim().length === 0) {
-        console.log("Username field must not be empty");
+        // console.log("Username field must not be empty");
         return ;
     }
     // Check if Player already in list
    
     if (playerExists(newPlayerName)) {
-        console.log("Player already in tournament");
+        // console.log("Player already in tournament");
         return ;
     }
 
@@ -69,13 +68,12 @@ function addNewPlayer() {
     
     // Update num of players on HTML
     var numOfPlayers = document.getElementById('num-of-players');
-    console.log(numOfPlayers);
+    // console.log(numOfPlayers);
     numOfPlayers.textContent = parseInt(numOfPlayers.textContent) + 1;
 
     // Append the new item to the list
     players.insertBefore(newPlayer, players.firstElementChild);
     // players.appendChild(newPlayer);
-    console.log("New player added");
 }
 
 // Get the reference to the button element
