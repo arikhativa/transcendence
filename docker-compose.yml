@@ -48,7 +48,7 @@ services:
   nginx:
     build: ./nginx
     container_name: nginx
-    restart: unless-stopped
+    restart: "unless-stopped"
     networks:
       - transcendence
     ports:
@@ -64,7 +64,7 @@ services:
 # Backend
   django:
     container_name: django
-    restart: unless-stopped
+    restart: "unless-stopped"
     build: .
     networks:
       - transcendence
@@ -72,6 +72,7 @@ services:
       - postgres
     env_file:
       - .env
+      # TODO change this vulome
     volumes:
       - .:/home:delegated
       - common-log-data:/var/log/django/
@@ -79,7 +80,7 @@ services:
 # DB
   postgres:
     container_name: postgres
-    restart: unless-stopped
+    restart: "unless-stopped"
     image: postgres:16
     networks:
       - transcendence
@@ -92,7 +93,7 @@ services:
   prometheus:
     container_name: prometheus
     image:  prom/prometheus:v2.47.2
-    restart: unless-stopped
+    restart: "unless-stopped"
     networks:
       - transcendence
     volumes:
@@ -111,13 +112,13 @@ services:
     volumes:
       - grafana-data:/var/lib/grafana
 
-    restart: unless-stopped
+    restart: "unless-stopped"
 
 # Exporters
   postgres-exporter:
     image: prometheuscommunity/postgres-exporter:v0.15.0
     container_name: postgres-exporter
-    restart: unless-stopped
+    restart: "unless-stopped"
     depends_on:
       - postgres
     networks:
@@ -130,7 +131,7 @@ services:
     container_name: es-exporter
     command:
       - '--es.uri=http://elasticsearch:9200'
-    restart: unless-stopped
+    restart: "unless-stopped"
     depends_on:
       - setup
       - elasticsearch
@@ -145,7 +146,7 @@ services:
   elasticsearch:
     image: elasticsearch:8.11.1
     container_name: elasticsearch
-    restart: unless-stopped
+    restart: "unless-stopped"
     volumes:
       - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
       - elastic-data:/usr/share/elasticsearch/data/
@@ -158,7 +159,7 @@ services:
   logstash:
     image: logstash:8.11.1
     container_name: logstash
-    restart: unless-stopped
+    restart: "unless-stopped"
     volumes:
     - ./logstash/config:/usr/share/logstash/config:ro
     - ./logstash/pipeline:/usr/share/logstash/pipeline:ro
@@ -175,7 +176,7 @@ services:
   kibana:
     image: kibana:8.11.1
     container_name: kibana
-    restart: unless-stopped
+    restart: "unless-stopped"
     volumes:
       - ./kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml:ro
     env_file:
@@ -197,7 +198,7 @@ services:
       - ./setup/lib.sh:/lib.sh:ro
     depends_on:
       - elasticsearch  
-    restart: no
+    restart: "no"
     networks:
       - transcendence
     env_file:
@@ -208,7 +209,7 @@ services:
   adminer:
     container_name: adminer
     image: adminer:latest
-    restart: unless-stopped
+    restart: "unless-stopped"
     depends_on:
       - postgres
     networks:

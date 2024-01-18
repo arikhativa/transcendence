@@ -1,11 +1,11 @@
 
-FROM debian:bookworm
+FROM python:3.11.7-slim-bullseye
 
 # install python
 RUN apt-get update
 RUN apt-get install -y postgresql-client
-RUN apt-get install -y python3.11
-RUN apt-get install -y python3.11-venv
+# RUN apt-get install -y python3.11
+# RUN apt-get install -y python3.11-venv
 RUN apt-get install -y python3-pip
 
 # Utils

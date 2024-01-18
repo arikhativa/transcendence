@@ -1,7 +1,7 @@
 
 DC_FILE_DEV := docker-compose.yml
 
-DC := docker compose -f $(DC_FILE_DEV)
+DC := docker-compose -f $(DC_FILE_DEV)
 DX := docker exec 
 UP := up -d --build
 
