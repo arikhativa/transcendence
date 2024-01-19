@@ -1,7 +1,7 @@
 import { GameController } from './GameController.js';
 import { ScreenManager } from './ScreenManager.js';
 import { Tournament } from './TournamentManager.js';
-import { Customization } from './Customization.js';
+// import { Customization } from './Customization.js';
 
 const playersDataElement = document.getElementById('players-data');
 const playersDataString = playersDataElement ? playersDataElement.dataset.players : null;
@@ -34,7 +34,7 @@ window.onresize = onResize;
 //Game SETUP
 let  tournament = new Tournament();
 let  game = new GameController(tournament.nextMatch(), {barriers: true, ballSpeed: 3, bonus: true});
-let custom = new Customization(game, canvas);
+// let custom = new Customization(game, canvas);
 let screenManager = new ScreenManager();
 
 // Input handler
@@ -58,7 +58,7 @@ window.addEventListener('keyup', (e) => {
         return ;
     } else if (screenManager.currentScreen == screenManager.screens.INTRO) {
         window.addEventListener('click',  function(event) {custom.listener(event, custom)});
-        screenManager.nextScreen = screenManager.screens.CUSTOMIZATION;
+        screenManager.nextScreen = screenManager.screens.TOURNAMENTTREE;
     } else if (screenManager.currentScreen == screenManager.screens.CUSTOMIZATION) {
         window.removeEventListener('click', custom.listener);
         screenManager.nextScreen = screenManager.screens.TOURNAMENTTREE;
@@ -86,7 +86,7 @@ function gameLoop() {
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     //Show screens
-    screenManager.loop(ctx, canvas, game, tournament, custom);
+    screenManager.loop(ctx, canvas, game, tournament);
     //Manage the torunament
     tournament.handler(game, screenManager);
 
