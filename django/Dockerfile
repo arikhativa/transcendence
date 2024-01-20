@@ -6,8 +6,8 @@ RUN apt-get update
 RUN apt-get install -y postgresql-client
 
 
-COPY src /home/
-# RUN chmod +x -R /home
+# TODO Add this copy and remove the dc volume
+# COPY src /home/
 
 COPY conf /etc/django
 RUN chmod +x /etc/django/run_basic_migrations.sh

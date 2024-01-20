@@ -73,6 +73,7 @@ services:
     env_file:
       - .env
     volumes:
+      - ./django/src:/home/
       - common-log-data:/var/log/django/
 
 # DB
