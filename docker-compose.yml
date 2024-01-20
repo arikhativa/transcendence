@@ -65,16 +65,14 @@ services:
   django:
     container_name: django
     restart: "unless-stopped"
-    build: .
+    build: ./django
     networks:
       - transcendence
     depends_on:
       - postgres
     env_file:
       - .env
-      # TODO change this vulome
     volumes:
-      - .:/home:delegated
       - common-log-data:/var/log/django/
 
 # DB
