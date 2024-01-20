@@ -1,6 +1,7 @@
 from twofa.views import _user_jwt_cookie
 from django.views.decorators.csrf import csrf_protect
 from django.utils.translation import gettext as _
+from django.http import JsonResponse
 
 @csrf_protect
 def game_settings(request):
@@ -55,5 +56,22 @@ def save_game_settings(request, user):
 		user.player_1_color = request.POST.get('player1')
 		user.player_2_color = request.POST.get('player2')
 		user.save()
+
+def get_game_settings(request):
+	user = _user_jwt_cookie(request)
+	user_settings = {
+		"bonus": False,
+		"walls": False,
+		"player1_color": "white",
+		"player2_color": "white",
+	}
+
+	if user is not None:
+		user_settings["bonus"] = user.bonus
+		user_settings["walls"] = user.walls
+		user_settings["player1_color"] = user.player_1_color
+		user_settings["player2_color"] = user.player_2_color
+	
+	return JsonResponse(user_settings)
 	
 	
