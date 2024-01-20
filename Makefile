@@ -1,6 +1,13 @@
 
+
 DC_FILE_DEV := docker-compose.yml
-DC := docker-compose -f $(DC_FILE_DEV)
+DC := docker compose -f $(DC_FILE_DEV)
+
+# Mac does not use docker compose (only docker-compose)
+unameOut := $(shell uname -s)
+ifeq ($(unameOut), Darwin)
+	DC := docker-compose -f $(DC_FILE_DEV)
+endif
 
 COMMON_VOLUME := .docker-volume-mnt/commonlog_data
 ELASTIC_VOLUME := .docker-volume-mnt/elastic_data
