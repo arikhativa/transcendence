@@ -1,12 +1,11 @@
 from django.shortcuts import render
 from API.views import authenticate_42
 from django.utils import translation
-from django.shortcuts import redirect
-from django.http import HttpResponse, HttpResponseNotFound
+from django.http import HttpResponseNotFound
 from django.conf import settings
 from twofa.views import twofa, validate_2fa, qr_setup, email_setup, delete_jwt, _jwt_is_expired, _user_jwt_cookie
 from game.views import game_setup
-from game_settings.views import game_settings
+from game_settings.views import game_settings, get_game_settings
 
 def spa_view(request):
 	try:
@@ -89,6 +88,9 @@ def game_settings_view(request):
 		return render(request, "main.html")
 	context = game_settings(request)
 	return render(request, "game_settings.html", context)
+
+def get_game_settings_view(request):
+	return get_game_settings(request)
 
 def tournament_view(request):
 	if not is_logged_in(request)[0]:

@@ -14,6 +14,7 @@ urlpatterns = [
     path("main/", views.spa_view, name="main"),
     path("game/", views.spa_view, name="game"),
     path("game_settings/", views.spa_view, name="game_settings"),
+    path("get_game_settings/", views.get_game_settings_view, name="get_game_settings"),
     path("tournament/", views.spa_view, name="tournament"),
     path("twofa", views.spa_view, name="twofa"),
     path("API/authenticate_42", views.api_view, name="api"),
