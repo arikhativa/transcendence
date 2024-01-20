@@ -42,13 +42,13 @@ elk/re:
 	$(DC) down $(ELK_CONTAINERS)
 	$(DC) $(UP) $(ELK_CONTAINERS)
 
-clear:
+clean:
 	$(DC) down
 
-fclear:
+fclean:
 	$(DC) down --volumes --rmi local
 
-re: clear all
+re: clean all
 
 restart: 
 	$(DC) restart
