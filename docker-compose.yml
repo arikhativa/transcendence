@@ -188,13 +188,6 @@ services:
   setup:
     container_name: setup
     build: ./setup
-    volumes:
-      - ./setup/kibana:/kibana:ro
-      - ./setup/templates:/templates:ro
-      - ./setup/policies:/policies:ro
-      - ./setup/roles:/roles:ro
-      - ./setup/entrypoint.sh:/entrypoint.sh:ro
-      - ./setup/lib.sh:/lib.sh:ro
     depends_on:
       - elasticsearch  
     restart: "no"
