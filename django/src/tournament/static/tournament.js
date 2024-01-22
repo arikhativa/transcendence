@@ -1,12 +1,12 @@
 var players = document.getElementById('tournament-players');
 
-function getTournamentPlayers() {
+async function getTournamentPlayers() {
     const playerList = [];
     var names = players.getElementsByTagName('li');
     for (var i = 0; i < names.length; i++) {
         playerList.push(names[i].innerText);
     }
-    showSection('game', {"players": playerList});
+    return await showSection('game', {"players": playerList});
 }
 
 function playerExists(name) {

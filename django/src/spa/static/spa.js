@@ -4,9 +4,9 @@ window.addEventListener('popstate', function(event) {
         showSection(event.state.path);
 });
 
-function showSection(section, paramObject) {
+async function showSection(section, paramObject) {
     if (section == undefined) {
-        return;
+        return Promise.resolve();
     }
 
     var url = new URL(window.location.href);
@@ -28,7 +28,7 @@ function showSection(section, paramObject) {
 
     url.pathname = `section/${section}/`;
 
-    fetch(url.href)
+    return fetch(url.href)
         .then(response => {
             if (!response.ok || response.status != 200) {
                 throw new Error('Network response was not ok');
@@ -52,7 +52,6 @@ function showSection(section, paramObject) {
             history.pushState(null, null, historyURL.href);
         })
         .catch(error => console.debug('Error loading HTML:', error));
-    
 }
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -62,8 +61,8 @@ document.addEventListener("DOMContentLoaded", function() {
             // console.error("Error: button.value is undefined");
             return;
         }
-        button.onclick = function() {
-            showSection(this.value)
+        button.onclick = async function() {
+            return await showSection(this.value)
         }
     })
 
