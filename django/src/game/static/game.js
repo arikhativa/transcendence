@@ -2,6 +2,8 @@ import { GameController } from './GameController.js';
 import { ScreenManager } from './ScreenManager.js';
 import { Tournament } from './TournamentManager.js';
 
+const usernameDataElement = document.getElementById('username-data');
+const usernameDataString = usernameDataElement ? usernameDataElement.dataset.username : null;
 const playersDataElement = document.getElementById('players-data');
 const playersDataString = playersDataElement ? playersDataElement.dataset.players : null;
 let playersList = [];
@@ -11,6 +13,19 @@ if (playersDataString) {
     const playersParam = new URLSearchParams(playersDataString).get('players');
     
     playersList = playersParam ? decodeURIComponent(playersParam).split(',') : [];
+	if (playersList.length === 0)
+	{
+		playersList.push(usernameDataString);
+		playersList.push("Player2");
+	}
+	if (playersList.length === 1)
+	{
+		playersList.unshift(usernameDataString);
+	}
+}
+else {
+	playersList.push(usernameDataString);
+	playersList.push("Player2");
 }
 
 
