@@ -100,7 +100,7 @@ def set_language(request, language_code):
 		renderizado.set_cookie(settings.LANGUAGE_COOKIE_NAME, language_code)
 		return renderizado
 	else:
-		return HttpResponseNotFound()
+		return spa_view(request)
 
 def logout_view(request):
 	delete_jwt(request)
