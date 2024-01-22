@@ -36,7 +36,7 @@ def spa_view(request):
 		if section == "email_setup":
 			context, token = email_setup(request)
 		if section == "game" and logged_in:
-			context = game_setup(request, context)
+			context = game_setup(request, context, user)
 
 		if section == "main" and logged_in:
 			context, token = logged_page(request, user)
@@ -77,7 +77,9 @@ def main_view(request):
 def game_view(request):
 	if not is_logged_in(request)[0]:
 		return render(request, "main.html")
-	context = game_setup(request, {})
+	logged_in, user = is_logged_in(request)
+
+	context = game_setup(request, {}, user)
 	return render(request, "game.html", context)
 
 def tournament_view(request):

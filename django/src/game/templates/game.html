@@ -11,6 +11,7 @@
 <script type="module" src="{% static 'TournamentManager.js' %}"></script>
 
 {% block main_content %}
+  <div id="username-data" data-username="{{ username|safe }}"></div>
   <div id="players-data" data-players="{{ players|safe }}"></div>
   <canvas id="canvas" class="bg-white"></canvas>
 {% endblock %}
