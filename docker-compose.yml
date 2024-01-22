@@ -95,11 +95,15 @@ services:
     restart: "unless-stopped"
     networks:
       - transcendence
+    ports:
+      - 9090:9090
     volumes:
       - ./prometheus:/etc/prometheus:ro
       - prometheus_data:/prometheus
     command:
-      - --config.file=/etc/prometheus/prometheus.yml
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.retention.size=100MB"
+      - "--storage.tsdb.retention.time=5d"
 
   grafana:
     build: ./grafana
