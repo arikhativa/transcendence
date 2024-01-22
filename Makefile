@@ -35,7 +35,7 @@ restart:
 
 # CI
 ci/test:
-	$(CI_DIR)/is_up.sh
+	ci/is_up.sh
 
 # Volumes
 $(POSTGRES_VOLUME): 
