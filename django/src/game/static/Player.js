@@ -5,7 +5,7 @@ export class Player {
         this.w = 30;
         this.h = 200;
 
-        this.speed = 5;
+        this.speed = 9;
         this.color = 'white'
         //Control state
         this.controls = {
@@ -28,10 +28,14 @@ export class Player {
     draw(ctx, board) {
 		ctx.fillStyle = 'white';
 		ctx.font = "50px Arial";
-        if (this.isLeftPlayer)
-		    ctx.fillText(this.name, board.w / 4, 50);
-        else
-		    ctx.fillText(this.name, 3 * (board.w / 4), 50);
+        if (this.isLeftPlayer) {
+            ctx.fillText(this.name, board.w / 4, 50);
+            ctx.fillText(this.score, board.w / 4, 50 + 50);
+        }
+        else {
+            ctx.fillText(this.name, 3 * (board.w / 4), 50);
+            ctx.fillText(this.score, 3 * (board.w / 4), 50 + 50);
+        }
 
         ctx.fillStyle = this.color;
         ctx.fillRect(this.x - this.w/2, this.y - this.h/2, this.w, this.h);

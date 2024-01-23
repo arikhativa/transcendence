@@ -97,6 +97,7 @@ let  game = new GameController(tournament.nextMatch());
 
 let screenManager = new ScreenManager();
 
+let frames = 0;
 function gameLoop() {
     //Clear Canvas
     ctx.fillStyle = 'black';

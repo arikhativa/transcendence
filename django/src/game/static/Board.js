@@ -25,28 +25,27 @@ export class Board {
         {
             ball.x = this.x;
             ball.y = this.y;
+            ball.generateRandomInitAngle();
             p2.score++;
         }
         if (ball.x + ball.w/2 >= p2.x - p2.w/2 && !(ball.y > p2.y - p2.h/2 && ball.y < p2.y + p2.h/2))
         {
             ball.x = this.x;
             ball.y = this.y;
+            ball.generateRandomInitAngle();
             p1.score++;
         }
 
-        // Ball collision with Player1
-        if (ball.x - ball.w/2 <= p1.x + p1.w/2 && (ball.y > p1.y - p1.h/2 && ball.y < p1.y + p1.h/2))
+        if (ball.nextStep().x - ball.w/2 <= p1.x + p1.w/2 && (ball.nextStep().y > p1.y - p1.h/2 && ball.nextStep().y < p1.y + p1.h/2))
         {
-            ball.dir.x *= -1;
-            if (p1.dir)
-                ball.dir.y = p1.dir;
+            ball.rotateBall(Math.PI);
+            ball.randomDeviation(0.9);
         }
         // Ball collision with Player2
-        if (ball.x + ball.w/2 >= p2.x - p2.w/2 && (ball.y > p2.y - p2.h/2 && ball.y < p2.y + p2.h/2))
+        if (ball.nextStep().x + ball.w/2 >= p2.x - p2.w/2 && (ball.nextStep().y > p2.y - p2.h/2 && ball.nextStep().y < p2.y + p2.h/2))
         {
-            ball.dir.x *= -1;
-            if (p2.dir)
-                ball.dir.y = p2.dir;
+            ball.rotateBall(Math.PI);
+            ball.randomDeviation(0.9);
         }
         // -------------------------------------------------------------------------------------
     }
