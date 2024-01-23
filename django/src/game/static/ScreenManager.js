@@ -99,8 +99,13 @@ export class ScreenManager {
     }
     
 
-	drawBoxes(ctx, ammount, tile_width, tile_height, size, i, round)
+	drawBoxes(ctx, ammount, tile_width, tile_height, size, i, tournament)
 	{
+		let iii = 0;
+		let mid = tournament.auxTournament.length / 2;
+		if (mid * 2 < tournament.auxTournament.length)
+			++mid;
+
 		for (let k = 0; k < ammount; k++) {
 
 			let pos_left = [(i * tile_width) + tile_width/2, (k * tile_height) + tile_height/2];
@@ -116,34 +121,43 @@ export class ScreenManager {
 			// round 3 is round of 8
 			// round 2 is round of 4
 			// round 1 is round of 2
-			// i 0 is -> 16
-			// i 1 is -> 8
-			// i 2 is -> 4
-			// i 3 is -> 2
-			if (i == round)
+			// i 1 is -> 16
+			// i 2 is -> 8
+			// i 3 is -> 4
+			// i 4 is -> 2
+			if (i == 4 - tournament.round)
 			{
 				ctx.fillStyle = 'white';
 				ctx.font = "30px Arial";
-				ctx.fillText("Player name1", pos_right[0], pos_right[1] + 15);
+
+				ctx.fillText(tournament.auxTournament[iii].obj.name, pos_right[0], pos_right[1] + 15);
 	
-				ctx.fillText("Player name", pos_left[0], pos_left[1] + 15);
+				if (mid < tournament.auxTournament.length)
+					ctx.fillText(tournament.auxTournament[mid].obj.name, pos_left[0], pos_left[1] + 15);
+
 				ctx.fillStyle = 'white';
+				++iii;
+				++mid;
 			}
 
 		}
 	}
 
     tournamentTreeScreen(ctx, tournament) {
+		if (!canvas)
+			return ;
+
         tournament.phaseChange = false;
         let depth = 4;
         let size = (8);
         ctx.fillStyle = 'white';
 
+
         let tile_width = canvas.width / size;
         for (let i = 0; i < size/2; i++) {
             let ammount = 2**(depth - 1 - i);
             let tile_height = canvas.height / ammount;
-			this.drawBoxes(ctx, ammount, tile_width, tile_height, size, i, tournament.round);
+			this.drawBoxes(ctx, ammount, tile_width, tile_height, size, i, tournament);
         }
     }
 

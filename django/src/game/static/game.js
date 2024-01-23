@@ -74,8 +74,7 @@ window.addEventListener('keyup', (e) => {
     if (screenManager.currentScreen == screenManager.screens.GAME) {
 		if (e.key === "n" || e.key === "N")
 		{
-			tournament.lastMatchIsFinished = true;
-			game.winner_name = game.p1.name;
+			game.last_winner = game.p1;
 			return ;
 		}
         game.pause = !game.pause;
