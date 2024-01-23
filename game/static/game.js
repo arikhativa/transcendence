@@ -55,14 +55,20 @@ window.addEventListener('keyup', (e) => {
         game.pause = !game.pause;
         return ;
     } else if (screenManager.currentScreen == screenManager.screens.INTRO) {
-        screenManager.nextScreen = screenManager.screens.VSSCREEN;
+        screenManager.nextScreen = screenManager.screens.TOURNAMENTTREE;
     } else if (screenManager.currentScreen == screenManager.screens.VSSCREEN) {
         screenManager.nextScreen = screenManager.screens.GAME;
     } else if (screenManager.currentScreen == screenManager.screens.ENDOFMATCH) {
+        if (tournament.phaseChange)
+            screenManager.nextScreen = screenManager.screens.TOURNAMENTTREE
+        else
+            screenManager.nextScreen = screenManager.screens.VSSCREEN;
+    } else if (screenManager.currentScreen == screenManager.screens.TOURNAMENTTREE) {
         screenManager.nextScreen = screenManager.screens.VSSCREEN;
     } else if (screenManager.currentScreen == screenManager.screens.ENDOFTOURNAMENT) {
         //TODO: reset tournament
     }
+    //TODO: new screens can be added here if you want to switch screens using space
     screenManager.transition = true;
 });
 document.addEventListener('keydown', handleKeyPress);
