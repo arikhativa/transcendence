@@ -23,11 +23,20 @@ export class Ball {
     }
 
     generateRandomInitAngle() {
-        let angle = Math.random() * Math.PI / 2 - Math.PI / 4
-        this.angle += angle;
+        let min, max;
+        if (Math.cos(this.angle) < 0) {
+            min = 2*Math.PI - 3*Math.PI/9
+            max = 2*Math.PI + 3*Math.PI/9
+        } else {
+            min = Math.PI - 3*Math.PI/9
+            max = Math.PI + 3*Math.PI/9
+        }
+        this.angle = 0;
+        this.randomDeviation(min, max);
         if (this.angle >= 2 * Math.PI) this.angle -= (2 * Math.PI);
+        if (this.angle < 0) this.angle += (2 * Math.PI);
         this.dir = {
-            x: Math.sign(Math.random() * 2 - 1) * Math.cos(this.angle),
+            x: Math.cos(this.angle),
             y: -Math.sin(this.angle),
         };
     }

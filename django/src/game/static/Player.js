@@ -4,7 +4,7 @@ export class Player {
         this.name = name
         this.w = 30;
         this.h = 200;
-        this.h_visual = this.h - this.h * 0.01;
+        this.h_visual = this.h - this.h * 0.2;
 
         this.speed = 9;
         this.color = 'white'
