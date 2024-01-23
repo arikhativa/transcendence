@@ -6,7 +6,7 @@ async function getTournamentPlayers() {
     for (var i = 0; i < names.length; i++) {
         playerList.push(names[i].innerText);
     }
-    return await showSection('game', {"players": playerList});
+    return await showSection('game', {"players": playerList}, true);
 }
 
 function playerExists(name) {

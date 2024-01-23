@@ -4,7 +4,7 @@ window.addEventListener('popstate', function(event) {
         showSection(event.state.path);
 });
 
-async function showSection(section, paramObject) {
+async function showSection(section, paramObject, shouldPushState) {
     if (section == undefined) {
         return Promise.resolve();
     }
@@ -49,7 +49,8 @@ async function showSection(section, paramObject) {
                 newScript.src = script.src + '?v=' + new Date().getTime();
                 script.parentNode.replaceChild(newScript, script);
             });
-            history.pushState(null, null, historyURL.href);
+			if (shouldPushState)
+            	history.pushState(null, null, historyURL.href);
         })
         .catch(error => console.debug('Error loading HTML:', error));
 }
@@ -62,8 +63,28 @@ document.addEventListener("DOMContentLoaded", function() {
             return;
         }
         button.onclick = async function() {
-            return await showSection(this.value)
+            return await showSection(this.value, undefined, true)
         }
     })
 
 });
+
+const validSection = ["game", "tournament", "main"];
+
+window.addEventListener('popstate', async function(event) {
+	let section = event.target.location.pathname;
+
+	section = section.replace(/^\//, "");
+	section = section.replace(/\/$/, "");
+
+	if (!validSection.includes(section))
+		section = "main";
+
+	const playersParam = new URLSearchParams(event.target.location.search).get('players');
+
+	if (playersParam)
+		return await showSection(section, {"players": playersParam}, false);
+	else
+		return await showSection(section, undefined, false);
+
+   }, false);
