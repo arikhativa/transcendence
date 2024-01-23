@@ -43,9 +43,6 @@ export class ScreenManager {
         this.transitionHandler();
 	}
 
-	draw(ctx) {
-	}
-
     //Screen Handlers
     gameScreen(ctx, game) {
         if (!this.transition && !game.pause)
@@ -98,37 +95,55 @@ export class ScreenManager {
         ctx.textAlign = "center";
         ctx.fillText(game.winner_name + " won", canvas.width/2, canvas.height/2 - 70);
         ctx.fillText("the match!", canvas.width/2, canvas.height/2 + 100);
+
     }
     
+
+	drawBoxes(ctx, ammount, tile_width, tile_height, size, i, round)
+	{
+		for (let k = 0; k < ammount; k++) {
+
+			let pos_left = [(i * tile_width) + tile_width/2, (k * tile_height) + tile_height/2];
+			let pos_right = [((size - i - 1) * tile_width) + tile_width/2, (k * tile_height) + tile_height/2];
+			//Player Boxes
+			let h = tile_width / 2;
+			ctx.lineWidth = 8;
+			ctx.strokeStyle = "white";
+			ctx.strokeRect(pos_left[0] - tile_width/2 + 10, pos_left[1] - h/2, tile_width - 20, h);
+			ctx.strokeRect(pos_right[0] - tile_width/2 + 10, pos_right[1] - h/2, tile_width - 20, h);
+
+			// round 4 is round of 16
+			// round 3 is round of 8
+			// round 2 is round of 4
+			// round 1 is round of 2
+			// i 0 is -> 16
+			// i 1 is -> 8
+			// i 2 is -> 4
+			// i 3 is -> 2
+			if (i == round)
+			{
+				ctx.fillStyle = 'white';
+				ctx.font = "30px Arial";
+				ctx.fillText("Player name1", pos_right[0], pos_right[1] + 15);
+	
+				ctx.fillText("Player name", pos_left[0], pos_left[1] + 15);
+				ctx.fillStyle = 'white';
+			}
+
+		}
+	}
+
     tournamentTreeScreen(ctx, tournament) {
         tournament.phaseChange = false;
-        let depth = tournament.maxDepth;
-        let size = ((2**depth)/2 + 2);
+        let depth = 4;
+        let size = (8);
         ctx.fillStyle = 'white';
-    
+
         let tile_width = canvas.width / size;
         for (let i = 0; i < size/2; i++) {
             let ammount = 2**(depth - 1 - i);
             let tile_height = canvas.height / ammount;
-            let h = tile_width * (9/18);
-            for (let k = 0; k < ammount; k++) {
-                let pos_left = [(i * tile_width) + tile_width/2, (k * tile_height) + tile_height/2];
-                let pos_right = [((size - i - 1) * tile_width) + tile_width/2, (k * tile_height) + tile_height/2];
-                //Player Boxes
-                let h = tile_width / 2;
-                ctx.lineWidth = 8;
-                ctx.strokeStyle = "white";
-                ctx.strokeRect(pos_left[0] - tile_width/2 + 10, pos_left[1] - h/2, tile_width - 20, h);
-                ctx.strokeRect(pos_right[0] - tile_width/2 + 10, pos_right[1] - h/2, tile_width - 20, h);
-    
-                //Player Names
-                ctx.fillStyle = 'white';
-                ctx.font = "30px Arial";
-                ctx.fillText("Player name", pos_right[0], pos_right[1] + 15);
-    
-                ctx.fillText("Player name", pos_left[0], pos_left[1] + 15);
-                ctx.fillStyle = 'white';
-            }
+			this.drawBoxes(ctx, ammount, tile_width, tile_height, size, i, tournament.round);
         }
     }
 

@@ -54,7 +54,9 @@ export class Tournament {
     this.auxTournament = this.tournament;
     fillTournament(this.auxTournament, this.maxDepth);
     this.len = this.auxTournament.length;
-    //console.log(this.tournament);
+
+    this.round = getMaxDepth(this.len);
+	console.log("this.round", this.round);
   }
 
   restartTournament() {
@@ -111,6 +113,7 @@ export class Tournament {
     }
     // Right player config
     m[1].setRightPlayer();
+	++this.round;
     return (m);
   }
   
