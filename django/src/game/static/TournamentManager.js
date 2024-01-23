@@ -54,7 +54,8 @@ export class Tournament {
     this.auxTournament = this.tournament;
     fillTournament(this.auxTournament, this.maxDepth);
     this.len = this.auxTournament.length;
-    //console.log(this.tournament);
+
+    this.round = getMaxDepth(this.len);
   }
 
   restartTournament() {
@@ -129,6 +130,7 @@ export class Tournament {
     this.len = this.auxTournament.length;
     if (this.currentDepth === 0)
       return this.endTournament();
+	--this.round;
     return true;
   }
   
@@ -144,11 +146,13 @@ export class Tournament {
   }
 
   handler(game, screenManager) {
+
     if (!this.isFinished) {
         if (game.last_winner !== null) {
             this.lastMatchWinner(game.last_winner);
         }
         let m = this.nextMatch();
+
         if (m != null) {
             screenManager.nextScreen = screenManager.screens.ENDOFMATCH;
             screenManager.transition = true;
