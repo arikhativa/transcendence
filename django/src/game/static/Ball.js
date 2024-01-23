@@ -40,8 +40,8 @@ export class Ball {
             y: -Math.sin(this.angle),
         };
     }
-    randomDeviation(maxTimes2) {
-        let randomOffset = Math.random() * maxTimes2 - maxTimes2/2;
+    randomDeviation(min, max) {
+        let randomOffset = Math.random() * (max - min) + min;
         this.rotateBall(randomOffset);
         console.log(randomOffset);
     }

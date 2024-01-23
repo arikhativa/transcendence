@@ -4,6 +4,7 @@ export class Player {
         this.name = name
         this.w = 30;
         this.h = 200;
+        this.h_visual = this.h - this.h * 0.01;
 
         this.speed = 9;
         this.color = 'white'
@@ -39,7 +40,7 @@ export class Player {
         }
 
         ctx.fillStyle = this.color;
-        ctx.fillRect(this.x - this.w/2, this.y - this.h/2, this.w, this.h);
+        ctx.fillRect(this.x - this.w/2, this.y - this.h_visual/2, this.w, this.h_visual);
     }
 
     move_listener(e, isKeyDown) {

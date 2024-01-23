@@ -36,16 +36,25 @@ export class Board {
             p1.score++;
         }
 
+        // Ball collision with Player1 | LEFT
         if (ball.nextStep().x - ball.w/2 <= p1.x + p1.w/2 && (ball.nextStep().y > p1.y - p1.h/2 && ball.nextStep().y < p1.y + p1.h/2))
         {
-            ball.rotateBall(Math.PI);
-            ball.randomDeviation(0.9);
+            ball.angle = 0;
+            let min = 2*Math.PI - 3*Math.PI/9
+            let max = 2*Math.PI + 3*Math.PI/9
+            ball.randomDeviation(min, max);
+            // ball.rotateBall(Math.PI);
+            // ball.randomDeviation(0.9);
         }
-        // Ball collision with Player2
+        // Ball collision with Player2 | RIGHT
         if (ball.nextStep().x + ball.w/2 >= p2.x - p2.w/2 && (ball.nextStep().y > p2.y - p2.h/2 && ball.nextStep().y < p2.y + p2.h/2))
         {
-            ball.rotateBall(Math.PI);
-            ball.randomDeviation(0.9);
+            ball.angle = 0;
+            let min = Math.PI - 3*Math.PI/9
+            let max = Math.PI + 3*Math.PI/9
+            ball.randomDeviation(min, max);
+            // ball.rotateBall(Math.PI);
+            // ball.randomDeviation(0.9);
         }
         // -------------------------------------------------------------------------------------
     }
