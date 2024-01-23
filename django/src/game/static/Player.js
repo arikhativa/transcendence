@@ -1,6 +1,7 @@
 export class Player {
     // Constructor method
-    constructor(name) {
+    constructor(name, canvas) {
+		this.canvas = canvas;
         this.name = name
         this.w = 30;
         this.h = 200;
@@ -52,27 +53,21 @@ export class Player {
     }
 
     setLeftPlayer() {
-		if (!canvas)
-			return ;
-
         this.controls = {
             up: {state: false, keys: "wW"},
             down: {state: false, keys: "sS"}};
         this.x = 30;
-        this.y = canvas.height/2
+        this.y = this.canvas.height/2
         this.isLeftPlayer = true;
         this.score = 0;
     }
     
     setRightPlayer() {
-		if (!canvas)
-			return ;
-
         this.controls = {
             up: {state: false, keys: "iI"},
             down: {state: false, keys: "kK"}};
-        this.x = canvas.width - 30;
-        this.y = canvas.height/2;
+        this.x = this.canvas.width - 30;
+        this.y = this.canvas.height/2;
         this.isLeftPlayer = false;
         this.score = 0;
     } 

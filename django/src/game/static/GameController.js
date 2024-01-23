@@ -3,7 +3,8 @@ import { Board } from './Board.js';
 
 export class GameController {
     // Constructor method
-	constructor(players) {
+	constructor(players, canvas) {
+		this.canvas = canvas;
 		this.pause = false;
 		this.last_winner = null;
 		this.winner_name = ""
@@ -13,11 +14,8 @@ export class GameController {
 	}
 
 	setup() {
-		if (canvas)
-		{
-			this.ball = new Ball(canvas.width/2, canvas.height/2);
-			this.board = new Board(canvas.width, canvas.height);
-		}
+		this.ball = new Ball(this.canvas.width/2, this.canvas.height/2);
+		this.board = new Board(this.canvas.width, this.canvas.height);
 	}
 
 	setPlayers(m) {

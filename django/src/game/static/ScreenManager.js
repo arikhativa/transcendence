@@ -1,6 +1,7 @@
 export class ScreenManager {
     // Constructor method
-	constructor() {
+	constructor(canvas) {
+		this.canvas = canvas;
 		this.screens = {
 			INTRO: 0,
 			GAME: 1,
@@ -17,27 +18,27 @@ export class ScreenManager {
         this.transitionPerc = 1;
 	}
     
-    loop(ctx, canvas, game, tournament) {
+    loop(ctx, game, tournament) {
         ctx.globalAlpha = Math.min(Math.max(parseFloat(this.transitionPerc), 0), 1);
         //Draw game
         switch (this.currentScreen) {
             case this.screens.INTRO:
-                this.introScreen(ctx, canvas);
+                this.introScreen(ctx, this.canvas);
                 break;
             case this.screens.GAME:
                 this.gameScreen(ctx, game);
                 break;
             case this.screens.VSSCREEN:
-                this.vsScreen(ctx, canvas, game);
+                this.vsScreen(ctx, this.canvas, game);
                 break;
             case this.screens.ENDOFTOURNAMENT:
-                this.endOfTournamentScreen(ctx, canvas, game);
+                this.endOfTournamentScreen(ctx, this.canvas, game);
                 break;
             case this.screens.TOURNAMENTTREE:
                 this.tournamentTreeScreen(ctx, tournament);
                 break;
             case this.screens.ENDOFMATCH:
-                this.endOfMatchScreen(ctx, canvas, game);
+                this.endOfMatchScreen(ctx, this.canvas, game);
                 break;
         }
         this.transitionHandler();
@@ -144,19 +145,16 @@ export class ScreenManager {
 	}
 
     tournamentTreeScreen(ctx, tournament) {
-		if (!canvas)
-			return ;
-
         tournament.phaseChange = false;
         let depth = 4;
         let size = (8);
         ctx.fillStyle = 'white';
 
 
-        let tile_width = canvas.width / size;
+        let tile_width = this.canvas.width / size;
         for (let i = 0; i < size/2; i++) {
             let ammount = 2**(depth - 1 - i);
-            let tile_height = canvas.height / ammount;
+            let tile_height = this.canvas.height / ammount;
 			this.drawBoxes(ctx, ammount, tile_width, tile_height, size, i, tournament);
         }
     }

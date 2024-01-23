@@ -28,13 +28,18 @@ else {
 	playersList.push("Player2");
 }
 
-let  tournament = new Tournament(playersList);
+
 
 
 // Define canvas and a context to draw to
 let canvas = document.getElementById("canvas");
 setCanvasSize();
 let ctx;
+
+// Setup
+let  tournament = new Tournament(playersList, canvas);
+let screenManager = new ScreenManager(canvas);
+let  game = new GameController(tournament.nextMatch(), canvas);
 
 if (canvas)
 {
@@ -75,6 +80,7 @@ window.addEventListener('keyup', (e) => {
 		if (e.key === "n" || e.key === "N")
 		{
 			game.last_winner = game.p1;
+			game.winner_name = game.p1.name;
 			return ;
 		}
         game.pause = !game.pause;
@@ -98,10 +104,6 @@ window.addEventListener('keyup', (e) => {
 });
 document.addEventListener('keydown', handleKeyPress);
 
-//Game SETUP
-let  game = new GameController(tournament.nextMatch());
-
-let screenManager = new ScreenManager();
 
 function gameLoop() {
     //Clear Canvas
@@ -113,7 +115,7 @@ function gameLoop() {
     	ctx.fillRect(0, 0, canvas.width, canvas.height);
 
 		//Show screens
-		screenManager.loop(ctx, canvas, game, tournament);
+		screenManager.loop(ctx, game, tournament);
 	}
 
     //Manage the torunament

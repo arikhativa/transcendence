@@ -19,7 +19,8 @@ function getMaxDepth(len) {
 }
   
 export class Tournament {
-  constructor(playerList) {
+  constructor(playerList, canvas) {
+	this.canvas = canvas;
     this.isFinished = false;
     this.isClosed = false;
     this.lastMatchIsFinished = true;
@@ -38,7 +39,7 @@ export class Tournament {
       //console.log("Closed, can't add more players!");
       return ;
     }
-    let newPlayer = {obj: new Player(name), depth: 0};
+    let newPlayer = {obj: new Player(name, this.canvas), depth: 0};
     this.tournament.push(newPlayer);
     this.auxTournament = this.tournament;
   }
