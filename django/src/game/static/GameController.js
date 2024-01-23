@@ -50,4 +50,15 @@ export class GameController {
 		if (this.last_winner !== null)
 			this.winner_name = this.last_winner.name;
 	}
+
+	onResize(canvas) {
+		if (this.ball)
+			this.ball.onResize(canvas.width/2, canvas.height/2);
+		if (this.board)
+			this.board.onResize(canvas.width, canvas.height);
+		if (this.p1)
+			this.p1.onResize(canvas);
+		if (this.p2)
+			this.p2.onResize(canvas);
+	}
 }

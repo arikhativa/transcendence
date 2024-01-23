@@ -66,4 +66,16 @@ export class Board {
         ctx.fillRect(0 + 4, 0 + 4, this.goal.p1 - 4, this.h - 8);
         ctx.fillRect(this.goal.p2, 0 + 4, this.goal_size - 4, this.h - 8);
     }
-  }
+
+    onResize(w, h) {
+        this.x = w/2
+        this.y = h/2;
+        this.w = w;
+        this.h = h;
+        this.goal =
+        {
+            p1: this.goal_size,
+            p2: this.w - this.goal_size
+        }; 
+    }
+}

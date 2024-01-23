@@ -28,6 +28,7 @@ export class Player {
     draw(ctx, board) {
 		ctx.fillStyle = 'white';
 		ctx.font = "50px Arial";
+        ctx.textAlign = "center";
         if (this.isLeftPlayer) {
             ctx.fillText(this.name, board.w / 4, 50);
             ctx.fillText(this.score, board.w / 4, 50 + 50);
@@ -79,5 +80,17 @@ export class Player {
         this.y = canvas.height/2;
         this.isLeftPlayer = false;
         this.score = 0;
-    } 
+    }
+
+    onResize(canvas) {
+        if (!canvas)
+            return ;
+        if (this.isLeftPlayer) {
+            this.x = 30;
+            this.y = canvas.height/2; 
+        } else {
+            this.x = canvas.width - 30;
+            this.y = canvas.height/2
+        }
+    }
 }

@@ -48,7 +48,10 @@ function setCanvasSize() {
 }
 
 function onResize() {
+    game.pause = true;
     setCanvasSize();
+    if (game && canvas)
+        game.onResize(canvas);
 }
 
 window.onresize = onResize;
@@ -92,7 +95,7 @@ window.addEventListener('keyup', (e) => {
 document.addEventListener('keydown', handleKeyPress);
 
 //Game SETUP
-let  tournament = new Tournament(playersList);
+let  tournament = new Tournament(playersList, canvas);
 let  game = new GameController(tournament.nextMatch());
 
 let screenManager = new ScreenManager();

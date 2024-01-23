@@ -51,4 +51,8 @@ export class Ball {
             y: this.y + this.dir.y * this.speed
         };
     }
+    onResize(x, y) {
+        this.x = x;
+        this.y = y;
+    }
 }
