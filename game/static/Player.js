@@ -69,5 +69,11 @@ export class Player {
         this.y = canvas.height/2;
         this.isLeftPlayer = false;
         this.score = 0;
-    } 
+    }
+    setColor(color) {
+        this.color = color;
+    }
+    setSpeed(speed) {
+        this.speed = speed;
+    }
 }

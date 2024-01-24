@@ -9,6 +9,12 @@ export class GameController {
 		this.winner_name = ""
 		this.settings = settings
 
+		this.rightPlayerColor = 'red';
+		this.rightPlayerSpeed = 5;
+
+		this.leftPlayerColor = 'yellow';
+		this.leftPlayerSpeed = 5;
+
 		this.setup();
 		this.setPlayers(players);
 	}
@@ -20,7 +26,12 @@ export class GameController {
 
 	setPlayers(m) {
 		this.p1 = m[0]
+		this.p1.setColor(this.leftPlayerColor);
+		this.p1.setSpeed(this.leftPlayerSpeed);
+		
 		this.p2 = m[1]
+		this.p2.setColor(this.rightPlayerColor);
+		this.p2.setSpeed(this.rightPlayerSpeed);
 		this.last_winner = null;
 	}
 
