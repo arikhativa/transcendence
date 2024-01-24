@@ -31,7 +31,7 @@
 						{% endfor %}
 					  </select>
 				</div>
-				<div>
+				<div class="mb-3" >
 					  <p class="select-label">{% trans "Player 2 color selector:" %}</p>
 					  <select name="player2" class="form-select" aria-label="Player 2 color selector">
 						{% for key, value in color_translations.items %}
@@ -43,7 +43,7 @@
 						{% endfor %}
 					  </select>
 				</div>
-				<div>
+				<div class="mb-3">
 					<p class="select-label">{% trans "Ball color selector:" %}</p>
 					<select name="ballColor" class="form-select" aria-label="Ball color selector">
 					  {% for key, value in color_translations.items %}
@@ -54,7 +54,11 @@
 						  {% endif %}
 					  {% endfor %}
 					</select>
-			  </div>
+			  	</div>
+				<div class="mb-3">
+					<p class="select-label">{% trans "Ball Speed:" %}</p>
+					<input name="ballSpeed" type="range" class="form-range" min="3" max="10" value={{ ball_speed }} id="customRange2">
+				</div>
 				<div class="text-center mt-3">
 					<button class="btn btn-primary" type="submit">{% trans "Save" %}</button>
 				</div>
