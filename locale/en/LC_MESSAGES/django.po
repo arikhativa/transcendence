@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-13 17:14+0000\n"
+"POT-Creation-Date: 2024-01-24 12:10+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -39,22 +39,30 @@ msgid "Player 2 color selector:"
 msgstr "Player 2 color selector:"
 
 #: game_settings/templates/game_settings.html:47
+msgid "Ball color selector:"
+msgstr "Ball color selector:"
+
+#: game_settings/templates/game_settings.html:59
+msgid "Ball Speed:"
+msgstr "Ball Speed:"
+
+#: game_settings/templates/game_settings.html:63
 msgid "Save"
 msgstr "Save"
 
-#: game_settings/views.py:13
+#: game_settings/views.py:18
 msgid "white"
 msgstr "white"
 
-#: game_settings/views.py:14
+#: game_settings/views.py:19
 msgid "red"
 msgstr "red"
 
-#: game_settings/views.py:15
+#: game_settings/views.py:20
 msgid "green"
 msgstr "green"
 
-#: game_settings/views.py:16
+#: game_settings/views.py:21
 msgid "blue"
 msgstr "blue"
 
