@@ -28,6 +28,8 @@ else {
 	playersList.push("Player2");
 }
 
+let  tournament = new Tournament(playersList);
+
 
 // Define canvas and a context to draw to
 let canvas = document.getElementById("canvas");
@@ -67,9 +69,16 @@ window.addEventListener('keyup', (e) => {
     handleKeyPress(e, false);
 });
 window.addEventListener('keyup', (e) => {
-    if (e.key !== " " || screenManager.transition)
+    if ((e.key !== " " && e.key !== "n" && e.key !== "N") || screenManager.transition)
         return;
     if (screenManager.currentScreen == screenManager.screens.GAME) {
+		// 'n' or 'N' will skip the match and chose p1 as winner
+		if (e.key === "n" || e.key === "N")
+		{
+			game.last_winner = game.p1;
+			game.winner_name = game.p1.name;
+			return ;
+		}
         game.pause = !game.pause;
         return ;
     } else if (screenManager.currentScreen == screenManager.screens.INTRO) {
@@ -92,7 +101,6 @@ window.addEventListener('keyup', (e) => {
 document.addEventListener('keydown', handleKeyPress);
 
 //Game SETUP
-let  tournament = new Tournament(playersList);
 let  game = new GameController(tournament.nextMatch());
 
 let screenManager = new ScreenManager();
