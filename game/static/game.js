@@ -69,9 +69,16 @@ async function startGame() {
 
 
     const userSettings = await getGameSettings();
+    const gameSettings = {
+        barriers: userSettings.walls,
+        ballSpeed: userSettings.ball_speed,
+        bonus: userSettings.bonus,
+        leftPlayerColor: userSettings.player1_color,
+        rightPlayerColor: userSettings.player2_color,
+        ballColor: userSettings.ball_color,
+    }
     tournament = new Tournament();
-    //game = new GameController(tournament.nextMatch(), {barriers: true, ballSpeed: 3, bonus: true});
-    game = new GameController(tournament.nextMatch(), {barriers: userSettings.walls, ballSpeed: 3, bonus: userSettings.bonus});
+    game = new GameController(tournament.nextMatch(), gameSettings);
     screenManager = new ScreenManager();
 
 

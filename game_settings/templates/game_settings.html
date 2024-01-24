@@ -43,6 +43,18 @@
 						{% endfor %}
 					  </select>
 				</div>
+				<div>
+					<p class="select-label">{% trans "Ball color selector:" %}</p>
+					<select name="ballColor" class="form-select" aria-label="Ball color selector">
+					  {% for key, value in color_translations.items %}
+						  {% if ball_color == key %}
+							  <option selected value="{{ key }}">{{ value|capfirst }}</option>
+						  {% else %}
+							  <option value="{{ key }}">{{ value|capfirst }}</option>
+						  {% endif %}
+					  {% endfor %}
+					</select>
+			  </div>
 				<div class="text-center mt-3">
 					<button class="btn btn-primary" type="submit">{% trans "Save" %}</button>
 				</div>

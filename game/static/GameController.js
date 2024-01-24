@@ -9,10 +9,10 @@ export class GameController {
 		this.winner_name = ""
 		this.settings = settings
 
-		this.rightPlayerColor = 'red';
+		this.rightPlayerColor = this.settings.rightPlayerColor;
 		this.rightPlayerSpeed = 5;
 
-		this.leftPlayerColor = 'yellow';
+		this.leftPlayerColor = this.settings.leftPlayerColor;
 		this.leftPlayerSpeed = 5;
 
 		this.setup();
@@ -20,7 +20,7 @@ export class GameController {
 	}
 
 	setup() {
-		this.ball = new Ball(canvas.width/2, canvas.height/2, this.settings.ballSpeed);
+		this.ball = new Ball(canvas.width/2, canvas.height/2, this.settings.ballSpeed, this.settings.ballColor);
 		this.board = new Board(canvas.width, canvas.height, this.settings);
 	}
 

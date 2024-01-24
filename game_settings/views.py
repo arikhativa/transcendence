@@ -22,6 +22,7 @@ def game_settings(request):
 
 	player1_color = user.player_1_color
 	player2_color = user.player_2_color
+	ball_color = user.ball_color
 
 	if user is not None:
 		if user.bonus:
@@ -38,6 +39,7 @@ def game_settings(request):
 		"check_mode_walls": check_mode_walls,
 		"player1_color": player1_color,
 		"player2_color": player2_color,
+		"ball_color": ball_color,
 		"color_list": ["white", "red", "green", "blue"],
 		"color_translations": color_translations,
 		"section": "game_settings.html",
@@ -55,6 +57,7 @@ def save_game_settings(request, user):
 			user.walls = False
 		user.player_1_color = request.POST.get('player1')
 		user.player_2_color = request.POST.get('player2')
+		user.ball_color = request.POST.get('ballColor')
 		user.save()
 
 def get_game_settings(request):
@@ -64,6 +67,7 @@ def get_game_settings(request):
 		"walls": False,
 		"player1_color": "white",
 		"player2_color": "white",
+		"ball_color": "white",
 	}
 
 	if user is not None:
@@ -71,6 +75,8 @@ def get_game_settings(request):
 		user_settings["walls"] = user.walls
 		user_settings["player1_color"] = user.player_1_color
 		user_settings["player2_color"] = user.player_2_color
+		user_settings["ball_color"] = user.ball_color
+		user_settings["ball_speed"] = user.ball_speed
 	
 	return JsonResponse(user_settings)
 	

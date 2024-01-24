@@ -14,6 +14,8 @@ class Users(models.Model):
     walls = models.BooleanField(default=False)
     player_1_color = models.CharField(max_length=80, null=True, default='white')
     player_2_color = models.CharField(max_length=80, null=True, default='white')
+    ball_color = models.CharField(max_length=80, null=True, default='white')
+    ball_speed = models.IntegerField(default=3)
     wins = models.IntegerField()
     losses = models.IntegerField()
 

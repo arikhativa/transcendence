@@ -1,13 +1,13 @@
 export class Ball {
     // Constructor method
-    constructor(x, y, ballSpeed) {
+    constructor(x, y, ballSpeed, ballColor) {
         this.x = x;
         this.y = y;
         this.w = 30;
         this.h = 30;
 
         this.speed = ballSpeed;
-        this.color = 'white';
+        this.color = ballColor;
         this.dir = {
             x: 2/Math.sqrt(3),
             y: 1/Math.sqrt(3)
