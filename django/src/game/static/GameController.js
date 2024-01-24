@@ -3,26 +3,35 @@ import { Board } from './Board.js';
 
 export class GameController {
     // Constructor method
-	constructor(players) {
+	constructor(players, settings) {
 		this.pause = false;
 		this.last_winner = null;
 		this.winner_name = ""
+		this.settings = settings
+
+		this.rightPlayerColor = this.settings.rightPlayerColor;
+		this.rightPlayerSpeed = 5;
+
+		this.leftPlayerColor = this.settings.leftPlayerColor;
+		this.leftPlayerSpeed = 5;
 
 		this.setup();
 		this.setPlayers(players);
 	}
 
 	setup() {
-		if (canvas)
-		{
-			this.ball = new Ball(canvas.width/2, canvas.height/2);
-			this.board = new Board(canvas.width, canvas.height);
-		}
+		this.ball = new Ball(canvas.width/2, canvas.height/2, this.settings.ballSpeed, this.settings.ballColor);
+		this.board = new Board(canvas.width, canvas.height, this.settings);
 	}
 
 	setPlayers(m) {
 		this.p1 = m[0]
+		this.p1.setColor(this.leftPlayerColor);
+		this.p1.setSpeed(this.leftPlayerSpeed);
+		
 		this.p2 = m[1]
+		this.p2.setColor(this.rightPlayerColor);
+		this.p2.setSpeed(this.rightPlayerSpeed);
 		this.last_winner = null;
 	}
 
@@ -43,9 +52,9 @@ export class GameController {
 	}
 
 	checkWinner() {
-		if (this.p1.score == 3)
+		if (this.p1.score == 5)
 			this.last_winner = this.p1;
-		else if (this.p2.score == 3)
+		else if (this.p2.score == 5)
 			this.last_winner = this.p2;
 		if (this.last_winner !== null)
 			this.winner_name = this.last_winner.name;
