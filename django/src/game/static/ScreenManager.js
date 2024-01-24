@@ -112,7 +112,7 @@ export class ScreenManager {
 			let pos_right = [((size - i - 1) * tile_width) + tile_width/2, (k * tile_height) + tile_height/2];
 			//Player Boxes
 			let h = tile_width / 4;
-			ctx.lineWidth = 8;
+			ctx.lineWidth = 4;
 			ctx.strokeStyle = "white";
 			ctx.strokeRect(pos_left[0] - tile_width/2 + 10, pos_left[1] - h/2, tile_width - 20, h);
 			ctx.strokeRect(pos_right[0] - tile_width/2 + 10, pos_right[1] - h/2, tile_width - 20, h);
@@ -127,13 +127,17 @@ export class ScreenManager {
 			// i 4 is -> 2
 			if (i == 4 - tournament.round)
 			{
-				ctx.fillStyle = 'white';
-				ctx.font = "30px Arial";
+				let fontSize = (tile_width / 6);
+				let offset = (h / 5);
 
-				ctx.fillText(tournament.auxTournament[left_index].obj.name, pos_right[0], pos_right[1] + 15);
+				ctx.fillStyle = 'white';
+				ctx.font = `${fontSize}px Arial`;
+				ctx.textAlign = "center";
+
+				ctx.fillText(tournament.auxTournament[left_index].obj.name, pos_right[0], pos_right[1] + offset);
 	
 				if (right_index < tournament.auxTournament.length)
-					ctx.fillText(tournament.auxTournament[right_index].obj.name, pos_left[0], pos_left[1] + 15);
+					ctx.fillText(tournament.auxTournament[right_index].obj.name, pos_left[0], pos_left[1] + offset);
 
 				ctx.fillStyle = 'white';
 				++left_index;
