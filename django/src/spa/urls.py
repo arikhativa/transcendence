@@ -5,6 +5,7 @@ urlpatterns = [
     # these are to load section only
     path("section/tournament/", views.tournament_view, name="tournament"),
     path("section/game/", views.game_view, name="game"),
+	path("section/game_settings/", views.game_settings_view, name="game_settings"),
     path("section/main/", views.main_view, name="main"),
     path("section/validate_2fa_code/", views.validate_2fa_code, name="validate_2fa_code"),
     path("section/logout/", views.logout_view, name="logout"),
