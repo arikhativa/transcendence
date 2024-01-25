@@ -52,6 +52,9 @@ export class Player {
     }
 
     setLeftPlayer() {
+        if (!canvas)
+			return ;
+
         this.controls = {
             up: {state: false, keys: "wW"},
             down: {state: false, keys: "sS"}};
@@ -62,6 +65,9 @@ export class Player {
     }
     
     setRightPlayer() {
+        if (!canvas)
+			return ;
+        
         this.controls = {
             up: {state: false, keys: ["i", "I", "ArrowUp"]},
             down: {state: false, keys: ["k", "K", "ArrowDown"]}};
