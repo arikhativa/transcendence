@@ -8,6 +8,8 @@ urlpatterns = [
     path("section/main/", views.main_view, name="main"),
     path("section/validate_2fa_code/", views.validate_2fa_code, name="validate_2fa_code"),
     path("section/logout/", views.logout_view, name="logout"),
+	path("section/game_settings/", views.game_settings_view, name="game_settings"),
+    
     # these are to ALL of the page
     path("", views.spa_view, name="spa"),
     path("main/", views.spa_view, name="main"),
