@@ -39,6 +39,5 @@ export function translateGameText(textToTranslate) {
 		}
 	};
 
-	console.log(translations[language][textToTranslate]);
 	return translations[language][textToTranslate];
 }
