@@ -2,13 +2,36 @@ import { GameController } from './GameController.js';
 import { ScreenManager } from './ScreenManager.js';
 import { Tournament } from './TournamentManager.js';
 
+const usernameDataElement = document.getElementById('username-data');
+const usernameDataString = usernameDataElement ? usernameDataElement.dataset.username : null;
+const playersDataElement = document.getElementById('players-data');
+const playersDataString = playersDataElement ? playersDataElement.dataset.players : null;
+let playersList = [];
+
+if (playersDataString) {
+
+    const playersParam = new URLSearchParams(playersDataString).get('players');
+
+    playersList = playersParam ? decodeURIComponent(playersParam).split(',') : [];
+	if (playersList.length === 0)
+	{
+		playersList.push(usernameDataString);
+		playersList.push("Player2");
+	}
+	if (playersList.length === 1)
+	{
+		playersList.unshift(usernameDataString);
+	}
+}
+else {
+	playersList.push(usernameDataString);
+	playersList.push("Player2");
+}
+
 // Define canvas and a context to draw to
 const canvas = document.getElementById("canvas");
 setCanvasSize();
 const ctx = canvas.getContext("2d");
-
-
-window.onresize = onResize;
 
 //Game SETUP
 let tournament;
@@ -17,6 +40,8 @@ let screenManager;
 
 // Gmaejs
 function setCanvasSize() {
+	if (!canvas)
+		return ;
     canvas.width = canvas.parentElement.parentElement.clientWidth * 0.8;
     canvas.height = canvas.parentElement.parentElement.clientHeight * 0.8;
     //console.log(canvas.width, canvas.height);
@@ -26,11 +51,7 @@ function onResize() {
     setCanvasSize();
 }
 
-async function getGameSettings() {
-    const response = await fetch('/get_game_settings/');
-    const data = await response.json();
-    return data;
-}
+window.onresize = onResize;
 
 // Input handler
 function handleKeyPress(e, isKeyDown) {
@@ -56,18 +77,6 @@ function gameLoop() {
 }
 
 async function startGame() {
-    const playersDataElement = document.getElementById('players-data');
-    const playersDataString = playersDataElement ? playersDataElement.dataset.players : null;
-    let playersList = [];
-
-    if (playersDataString) {
-
-        const playersParam = new URLSearchParams(playersDataString).get('players');
-        
-        playersList = playersParam ? decodeURIComponent(playersParam).split(',') : [];
-    }
-
-
     const userSettings = await getGameSettings();
     const gameSettings = {
         barriers: userSettings.walls,
@@ -77,7 +86,7 @@ async function startGame() {
         rightPlayerColor: userSettings.player2_color,
         ballColor: userSettings.ball_color,
     }
-    tournament = new Tournament();
+    tournament = new Tournament(playersList);
     game = new GameController(tournament.nextMatch(), gameSettings);
     screenManager = new ScreenManager();
 
@@ -89,9 +98,16 @@ async function startGame() {
         handleKeyPress(e, false);
     });
     window.addEventListener('keyup', (e) => {
-        if (e.key !== " " || screenManager.transition)
+        if ((e.key !== " " && e.key !== "n" && e.key !== "N") || screenManager.transition)
             return;
         if (screenManager.currentScreen == screenManager.screens.GAME) {
+			// 'n' or 'N' will skip the match and chose p1 as winner
+			if (e.key === "n" || e.key === "N")
+			{
+				game.last_winner = game.p1;
+				game.winner_name = game.p1.name;
+				return ;
+			}
             game.pause = !game.pause;
             return ;
         } else if (screenManager.currentScreen == screenManager.screens.INTRO) {
@@ -118,11 +134,15 @@ async function startGame() {
 
 if (document.readyState !== 'complete') {
     window.addEventListener("DOMContentLoaded", (event) => {
-        console.log(event);
-        console.log("DOM fully loaded and parsed");
         startGame();
     });
 }
 else {
     startGame();
+}
+
+async function getGameSettings() {
+    const response = await fetch('/get_game_settings/');
+    const data = await response.json();
+    return data;
 }

@@ -19,7 +19,7 @@ function getMaxDepth(len) {
 }
   
 export class Tournament {
-  constructor() {
+  constructor(playerList) {
     this.isFinished = false;
     this.isClosed = false;
     this.lastMatchIsFinished = true;
@@ -30,7 +30,7 @@ export class Tournament {
     this.currentMatch = {p1: 0, p2: 1};
     this.phaseChange = false;
 
-    this.tmpFillTournament();
+    this.fillTournamentWithPlayers(playerList);
   }
   
   addPlayer(name) {
@@ -54,7 +54,7 @@ export class Tournament {
     this.auxTournament = this.tournament;
     fillTournament(this.auxTournament, this.maxDepth);
     this.len = this.auxTournament.length;
-    //console.log(this.tournament);
+	this.round = getMaxDepth(this.len);
   }
 
   restartTournament() {
@@ -129,6 +129,7 @@ export class Tournament {
     this.len = this.auxTournament.length;
     if (this.currentDepth === 0)
       return this.endTournament();
+	--this.round;
     return true;
   }
   
@@ -144,11 +145,13 @@ export class Tournament {
   }
 
   handler(game, screenManager) {
+
     if (!this.isFinished) {
         if (game.last_winner !== null) {
             this.lastMatchWinner(game.last_winner);
         }
         let m = this.nextMatch();
+
         if (m != null) {
             screenManager.nextScreen = screenManager.screens.ENDOFMATCH;
             screenManager.transition = true;
@@ -166,13 +169,10 @@ export class Tournament {
     }
   }
 
-  //TODO: remove this function when the user provided list can be used
-  tmpFillTournament() {
-    this.addPlayer("Alvaro");
-    this.addPlayer("Cristina");
-    this.addPlayer("Juan Jimenez");
-    this.addPlayer("Berto");
-    this.addPlayer("Mateo");
+  fillTournamentWithPlayers(players = []) {
+	for (let i = 0; i < players.length; i++) {
+		this.addPlayer(players[i]);
+	}
     this.closeTournament();
   }
 }
