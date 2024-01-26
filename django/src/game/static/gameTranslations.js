@@ -14,28 +14,28 @@ export function translateGameText(textToTranslate) {
 	// Add any translations here:
 	const translations = {
 		'en': {
-			'Press space to start!': 'Press space to start!',
-			'Press space to continue!': 'Press space to continue!',
-			' won the match!': ' won the match!',
-			' won the tournament!': ' won the tournament!',
+			'SPACE_TO_START': 'Press space to start!',
+			'SPACE_TO_CONTINUE': 'Press space to continue!',
+			'WON_MATCH': ' won the match!',
+			'WON_TOURNAMENT': ' won the tournament!',
 		},
 		'es': {
-			'Press space to start!': 'Presiona espacio para comenzar!',
-			'Press space to continue!': 'Presiona espacio para continuar!',
-			' won the match!': ' ganó la partida!',
-			' won the tournament!': ' ganó el torneo!',
+			'SPACE_TO_START': 'Presiona espacio para comenzar!',
+			'SPACE_TO_CONTINUE': 'Presiona espacio para continuar!',
+			'WON_MATCH': ' ganó la partida!',
+			'WON_TOURNAMENT': ' ganó el torneo!',
 		},
 		'fr': {
-			'Press space to start!': 'Appuyez sur espace pour commencer!',
-			'Press space to continue!': 'Appuyez sur espace pour continuer!',
-			' won the match!': ' a gagné le match!',
-			' won the tournament!': ' a gagné le tournoi!',
+			'SPACE_TO_START': 'Appuyez sur espace pour commencer!',
+			'SPACE_TO_CONTINUE': 'Appuyez sur espace pour continuer!',
+			'WON_MATCH': ' a gagné le match!',
+			'WON_TOURNAMENT': ' a gagné le tournoi!',
 		},
 		'he': {
-			'Press space to start!': 'לחץ על רווח כדי להתחיל!',
-			'Press space to continue!': 'לחץ על רווח כדי להמשיך!',
-			' won the match!': ' ניצח את המשחק!',
-			' won the tournament!': ' ניצח את הטורניר!',
+			'SPACE_TO_START': 'לחץ על רווח כדי להתחיל!',
+			'SPACE_TO_CONTINUE': 'לחץ על רווח כדי להמשיך!',
+			'WON_MATCH': ' ניצח את המשחק!',
+			'WON_TOURNAMENT': ' ניצח את הטורניר!',
 		}
 	};
 

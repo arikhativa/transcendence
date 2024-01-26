@@ -83,7 +83,7 @@ export class ScreenManager {
         ctx.font = "100px Arial";
         ctx.fillStyle = "white";
         ctx.textAlign = "center";
-        ctx.fillText(translateGameText("Press space to start!"), canvas.width/2, canvas.height/2 - 200);
+        ctx.fillText(translateGameText("SPACE_TO_START"), canvas.width/2, canvas.height/2 - 200);
         ctx.fillText("⬆️ W & I", canvas.width/2 - 300, canvas.height/2 + 50);
         ctx.fillText("⬇️ S & K", canvas.width/2 + 300, canvas.height/2 + 50);
 
