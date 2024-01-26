@@ -83,14 +83,14 @@ export class ScreenManager {
         ctx.font = "100px Arial";
         ctx.fillStyle = "white";
         ctx.textAlign = "center";
-        ctx.fillText(translateGameText("SPACE_TO_START"), canvas.width/2, canvas.height/2 - 200);
-        ctx.fillText("⬆️ W & I", canvas.width/2 - 300, canvas.height/2 + 50);
-        ctx.fillText("⬇️ S & K", canvas.width/2 + 300, canvas.height/2 + 50);
+        ctx.fillText(translateGameText("SPACE_TO_START"), canvas.width/2, canvas.height/2);
+        //ctx.fillText("⬆️ W & I", canvas.width/2 - 300, canvas.height/2 + 50);
+        //ctx.fillText("⬇️ S & K", canvas.width/2 + 300, canvas.height/2 + 50);
 
-        ctx.fillText("⏯ ", (canvas.width/2) - 100, (canvas.height * 0.8));
+        //ctx.fillText("⏯ ", (canvas.width/2) - 100, (canvas.height * 0.8));
 		const center_x = (canvas.width/2) + 50;
 		const center_y = (canvas.height * 0.72);
-		this.drawSpace(ctx, center_x, center_y);
+		//this.drawSpace(ctx, center_x, center_y);
 
     }
     
@@ -113,7 +113,7 @@ export class ScreenManager {
         ctx.font = "100px Arial";
         ctx.fillStyle = "white";
         ctx.textAlign = "center";
-        ctx.fillText("🥇 " + game.winner_name + " 🥇", canvas.width/2, canvas.height/2 - 70);
+        ctx.fillText("🥇" + game.winner_name + translateGameText('WON_TOURNAMENT'), canvas.width/2, canvas.height/2 - 70);
         ctx.fillText("🏆", canvas.width/2, canvas.height/2 + 100);
     }
     
@@ -125,7 +125,7 @@ export class ScreenManager {
         ctx.font = "100px Arial";
         ctx.fillStyle = "white";
         ctx.textAlign = "center";
-        ctx.fillText("🏅 " + game.winner_name + " 🏅", canvas.width/2, canvas.height/2 - 70);
+        ctx.fillText("🥇" + game.winner_name + translateGameText('WON_MATCH'), canvas.width/2, canvas.height/2 - 70);
 
     }
 
