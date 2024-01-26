@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 });
 
-const validSection = ["game", "tournament", "main"];
+const validSection = ["game", "tournament", "main", "game_settings"];
 
 window.addEventListener('popstate', async function(event) {
 	let section = event.target.location.pathname;

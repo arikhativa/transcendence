@@ -30,6 +30,7 @@ else {
 
 // Define canvas and a context to draw to
 const canvas = document.getElementById("canvas");
+setCanvasSize()
 const ctx = canvas.getContext("2d");
 
 //Game SETUP
@@ -107,10 +108,14 @@ function gameLoop() {
     //Clear Canvas
     ctx.fillStyle = 'black';
     ctx.globalAlpha = 1;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    //Show screens
-    screenManager.loop(ctx, canvas, game, tournament);
+	if (canvas)
+	{
+    	ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+		//Show screens
+		screenManager.loop(ctx, canvas, game, tournament);
+	}
     //Manage the torunament
     tournament.handler(game, screenManager);
 
