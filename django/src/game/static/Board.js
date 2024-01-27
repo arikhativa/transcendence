@@ -27,14 +27,19 @@ export class Board {
 
         if (this.settings.barriers) {
             this.barriers = [];
-            for (let i = 0; i < 5; i++) {  // Generate 10 random barriers
+            let xBar = 9, yBar = 5
+            for (let i = 0; i < (xBar * yBar); i++) {  // Generate 10 random barriers
+                let xGrid = Math.floor(i / yBar);
+                let yGrid = i % yBar;
+                if (xGrid == 0 || yGrid == 0 || xGrid == 1 || xGrid == 8) continue;
                 let barrier = {
-                    x: Math.random() * w,
-                    y: Math.random() * h,
-                    w: 20,  // Fixed width for barriers
-                    h: 40  // Fixed height for barriers
+                    x: xGrid * this.w / xBar,
+                    y: yGrid * this.h / yBar,
+                    w: 10,  // Fixed width for barriers
+                    h: 80  // Fixed height for barriers
                 };
-                this.barriers.push(barrier);
+                if (Math.random() < 0.25)
+                    this.barriers.push(barrier);
             }
         }
     }
@@ -56,9 +61,12 @@ export class Board {
             ball.x = this.x;
             ball.y = this.y;
             ball.generateRandomInitAngle();
-            p2.score++;
 			if (this.settings.bonus && this.bonus.playerWithBonus == p2)
-            	p2.score++;
+            {
+                this.bonus.playerWithBonus = null;
+                p2.score++;
+            }
+            p2.score++;
         }
         if (ball.x + ball.w / 2 >= p2.x - p2.w / 2 && !(ball.y > p2.y - p2.h / 2 && ball.y < p2.y + p2.h / 2)) {
             ball.x = this.x;
@@ -66,19 +74,19 @@ export class Board {
             ball.generateRandomInitAngle();
             p1.score++;
 			if (this.settings.bonus && this.bonus.playerWithBonus == p1)
-            	p1.score++;
+            {
+                this.bonus.playerWithBonus = null;
+                p1.score++;
+            }
         }
 
         // Ball collision with Player1 | LEFT
         if (ball.nextStep().x - ball.w / 2 <= p1.x + p1.w / 2 && (ball.nextStep().y > p1.y - p1.h / 2 && ball.nextStep().y < p1.y + p1.h / 2)) {
             ball.angle = 0;
-            let min = 2 * Math.PI - 3 * Math.PI / 9
-            let max = 2 * Math.PI + 3 * Math.PI / 9
+            let min = 2 * Math.PI - 3 * Math.PI / 9;
+            let max = 2 * Math.PI + 3 * Math.PI / 9;
             ball.randomDeviation(min, max);
 			ball.hitBy = p1;
-
-            // ball.rotateBall(Math.PI);
-            // ball.randomDeviation(0.9);
         }
         // Ball collision with Player2 | RIGHT
         if (ball.nextStep().x + ball.w / 2 >= p2.x - p2.w / 2 && (ball.nextStep().y > p2.y - p2.h / 2 && ball.nextStep().y < p2.y + p2.h / 2)) {
@@ -87,20 +95,25 @@ export class Board {
             let max = Math.PI + 3 * Math.PI / 9
             ball.randomDeviation(min, max);
 			ball.hitBy = p2;
-            // ball.rotateBall(Math.PI);
-            // ball.randomDeviation(0.9);
         }
 
         // Barriers collision
         if (this.settings.barriers) {
             for (let barrier of this.barriers) {
-                if (ball.x + ball.w/2 > barrier.x - barrier.w/2 && ball.x - ball.w/2 < barrier.x + barrier.w/2 &&
-                    ball.y + ball.h/2 > barrier.y - barrier.h/2 && ball.y - ball.h/2 < barrier.y + barrier.h/2) {
-                    // ball.dir.x *= -1 + (Math.random() - 0.5);
-                    // ball.dir.y *= -1 + (Math.random() - 0.5);
+                if (ball.nextStep().x + ball.w/2 > barrier.x - barrier.w/2 && ball.nextStep().x - ball.w/2 < barrier.x + barrier.w/2 &&
+                    ball.nextStep().y + ball.h/2 > barrier.y - barrier.h/2 && ball.nextStep().y - ball.h/2 < barrier.y + barrier.h/2) {
                     ball.angle = 0;
-                    let min = Math.PI - 3 * Math.PI / 9
-                    let max = Math.PI + 3 * Math.PI / 9
+                    let min = 0, max = 0;
+                    if (ball.dir.x < 0) //Izquierda
+                    {
+                        min = 2 * Math.PI - 3 * Math.PI / 9;
+                        max = 2 * Math.PI + 3 * Math.PI / 9;
+                    }
+                    else //Derecha
+                    {
+                        min = Math.PI - 3 * Math.PI / 9;
+                        max = Math.PI + 3 * Math.PI / 9;
+                    }
                     ball.randomDeviation(min, max);
                 }
             }
