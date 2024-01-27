@@ -52,7 +52,6 @@ export class Ball {
     randomDeviation(min, max) {
         let randomOffset = Math.random() * (max - min) + min;
         this.rotateBall(randomOffset);
-        console.log(randomOffset);
     }
     nextStep() {
         return {
