@@ -52,29 +52,6 @@ export class ScreenManager {
         game.draw(ctx);
     }
 
-	drawSpace(ctx, center_x, center_y)
-	{
-		ctx.fillStyle = 'white';
-
-		let bot_x = center_x - 50;
-		let bot_y = center_y + 50;
-		let width = 100;
-		let height = 10;
-        ctx.fillRect(bot_x, bot_y, width, height);
-
-		height = 30;
-		width = 10;
-		let left_x = bot_x;
-		let left_y = bot_y - height + (height / 10);
-        ctx.fillRect(left_x, left_y, width, height);
-
-		height = 30;
-		width = 10;
-		let right_x = bot_x + 90;
-		let right_y = bot_y - height + (height / 10);
-        ctx.fillRect(right_x, right_y, width, height);
-	}
-    
     introScreen(ctx, canvas) {
         // Clear the canvas to render new frame
         ctx.fillStyle = 'black';
@@ -84,13 +61,9 @@ export class ScreenManager {
         ctx.fillStyle = "white";
         ctx.textAlign = "center";
         ctx.fillText(translateGameText("SPACE_TO_START"), canvas.width/2, canvas.height/2);
-        //ctx.fillText("⬆️ W & I", canvas.width/2 - 300, canvas.height/2 + 50);
-        //ctx.fillText("⬇️ S & K", canvas.width/2 + 300, canvas.height/2 + 50);
 
-        //ctx.fillText("⏯ ", (canvas.width/2) - 100, (canvas.height * 0.8));
 		const center_x = (canvas.width/2) + 50;
 		const center_y = (canvas.height * 0.72);
-		//this.drawSpace(ctx, center_x, center_y);
 
     }
     

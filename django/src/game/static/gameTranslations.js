@@ -9,7 +9,9 @@ function getCookieValue(cookieName)
 }
 
 export function translateGameText(textToTranslate) {
-	const language = getCookieValue('django_language');
+	let language = getCookieValue('django_language');
+	if (language === null)
+		language = 'en';
 
 	// Add any translations here:
 	const translations = {
