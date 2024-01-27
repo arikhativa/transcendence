@@ -1,3 +1,5 @@
+import { drawRectRounded } from './draw_helpers.js';
+
 export class Ball {
     // Constructor method
     constructor(x, y, ballSpeed, ballColor) {
@@ -7,7 +9,7 @@ export class Ball {
         this.h = 40;
 
         this.speed = ballSpeed;
-        this.color = ballColor;
+        this.setColor(ballColor);
         this.angle = 0;
         this.generateRandomInitAngle();
         this.hitBy = null;
@@ -20,7 +22,8 @@ export class Ball {
 
     draw(ctx) {
         ctx.fillStyle = this.color;
-        ctx.fillRect(this.x - this.w/2, this.y - this.h/2, this.w, this.h);
+        // ctx.fillRect(this.x - this.w/2, this.y - this.h/2, this.w, this.h);
+        drawRectRounded(ctx, this.x, this.y, this.w, this.h, 5);
     }
 
     generateRandomInitAngle() {
@@ -63,5 +66,23 @@ export class Ball {
     onResize(x, y) {
         this.x = x;
         this.y = y;
+    }
+
+    setColor(color) {
+        switch (color) {
+            case "green":
+                this.color = '#a8ff66';
+                console.log("asd" + this.color);
+                break;
+            case "red":
+                this.color = '#ff6666';
+                break;
+            case "blue":
+                this.color = '#66baff';
+                break;
+            default:
+                this.color = 'white';
+                break;
+        }
     }
 }

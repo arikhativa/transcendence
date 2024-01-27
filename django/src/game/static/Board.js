@@ -1,3 +1,5 @@
+import { drawRectRounded } from './draw_helpers.js';
+
 export class Board {
     // Constructor method
     constructor(w, h, settings) {
@@ -7,7 +9,7 @@ export class Board {
         this.h = h;
 
         this.goal_size = 45;
-        this.goal_color = '#888888';
+        this.goal_color = '#2e2e2e';
         this.goal =
         {
             p1: this.goal_size,
@@ -143,16 +145,20 @@ export class Board {
 
         // Draw barriers
         if (this.settings.barriers) {
-            ctx.fillStyle = 'green';
+            ctx.fillStyle = '#ff4dc4';
             for (let barrier of this.barriers) {
-                ctx.fillRect(barrier.x - barrier.w/2, barrier.y - barrier.h/2, barrier.w, barrier.h);
+                // ctx.fillRect(barrier.x - barrier.w/2, barrier.y - barrier.h/2, barrier.w, barrier.h);
+                drawRectRounded(ctx, barrier.x, barrier.y, barrier.w, barrier.h, 3)
             }
         }
 
 		// Draw the 2x bonus
         if (this.settings.bonus && this.bonus.active) {
-            ctx.fillStyle = 'yellow';
-            ctx.fillRect(this.bonus.x - this.bonus.s/2, this.bonus.y - this.bonus.s/2, this.bonus.s, this.bonus.s);
+            ctx.fillStyle = '#f7d811';
+            ctx.beginPath();
+            ctx.arc(this.bonus.x, this.bonus.y, 0.6 * this.bonus.s, 0, 2 * Math.PI);
+            ctx.fill();
+            // ctx.fillRect(this.bonus.x - this.bonus.s/2, this.bonus.y - this.bonus.s/2, this.bonus.s, this.bonus.s);
 
             ctx.fillStyle = 'black';
             ctx.font = '30px Arial';
