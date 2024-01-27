@@ -157,6 +157,7 @@ export class ScreenManager {
         let size = 8;
         ctx.fillStyle = 'white';
     
+        if (typeof canvas === "undefined") return ;
         let tile_width = canvas.width / size;
         for (let i = 0; i < size/2; i++) {
 			let ammount = 2**(depth - 1 - i);

@@ -66,12 +66,18 @@ let screenManager;
 function setCanvasSize() {
 	if (!canvas)
 		return ;
-    canvas.width = canvas.parentElement.parentElement.clientWidth * 0.8;
-    canvas.height = canvas.parentElement.parentElement.clientHeight * 0.8;
+    if (typeof canvas.parentElement !== "undefined")
+    {
+        canvas.width = canvas.parentElement.parentElement.clientWidth * 0.8;
+        canvas.height = canvas.parentElement.parentElement.clientHeight * 0.8;
+    }
 }
 
 function onResize() {
+    game.pause = true;
     setCanvasSize();
+    if (game && canvas)
+        game.onResize(canvas);
 }
 
 window.onresize = onResize;
@@ -128,6 +134,7 @@ document.addEventListener('keydown', handleKeyPress);
 }
 
 
+let frames = 0;
 function gameLoop() {
     //Clear Canvas
     ctx.fillStyle = 'black';

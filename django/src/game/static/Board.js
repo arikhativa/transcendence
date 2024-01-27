@@ -13,13 +13,15 @@ export class Board {
             p1: this.goal_size,
             p2: this.w - this.goal_size
         };
-
         this.settings = settings;
+        this.initModifiers();
+    }
 
+    initModifiers() {
         if (this.settings.bonus) {
             this.bonus = {
-                x: w/2 + Math.random() * w/4 - w/8,  // Random position in the middle of the board
-                y: h/2 + Math.random() * h/4 - h/8,
+                x: this.w/2 + Math.random() * this.w/3 - this.w/6,  // Random position in the middle of the board
+                y: this.h/2 + Math.random() * this.h/3 - this.h/6,
                 s: 40,  // Size of the bonus square
                 active: true,  // Whether the bonus is active
 				playerWithBonus: null // The player who has the bonus
@@ -28,65 +30,94 @@ export class Board {
 
         if (this.settings.barriers) {
             this.barriers = [];
-            for (let i = 0; i < 5; i++) {  // Generate 10 random barriers
+            let xBar = 9, yBar = 5
+            for (let i = 0; i < (xBar * yBar); i++) {  // Generate 10 random barriers
+                let xGrid = Math.floor(i / yBar);
+                let yGrid = i % yBar;
+                if (xGrid == 0 || yGrid == 0 || xGrid == 1 || xGrid == 8) continue;
                 let barrier = {
-                    x: Math.random() * w,
-                    y: Math.random() * h,
-                    w: 20,  // Fixed width for barriers
-                    h: 40  // Fixed height for barriers
+                    x: xGrid * this.w / xBar,
+                    y: yGrid * this.h / yBar,
+                    w: 10,  // Fixed width for barriers
+                    h: 80  // Fixed height for barriers
                 };
-                this.barriers.push(barrier);
+                if (Math.random() < 0.25)
+                    this.barriers.push(barrier);
             }
         }
     }
-    
-    //TODO: Draw and update can be changed in order to create new boards with new obstacles 
+
     update(p1, p2, ball) {
         //Vertical Walls
-        if (ball.y - ball.h/2 <= this.y - this.h/2 || ball.y + ball.h/2 >= this.y + this.h/2)
+        if (ball.y - ball.h / 2 <= this.y - this.h / 2) {
+            //Cuanto se ha salido la bola de la pared de arriba
+            ball.y = (this.y - this.h / 2) + ball.h;
             ball.dir.y *= -1;
-        //Goal Walls
-        if (ball.x - ball.w/2 <= p1.x + p1.w/2 && !(ball.y > p1.y - p1.h/2 && ball.y < p1.y + p1.h/2))
-        {
-            ball.x = this.x;
-            ball.y = this.y;
-            p2.score++;
-			if (this.settings.bonus && this.bonus.playerWithBonus == p2)
-            	p2.score++;
         }
-        if (ball.x + ball.w/2 >= p2.x - p2.w/2 && !(ball.y > p2.y - p2.h/2 && ball.y < p2.y + p2.h/2))
-        {
+        if (ball.y + ball.h / 2 >= this.y + this.h / 2) {
+            //Cuanto se ha salido la bola de la pared de abajo
+            ball.y = (this.y + this.h / 2) - ball.h;
+            ball.dir.y *= -1;
+        }
+        //Goal Walls
+        if (ball.x - ball.w / 2 <= p1.x + p1.w / 2 && !(ball.y > p1.y - p1.h / 2 && ball.y < p1.y + p1.h / 2)) {
             ball.x = this.x;
             ball.y = this.y;
+            ball.generateRandomInitAngle();
+			if (this.settings.bonus && this.bonus.playerWithBonus == p2)
+            {
+                this.bonus.playerWithBonus = null;
+                p2.score++;
+            }
+            p2.score++;
+        }
+        if (ball.x + ball.w / 2 >= p2.x - p2.w / 2 && !(ball.y > p2.y - p2.h / 2 && ball.y < p2.y + p2.h / 2)) {
+            ball.x = this.x;
+            ball.y = this.y;
+            ball.generateRandomInitAngle();
             p1.score++;
 			if (this.settings.bonus && this.bonus.playerWithBonus == p1)
-            	p1.score++;
+            {
+                this.bonus.playerWithBonus = null;
+                p1.score++;
+            }
         }
 
-        // Ball collision with Player1
-        if (ball.x - ball.w/2 <= p1.x + p1.w/2 && (ball.y > p1.y - p1.h/2 && ball.y < p1.y + p1.h/2))
-        {
-            ball.dir.x *= -1;
-            if (p1.dir)
-                ball.dir.y = p1.dir;
+        // Ball collision with Player1 | LEFT
+        if (ball.nextStep().x - ball.w / 2 <= p1.x + p1.w / 2 && (ball.nextStep().y > p1.y - p1.h / 2 && ball.nextStep().y < p1.y + p1.h / 2)) {
+            ball.angle = 0;
+            let min = 2 * Math.PI - 3 * Math.PI / 9;
+            let max = 2 * Math.PI + 3 * Math.PI / 9;
+            ball.randomDeviation(min, max);
 			ball.hitBy = p1;
         }
-        // Ball collision with Player2
-        if (ball.x + ball.w/2 >= p2.x - p2.w/2 && (ball.y > p2.y - p2.h/2 && ball.y < p2.y + p2.h/2))
-        {
-            ball.dir.x *= -1;
-            if (p2.dir)
-                ball.dir.y = p2.dir;
+        // Ball collision with Player2 | RIGHT
+        if (ball.nextStep().x + ball.w / 2 >= p2.x - p2.w / 2 && (ball.nextStep().y > p2.y - p2.h / 2 && ball.nextStep().y < p2.y + p2.h / 2)) {
+            ball.angle = 0;
+            let min = Math.PI - 3 * Math.PI / 9
+            let max = Math.PI + 3 * Math.PI / 9
+            ball.randomDeviation(min, max);
 			ball.hitBy = p2;
         }
 
         // Barriers collision
         if (this.settings.barriers) {
             for (let barrier of this.barriers) {
-                if (ball.x + ball.w/2 > barrier.x - barrier.w/2 && ball.x - ball.w/2 < barrier.x + barrier.w/2 &&
-                    ball.y + ball.h/2 > barrier.y - barrier.h/2 && ball.y - ball.h/2 < barrier.y + barrier.h/2) {
-                    ball.dir.x *= -1 + (Math.random() - 0.5);
-                    ball.dir.y *= -1 + (Math.random() - 0.5);
+                if (ball.nextStep().x + ball.w/2 > barrier.x - barrier.w/2 && ball.nextStep().x - ball.w/2 < barrier.x + barrier.w/2 &&
+                    ball.nextStep().y + ball.h/2 > barrier.y - barrier.h/2 && ball.nextStep().y - ball.h/2 < barrier.y + barrier.h/2) {
+                    ball.angle = 0;
+                    let min = 0, max = 0;
+                    if (ball.dir.x < 0) //Izquierda
+                    {
+                        min = 2 * Math.PI - 3 * Math.PI / 9;
+                        max = 2 * Math.PI + 3 * Math.PI / 9;
+                    }
+                    else //Derecha
+                    {
+                        min = Math.PI - 3 * Math.PI / 9;
+                        max = Math.PI + 3 * Math.PI / 9;
+                    }
+                    ball.randomDeviation(min, max);
                 }
             }
         }
@@ -105,7 +136,7 @@ export class Board {
 		}
         // -------------------------------------------------------------------------------------
     }
-    
+
     draw(ctx) {
         ctx.lineWidth = 8;
         ctx.strokeStyle = "white";
@@ -134,14 +165,26 @@ export class Board {
         ctx.strokeRect(0, 0, this.w, this.h);
         ctx.fillStyle = 'white';
         //Midline
-        ctx.fillRect(this.w/2 - 2, 0, 4, this.h);
+        ctx.fillRect(this.w / 2 - 2, 0, 4, this.h);
         ctx.lineWidth = 4;
         //MidSquare
-        ctx.strokeRect(this.w/2 - 46, this.h/2 - 46, 92, 92);
+        ctx.strokeRect(this.w / 2 - 46, this.h / 2 - 46, 92, 92);
 
         ctx.fillStyle = this.goal_color;
         ctx.fillRect(0 + 4, 0 + 4, this.goal.p1 - 4, this.h - 8);
         ctx.fillRect(this.goal.p2, 0 + 4, this.goal_size - 4, this.h - 8);
 
     }
-  }
+
+    onResize(w, h) {
+        this.x = w / 2
+        this.y = h / 2;
+        this.w = w;
+        this.h = h;
+        this.goal =
+        {
+            p1: this.goal_size,
+            p2: this.w - this.goal_size
+        };
+    }
+}

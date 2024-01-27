@@ -10,10 +10,10 @@ export class GameController {
 		this.settings = settings
 
 		this.rightPlayerColor = this.settings.rightPlayerColor;
-		this.rightPlayerSpeed = 5;
+		this.rightPlayerSpeed = 10;
 
 		this.leftPlayerColor = this.settings.leftPlayerColor;
-		this.leftPlayerSpeed = 5;
+		this.leftPlayerSpeed = 10;
 
 		this.setup();
 		this.setPlayers(players);
@@ -35,6 +35,8 @@ export class GameController {
 		this.p2.setColor(this.rightPlayerColor);
 		this.p2.setSpeed(this.rightPlayerSpeed);
 		this.last_winner = null;
+
+		this.board.initModifiers();
 	}
 
     update() {
@@ -54,11 +56,22 @@ export class GameController {
 	}
 
 	checkWinner() {
-		if (this.p1.score == 3)
+		if (this.p1.score >= 3)
 			this.last_winner = this.p1;
-		else if (this.p2.score == 3)
+		else if (this.p2.score >= 3)
 			this.last_winner = this.p2;
 		if (this.last_winner !== null)
 			this.winner_name = this.last_winner.name;
+	}
+
+	onResize(canvas) {
+		if (this.ball)
+			this.ball.onResize(canvas.width/2, canvas.height/2);
+		if (this.board)
+			this.board.onResize(canvas.width, canvas.height);
+		if (this.p1)
+			this.p1.onResize(canvas);
+		if (this.p2)
+			this.p2.onResize(canvas);
 	}
 }
