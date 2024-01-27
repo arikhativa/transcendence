@@ -8,17 +8,41 @@ const playersDataElement = document.getElementById('players-data');
 const playersDataString = playersDataElement ? playersDataElement.dataset.players : null;
 let playersList = [];
 
+function isPlayerNamesValid(playersList)
+{	if (playersList.length > 16)
+		return false;
+
+	for (let i = 0; i < playersList.length; ++i)
+	{
+		if (playersList[i].length > 8 || playersList.length == 0)
+			return false;
+	}
+
+	const uniqueNames = new Set(playersList);
+    if (uniqueNames.size !== playersList.length) {
+        return false; // Duplicate names found
+    }
+
+	return true;
+}
+
 if (playersDataString) {
 
     const playersParam = new URLSearchParams(playersDataString).get('players');
 
     playersList = playersParam ? decodeURIComponent(playersParam).split(',') : [];
-	if (playersList.length === 0)
+	if (!isPlayerNamesValid(playersList))
+	{
+		playersList.length = 0;
+		playersList.push(usernameDataString);
+		playersList.push("Player2");
+	}
+	else if (playersList.length === 0)
 	{
 		playersList.push(usernameDataString);
 		playersList.push("Player2");
 	}
-	if (playersList.length === 1)
+	else if (playersList.length === 1)
 	{
 		playersList.unshift(usernameDataString);
 	}

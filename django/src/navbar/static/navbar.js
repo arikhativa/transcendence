@@ -1,12 +1,32 @@
 
 
 async function readOppInput() {
+    var errElem = document.getElementById('opponent-input-error');
     var elem = document.getElementById('opponent-name-input');
 	
 	if (elem && elem.value)
+	{
+		if (elem.value.length > 8)
+		{
+			if (errElem)
+			{
+			// TODO maybe translate
+				errElem.innerText = "Opponent name too long. max 8 charectars";
+				errElem.style["visibility"] =  "visible";
+			}
+			return ;
+		}
+		if (errElem)
+			errElem.style["visibility"] =  "hidden";
+
 		await showSection('game', {"players": elem.value}, true);
-	else 
+	}
+	else
+	{
+		if (errElem)
+			errElem.style["visibility"] =  "hidden";
 		await showSection('game', undefined, true);
+	}
 
     var canvas = document.getElementById('canvas');
 	if (canvas)
