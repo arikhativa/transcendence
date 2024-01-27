@@ -23,7 +23,9 @@ def game_settings(request):
 
 	if user is not None:
 		if request.method == 'POST':
-			save_game_settings(request, user)
+			form = forms.GameSettingsForm(request.POST)
+			if form.is_valid():
+				save_game_settings(request, user)
 
 		player1_color = user.player_1_color
 		player2_color = user.player_2_color
