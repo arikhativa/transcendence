@@ -46,7 +46,7 @@ def game_settings(request):
 		"player2_color": player2_color,
 		"ball_color": ball_color,
 		"ball_speed": ball_speed,
-		"color_list": ["white", "red", "green", "blue"],
+		"color_list": ["white", "red", "123", "blue"],
 		"color_translations": color_translations,
 		"section": "game_settings.html",
 	}

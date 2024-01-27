@@ -42,7 +42,7 @@ let screenManager;
 function setCanvasSize() {
 	if (!canvas)
 		return ;
-    if (canvas.parentElement !== undefined)
+    if (typeof canvas.parentElement !== "undefined")
     {
         canvas.width = canvas.parentElement.parentElement.clientWidth * 0.8;
         canvas.height = canvas.parentElement.parentElement.clientHeight * 0.8;
