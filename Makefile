@@ -25,6 +25,9 @@ all: $(VOLUMES)
 basic: $(VOLUMES) 
 	$(DC) up -d --build nginx django postgres
 
+elk: $(VOLUMES) 
+	$(DC) up -d --build nginx django postgres elasticsearch logstash kibana setup
+
 clean:
 	$(DC) down
 
@@ -53,4 +56,3 @@ $(ELASTIC_VOLUME):
 	mkdir -p $@ 
 $(NGINX_VOLUME): 
 	mkdir -p $@ 
-

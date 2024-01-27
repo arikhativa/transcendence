@@ -12,6 +12,9 @@ RUN apt-get install -y postgresql-client
 COPY conf /etc/django
 RUN chmod +x /etc/django/run_basic_migrations.sh
 
+# install gettext for makemessages (trnaslations)
+RUN apt-get install -y gettext
+
 # install python
 RUN python3 -m venv /etc/django/.venv
 # Enable venv

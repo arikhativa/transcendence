@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-10 13:56+0000\n"
+"POT-Creation-Date: 2024-01-27 14:39+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,54 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: game_settings/templates/game_settings.html:7 navbar/templates/navbar.html:37
+msgid "Game Settings"
+msgstr ""
+
+#: game_settings/templates/game_settings.html:15
+msgid "2X Bonus"
+msgstr ""
+
+#: game_settings/templates/game_settings.html:19
+msgid "Walls"
+msgstr ""
+
+#: game_settings/templates/game_settings.html:23
+msgid "Player 1 color selector:"
+msgstr ""
+
+#: game_settings/templates/game_settings.html:35
+msgid "Player 2 color selector:"
+msgstr ""
+
+#: game_settings/templates/game_settings.html:47
+msgid "Ball color selector:"
+msgstr ""
+
+#: game_settings/templates/game_settings.html:59
+msgid "Ball Speed:"
+msgstr ""
+
+#: game_settings/templates/game_settings.html:63
+msgid "Save"
+msgstr ""
+
+#: game_settings/views.py:18
+msgid "white"
+msgstr ""
+
+#: game_settings/views.py:19
+msgid "red"
+msgstr ""
+
+#: game_settings/views.py:20
+msgid "green"
+msgstr ""
+
+#: game_settings/views.py:21
+msgid "blue"
+msgstr ""
 
 #: header/templates/header.html:43
 msgid "Home"
@@ -55,6 +103,34 @@ msgstr "Create Tournament"
 #: spa/templates/error_page.html:8
 msgid "ERROR"
 msgstr "ERROR"
+
+#: tournament/templates/tournament.html:15
+#, fuzzy
+#| msgid "Create Tournament"
+msgid "New Tournament"
+msgstr "Create Tournament"
+
+#: tournament/templates/tournament.html:23
+msgid "Username"
+msgstr ""
+
+#: tournament/templates/tournament.html:25
+msgid "Add"
+msgstr ""
+
+#: tournament/templates/tournament.html:38
+msgid "Players"
+msgstr ""
+
+#: tournament/templates/tournament.html:39
+msgid "max players"
+msgstr ""
+
+#: tournament/templates/tournament.html:48
+#, fuzzy
+#| msgid "Create Tournament"
+msgid "Start Tournament"
+msgstr "Create Tournament"
 
 #: twofa/templates/2fa_setup.html:7 twofa/templates/email_setup.html:13
 msgid "Welcome to Two-Factor Authentication Setup"

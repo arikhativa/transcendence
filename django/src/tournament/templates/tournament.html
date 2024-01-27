@@ -1,4 +1,5 @@
 <!-- tournament/templates/tournament.html -->
+{% load i18n %}
 {% load static %}
 <link rel="stylesheet" href="{% static 'tournament.css' %}" />
 <script type="module" src="{% static 'tournament.js' %}"></script>
@@ -11,7 +12,7 @@
 
             <div class="row">
                 <div class="col">
-                    <h1 class="fw-bolder">New Tournament</h1>
+                    <h1 class="fw-bolder">{% trans "New Tournament" %}</h1>
               </div>
             </div>
         
@@ -19,9 +20,9 @@
               <div class="col-12 p-5">
                 <div class="input-group">
                     <span class="input-group-text" id="addon-wrapping">@</span>
-                    <input id="new-player-name" type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="addon-wrapping">
+                    <input id="new-player-name" type="text" class="form-control" placeholder={% trans "Username" %} aria-label="Username" aria-describedby="addon-wrapping">
                     <span>
-                      <button id="player-submit-button" class="btn btn-primary" type="submit">Add</button>
+                      <button id="player-submit-button" class="btn btn-primary" type="submit">{% trans "Add" %}</button>
                     </span>
                 </div>
 				<p id="input-error"></p>
@@ -34,8 +35,8 @@
       <div class="col-5 d-flex align-items-center justify-content-center">
         <!-- Comment to add a different page -->
         <div style="display: flex; flex-direction: column;">
-          <h1 class="fw-bolder">Players: <span id="num-of-players">0</span></h1>
-          <p>(max players: 16)</p>
+          <h1 class="fw-bolder">{% trans "Players" %}: <span id="num-of-players">0</span></h1>
+          <p>({% trans "max players" %}: 16)</p>
           <ul id="tournament-players" class="list-group overflow-auto" style="max-height: 20vh">
             
           </ul>
@@ -44,7 +45,7 @@
   </div>
   <div class="row">
     <div class="col-12 d-flex align-items-center justify-content-center">
-          <button id="tournament-start-button" class="btn btn-primary" type="submit">Start Tournament</button>
+          <button id="tournament-start-button" class="btn btn-primary" type="submit">{% trans "Start Tournament" %}</button>
     </div>
   </div>
 </div>
