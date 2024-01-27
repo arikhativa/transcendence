@@ -25,6 +25,17 @@ all: $(VOLUMES)
 basic: $(VOLUMES) 
 	$(DC) up -d --build nginx django postgres
 
+elk: $(VOLUMES) 
+	$(DC) up -d --build nginx django postgres elasticsearch logstash kibana setup
+
+elk/re: $(VOLUMES) 
+	$(DC) stop elasticsearch logstash kibana setup 
+	$(DC) rm -f elasticsearch logstash kibana setup 
+	rm -rf .docker-volume-mnt/elastic_data
+	mkdir -p .docker-volume-mnt/elastic_data
+	docker volume rm transcendence_elastic-data
+	$(DC) up -d --build elasticsearch logstash setup kibana
+
 clean:
 	$(DC) down
 
@@ -54,3 +65,6 @@ $(ELASTIC_VOLUME):
 $(NGINX_VOLUME): 
 	mkdir -p $@ 
 
+# TODO remove this
+kibana/export/django:
+	curl --insecure -X POST "https://localhost:5601/api/saved_objects/_export" -u "elastic:pass123123asdasd" -H 'kbn-xsrf: true' -H 'Content-Type: application/json' -d '{"objects": [{"type": "dashboard","id": "f1901610-9351-11ee-8b2f-752b243e3e50"}],"includeReferencesDeep": true}'
