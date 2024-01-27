@@ -2,7 +2,6 @@ from twofa.views import _user_jwt_cookie
 from django.views.decorators.csrf import csrf_protect
 from django.utils.translation import gettext as _
 from django.http import JsonResponse
-from . import forms
 
 def is_valid_input(form):
 	bonus = form.get('bonus')
