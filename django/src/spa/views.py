@@ -5,6 +5,10 @@ from django.conf import settings
 from twofa.views import twofa, validate_2fa, qr_setup, email_setup, delete_jwt, _jwt_is_expired, _user_jwt_cookie
 from game.views import game_setup
 from game_settings.views import game_settings, get_game_settings
+import logging
+
+logger = logging.getLogger(__name__)
+
 
 def spa_view(request):
 	try:
@@ -27,19 +31,23 @@ def spa_view(request):
 			"section": section + ".html",
 		}
 
-		if section == "validate_2fa_code":
+		if section == "validate_2fa_code" and logged_in:
+			section = "main"
+		elif section == "validate_2fa_code" and not logged_in:
 			context, token = validate_2fa(request)
-		if section == "twofa":
+		elif section == "twofa":
 			context, token = twofa(request)
-		if section == "qr_setup":
+		elif section == "qr_setup":
 			context, token = qr_setup(request)
-		if section == "email_setup":
+		elif section == "email_setup":
 			context, token = email_setup(request)
-		if section == "game_settings" and logged_in:
+		elif section == "game_settings" and logged_in:
 			context = game_settings(request)
-		if section == "game" and logged_in:
+		elif section == "game" and logged_in:
 			context = game_setup(request, context, user)
-
+			logger.info(f"game: {user.username}")
+		if section == "tournament" and logged_in:
+			logger.info(f"tournament: {user.username}")
 		if section == "main" and logged_in:
 			context, token = logged_page(request, user)
 			section = "temporal_loggedin"
@@ -80,6 +88,8 @@ def game_view(request):
 	if not is_logged_in(request)[0]:
 		return render(request, "main.html")
 	logged_in, user = is_logged_in(request)
+	
+	logger.info(f"game: {user.username}")
 
 	context = game_setup(request, {}, user)
 	return render(request, "game.html", context)
@@ -96,6 +106,10 @@ def get_game_settings_view(request):
 def tournament_view(request):
 	if not is_logged_in(request)[0]:
 		return render(request, "main.html")
+
+	logged_in, user = is_logged_in(request)
+	logger.info(f"tournament: {user.username}")
+
 	return render(request, "tournament.html")
 
 def api_view(request):
@@ -105,6 +119,7 @@ def validate_2fa_code(request):
 	return(validate_2fa(request))
 
 def set_language(request, language_code):
+	logger.info(f"language: {language_code}")
 	if translation.check_for_language(language_code):
 		translation.activate(language_code)
 		renderizado = spa_view(request)

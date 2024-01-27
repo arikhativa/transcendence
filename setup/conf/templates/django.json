@@ -12,7 +12,7 @@
                 },
                 "mapping": {
                     "total_fields": {
-                        "limit": "10"
+                        "limit": "50"
                     }
                 },
                 "refresh_interval": "5s"
@@ -38,7 +38,13 @@
                 "log_level": {
                     "type": "keyword"
                 },
-                "module": {
+                "language_type": {
+                    "type": "keyword"
+                },
+                "sub_module": {
+                    "type": "keyword"
+                },
+                "username": {
                     "type": "keyword"
                 }
             }
