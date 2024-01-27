@@ -2,6 +2,7 @@ from twofa.views import _user_jwt_cookie
 from django.views.decorators.csrf import csrf_protect
 from django.utils.translation import gettext as _
 from django.http import JsonResponse
+from .  import forms
 
 @csrf_protect
 def game_settings(request):
@@ -23,7 +24,9 @@ def game_settings(request):
 
 	if user is not None:
 		if request.method == 'POST':
-			save_game_settings(request, user)
+			form = forms.GameSettingsForm(request.POST)
+			if form.is_valid():
+				save_game_settings(request, user)
 
 		player1_color = user.player_1_color
 		player2_color = user.player_2_color

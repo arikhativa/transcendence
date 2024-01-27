@@ -1,13 +1,15 @@
 {% load i18n %}
 {% load static %}
 <link rel="stylesheet" href="{% static 'game_settings.css' %}" />
+<script type="module" src="{% static 'game_settings.js' %}"></script>
+
 <body>
 	<div class="card text-center border border-dark border-5 bg-info">
 		<div class="card-header bg-white">
 			<h1 class="card-title">{% trans "Game Settings" %}</h1>
 		</div>
 		<div class="card-body">
-			<form id="settings-form" method="post" action="/game_settings/">
+			<form id="game-settings-form" action="javascript"></form>
 				{% csrf_token %}
 				<div class="mb-3">
 					<div class="form-check form-switch center-switch">
@@ -60,7 +62,7 @@
 					<input name="ballSpeed" type="range" class="form-range" min="3" max="10" value={{ ball_speed }} id="customRange2">
 				</div>
 				<div class="text-center mt-3">
-					<button class="btn btn-primary" type="submit">{% trans "Save" %}</button>
+					<button id="game-settings-btn" class="btn btn-primary" type="submit">{% trans "Save" %}</button>
 				</div>
 			</form>
 		</div>
