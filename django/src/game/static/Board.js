@@ -52,12 +52,10 @@ export class Board {
     update(p1, p2, ball) {
         //Vertical Walls
         if (ball.y - ball.h / 2 <= this.y - this.h / 2) {
-            //Cuanto se ha salido la bola de la pared de arriba
             ball.y = (this.y - this.h / 2) + ball.h;
             ball.dir.y *= -1;
         }
         if (ball.y + ball.h / 2 >= this.y + this.h / 2) {
-            //Cuanto se ha salido la bola de la pared de abajo
             ball.y = (this.y + this.h / 2) - ball.h;
             ball.dir.y *= -1;
         }
@@ -111,12 +109,12 @@ export class Board {
                     ball.nextStep().y + ball.h/2 > barrier.y - barrier.h/2 && ball.nextStep().y - ball.h/2 < barrier.y + barrier.h/2) {
                     ball.angle = 0;
                     let min = 0, max = 0;
-                    if (ball.dir.x < 0) //Izquierda
+                    if (ball.dir.x < 0) //LEFT
                     {
                         min = 2 * Math.PI - 3 * Math.PI / 9;
                         max = 2 * Math.PI + 3 * Math.PI / 9;
                     }
-                    else //Derecha
+                    else //RIGHT
                     {
                         min = Math.PI - 3 * Math.PI / 9;
                         max = Math.PI + 3 * Math.PI / 9;
@@ -153,7 +151,6 @@ export class Board {
         if (this.settings.barriers) {
             ctx.fillStyle = '#ff4dc4';
             for (let barrier of this.barriers) {
-                // ctx.fillRect(barrier.x - barrier.w/2, barrier.y - barrier.h/2, barrier.w, barrier.h);
                 drawRectRounded(ctx, barrier.x, barrier.y, barrier.w, barrier.h, 3)
             }
         }
@@ -164,7 +161,7 @@ export class Board {
             ctx.beginPath();
             ctx.arc(this.bonus.x, this.bonus.y, 0.6 * this.bonus.s, 0, 2 * Math.PI);
             ctx.fill();
-            // ctx.fillRect(this.bonus.x - this.bonus.s/2, this.bonus.y - this.bonus.s/2, this.bonus.s, this.bonus.s);
+            ctx.closePath();
 
             ctx.fillStyle = 'black';
             ctx.font = '30px Arial';

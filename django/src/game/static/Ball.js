@@ -22,7 +22,6 @@ export class Ball {
 
     draw(ctx) {
         ctx.fillStyle = this.color;
-        // ctx.fillRect(this.x - this.w/2, this.y - this.h/2, this.w, this.h);
         drawRectRounded(ctx, this.x, this.y, this.w, this.h, 5);
     }
 

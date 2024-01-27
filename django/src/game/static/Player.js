@@ -43,7 +43,6 @@ export class Player {
         }
 
         ctx.fillStyle = this.color;
-        // ctx.fillRect(this.x - this.w / 2, this.y - this.h_visual / 2, this.w, this.h_visual);
         drawRectRounded(ctx, this.x, this.y, this.w, this.h_visual, 10);
         if (this.bonus)
             drawBorderRounded(ctx, this.x, this.y, this.w, this.h_visual, 10);
