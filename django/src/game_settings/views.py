@@ -2,6 +2,34 @@ from twofa.views import _user_jwt_cookie
 from django.views.decorators.csrf import csrf_protect
 from django.utils.translation import gettext as _
 from django.http import JsonResponse
+from . import forms
+
+def is_valid_input(form):
+	bonus = form.get('bonus')
+	walls = form.get('walls')
+	player1_color = form.get('player1')
+	player2_color = form.get('player2')
+	ball_color = form.get('ballColor')
+	ball_speed = form.get('ballSpeed')
+
+	# Validate the form data
+	if not all([player1_color, player2_color, ball_color, ball_speed]):
+		return False
+	if bonus not in ['on', None] or walls not in ['on', None]:
+		return False
+	if not isinstance(player1_color, str) or player1_color.lower() not in ['white', 'red', 'green', 'blue']:
+		return False
+	if not isinstance(player2_color, str) or player2_color.lower() not in ['white', 'red', 'green', 'blue']:
+		return False
+	if not isinstance(ball_color, str) or ball_color.lower() not in ['white', 'red', 'green', 'blue']:
+		return False
+	try:
+		if not 3 <= int(ball_speed) <= 10:
+			return False
+	except ValueError:
+		return False
+	return True
+	
 
 @csrf_protect
 def game_settings(request):
@@ -23,7 +51,12 @@ def game_settings(request):
 
 	if user is not None:
 		if request.method == 'POST':
-			save_game_settings(request, user)
+			if is_valid_input(request.POST):
+				save_game_settings(request, user)
+			else:
+				return {
+					"section": "game_settings_error.html",
+				}
 
 		player1_color = user.player_1_color
 		player2_color = user.player_2_color
