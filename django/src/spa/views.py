@@ -27,17 +27,19 @@ def spa_view(request):
 			"section": section + ".html",
 		}
 
-		if section == "validate_2fa_code":
+		if section == "validate_2fa_code" and logged_in:
+			section = "main"
+		elif section == "validate_2fa_code" and not logged_in:
 			context, token = validate_2fa(request)
-		if section == "twofa":
+		elif section == "twofa":
 			context, token = twofa(request)
-		if section == "qr_setup":
+		elif section == "qr_setup":
 			context, token = qr_setup(request)
-		if section == "email_setup":
+		elif section == "email_setup":
 			context, token = email_setup(request)
-		if section == "game_settings" and logged_in:
+		elif section == "game_settings" and logged_in:
 			context = game_settings(request)
-		if section == "game" and logged_in:
+		elif section == "game" and logged_in:
 			context = game_setup(request, context, user)
 
 		if section == "main" and logged_in:
