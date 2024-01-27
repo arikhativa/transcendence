@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-11 12:18+0000\n"
+"POT-Creation-Date: 2024-01-27 14:39+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,6 +18,54 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % "
 "1 == 0) ? 1: (n % 10 == 0 && n % 1 == 0 && n > 10) ? 2 : 3;\n"
+
+#: game_settings/templates/game_settings.html:7 navbar/templates/navbar.html:37
+msgid "Game Settings"
+msgstr "הגדרות משחק"
+
+#: game_settings/templates/game_settings.html:15
+msgid "2X Bonus"
+msgstr "בונוס 2X"
+
+#: game_settings/templates/game_settings.html:19
+msgid "Walls"
+msgstr "קירות"
+
+#: game_settings/templates/game_settings.html:23
+msgid "Player 1 color selector:"
+msgstr "בחירת צבע שחקן 1:"
+
+#: game_settings/templates/game_settings.html:35
+msgid "Player 2 color selector:"
+msgstr "בחירת צבע שחקן 2:"
+
+#: game_settings/templates/game_settings.html:47
+msgid "Ball color selector:"
+msgstr "בחירת צבע כדור:"
+
+#: game_settings/templates/game_settings.html:59
+msgid "Ball Speed:"
+msgstr "מהירות כדור:"
+
+#: game_settings/templates/game_settings.html:63
+msgid "Save"
+msgstr "שמור"
+
+#: game_settings/views.py:18
+msgid "white"
+msgstr "לבן"
+
+#: game_settings/views.py:19
+msgid "red"
+msgstr "אדום"
+
+#: game_settings/views.py:20
+msgid "green"
+msgstr "ירוק"
+
+#: game_settings/views.py:21
+msgid "blue"
+msgstr "כחול"
 
 #: header/templates/header.html:43
 msgid "Home"
@@ -54,6 +102,32 @@ msgstr "צור טורניר"
 #: spa/templates/error_page.html:8
 msgid "ERROR"
 msgstr "שְׁגִיאָה"
+
+#: tournament/templates/tournament.html:15
+#, fuzzy
+msgid "New Tournament"
+msgstr "טורניר חדש"
+
+#: tournament/templates/tournament.html:23
+msgid "Username"
+msgstr "שם משתמש"
+
+#: tournament/templates/tournament.html:25
+msgid "Add"
+msgstr "הוסף"
+
+#: tournament/templates/tournament.html:38
+msgid "Players"
+msgstr "שחקנים"
+
+#: tournament/templates/tournament.html:39
+msgid "max players"
+msgstr "מקסימום שחקנים"
+
+#: tournament/templates/tournament.html:48
+#, fuzzy
+msgid "Start Tournament"
+msgstr "התחל טורניר"
 
 #: twofa/templates/2fa_setup.html:7 twofa/templates/email_setup.html:13
 msgid "Welcome to Two-Factor Authentication Setup"
