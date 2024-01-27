@@ -1,0 +1,68 @@
+{% load i18n %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'game_settings.css' %}" />
+<body>
+	<div class="card text-center border border-dark border-5 bg-info">
+		<div class="card-header bg-white">
+			<h1 class="card-title">{% trans "Game Settings" %}</h1>
+		</div>
+		<div class="card-body">
+			<form id="settings-form" method="post" action="/game_settings/">
+				{% csrf_token %}
+				<div class="mb-3">
+					<div class="form-check form-switch center-switch">
+						<input name="bonus" class="form-check-input" type="checkbox" role="switch" id="{{ switch_type_bonus }}" {{ check_mode_bonus }}>
+						<label class="form-check-label" for="{{ switch_type_bonus }}">{% trans "2X Bonus" %}</label>
+					</div>
+					<div class="form-check form-switch center-switch">
+						<input name="walls" class="form-check-input" type="checkbox" role="switch" id="{{ switch_type_walls }}" {{ check_mode_walls }}>
+						<label class="form-check-label" for="{{ switch_type_walls }}">{% trans "Walls" %}</label>
+					</div>
+				</div>
+				<div class="mb-3">
+					<p class="select-label">{% trans "Player 1 color selector:" %}</p>
+					<select name="player1" class="form-select" aria-label="Player 1 color selector">
+						{% for key, value in color_translations.items %}
+							{% if player1_color == key %}
+								<option selected value="{{ key }}">{{ value|capfirst }}</option>
+							{% else %}
+								<option value="{{ key }}">{{ value|capfirst }}</option>
+							{% endif %}
+						{% endfor %}
+					  </select>
+				</div>
+				<div class="mb-3" >
+					  <p class="select-label">{% trans "Player 2 color selector:" %}</p>
+					  <select name="player2" class="form-select" aria-label="Player 2 color selector">
+						{% for key, value in color_translations.items %}
+							{% if player2_color == key %}
+								<option selected value="{{ key }}">{{ value|capfirst }}</option>
+							{% else %}
+								<option value="{{ key }}">{{ value|capfirst }}</option>
+							{% endif %}
+						{% endfor %}
+					  </select>
+				</div>
+				<div class="mb-3">
+					<p class="select-label">{% trans "Ball color selector:" %}</p>
+					<select name="ballColor" class="form-select" aria-label="Ball color selector">
+					  {% for key, value in color_translations.items %}
+						  {% if ball_color == key %}
+							  <option selected value="{{ key }}">{{ value|capfirst }}</option>
+						  {% else %}
+							  <option value="{{ key }}">{{ value|capfirst }}</option>
+						  {% endif %}
+					  {% endfor %}
+					</select>
+			  	</div>
+				<div class="mb-3">
+					<p class="select-label">{% trans "Ball Speed:" %}</p>
+					<input name="ballSpeed" type="range" class="form-range" min="10" max="20" value={{ ball_speed }} id="customRange2">
+				</div>
+				<div class="text-center mt-3">
+					<button class="btn btn-primary" type="submit">{% trans "Save" %}</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>

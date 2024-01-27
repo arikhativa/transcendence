@@ -1,11 +1,10 @@
 from django.shortcuts import render
 from API.views import authenticate_42
 from django.utils import translation
-from django.shortcuts import redirect
-from django.http import HttpResponse, HttpResponseNotFound
 from django.conf import settings
 from twofa.views import twofa, validate_2fa, qr_setup, email_setup, delete_jwt, _jwt_is_expired, _user_jwt_cookie
 from game.views import game_setup
+from game_settings.views import game_settings, get_game_settings
 
 def spa_view(request):
 	try:
@@ -14,12 +13,13 @@ def spa_view(request):
 
 		if (
 			section != "game"
+			and section != "game_settings"
 			and section != "tournament"
 			and section != "validate_2fa_code"
 			and section != "twofa"
 			and section != "qr_setup"
 			and section != "email_setup"
-			or not logged_in and (section == "game" or section == "tournament")
+			or not logged_in and (section == "game" or section == "tournament" or section == "game_settings")
 		):
 			section = "main"
 
@@ -35,6 +35,8 @@ def spa_view(request):
 			context, token = qr_setup(request)
 		if section == "email_setup":
 			context, token = email_setup(request)
+		if section == "game_settings" and logged_in:
+			context = game_settings(request)
 		if section == "game" and logged_in:
 			context = game_setup(request, context, user)
 
@@ -81,6 +83,15 @@ def game_view(request):
 
 	context = game_setup(request, {}, user)
 	return render(request, "game.html", context)
+
+def game_settings_view(request):
+	if not is_logged_in(request)[0]:
+		return render(request, "main.html")
+	context = game_settings(request)
+	return render(request, "game_settings.html", context)
+
+def get_game_settings_view(request):
+	return get_game_settings(request)
 
 def tournament_view(request):
 	if not is_logged_in(request)[0]:

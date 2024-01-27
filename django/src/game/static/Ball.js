@@ -1,15 +1,16 @@
 export class Ball {
     // Constructor method
-    constructor(x, y) {
+    constructor(x, y, ballSpeed, ballColor) {
         this.x = x;
         this.y = y;
         this.w = 40;
         this.h = 40;
 
-        this.speed = 16;
-        this.color = 'red';
+        this.speed = ballSpeed;
+        this.color = ballColor;
         this.angle = 0;
         this.generateRandomInitAngle();
+        this.hitBy = null;
     }
   
     update() {

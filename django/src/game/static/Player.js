@@ -6,7 +6,7 @@ export class Player {
         this.h = 300;
         this.h_visual = this.h - this.h * 0.2;
 
-        this.speed = 9;
+        this.speed = 10;
         this.color = 'white'
         //Control state
         this.controls = {
@@ -59,7 +59,7 @@ export class Player {
 
     setLeftPlayer() {
         if (!canvas)
-            return;
+			return ;
 
         this.controls = {
             up: { state: false, keys: "wW" },
@@ -73,18 +73,16 @@ export class Player {
 
     setRightPlayer() {
         if (!canvas)
-            return;
-
+			return ;
+        
         this.controls = {
-            up: { state: false, keys: "iI" },
-            down: { state: false, keys: "kK" }
-        };
+            up: {state: false, keys: ["i", "I", "ArrowUp"]},
+            down: {state: false, keys: ["k", "K", "ArrowDown"]}};
         this.x = canvas.width - 30;
         this.y = canvas.height / 2;
         this.isLeftPlayer = false;
         this.score = 0;
     }
-
     onResize(canvas) {
         if (!canvas)
             return;
@@ -95,5 +93,11 @@ export class Player {
             this.x = canvas.width - 30;
             this.y = canvas.height / 2
         }
+    }
+    setColor(color) {
+        this.color = color;
+    }
+    setSpeed(speed) {
+        this.speed = speed;
     }
 }
