@@ -22,6 +22,9 @@ VOLUMES := $(COMMON_VOLUME) $(ELASTIC_VOLUME) $(POSTGRES_VOLUME) $(GRAFANA_VOLUM
 all: $(VOLUMES) 
 	$(DC) up -d --build
 
+basic: $(VOLUMES) 
+	$(DC) up -d --build nginx django postgres
+
 clean:
 	$(DC) down
 
