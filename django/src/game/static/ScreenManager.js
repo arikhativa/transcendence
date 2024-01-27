@@ -43,15 +43,35 @@ export class ScreenManager {
         this.transitionHandler();
 	}
 
-	draw(ctx) {
-	}
-
     //Screen Handlers
     gameScreen(ctx, game) {
         if (!this.transition && !game.pause)
             game.update();
         game.draw(ctx);
     }
+
+	drawSpace(ctx, center_x, center_y)
+	{
+		ctx.fillStyle = 'white';
+
+		let bot_x = center_x - 50;
+		let bot_y = center_y + 50;
+		let width = 100;
+		let height = 10;
+        ctx.fillRect(bot_x, bot_y, width, height);
+
+		height = 30;
+		width = 10;
+		let left_x = bot_x;
+		let left_y = bot_y - height + (height / 10);
+        ctx.fillRect(left_x, left_y, width, height);
+
+		height = 30;
+		width = 10;
+		let right_x = bot_x + 90;
+		let right_y = bot_y - height + (height / 10);
+        ctx.fillRect(right_x, right_y, width, height);
+	}
     
     introScreen(ctx, canvas) {
         // Clear the canvas to render new frame
@@ -61,8 +81,15 @@ export class ScreenManager {
         ctx.font = "100px Arial";
         ctx.fillStyle = "white";
         ctx.textAlign = "center";
-        ctx.fillText("PONG", canvas.width/2, canvas.height/2 - 70);
-        ctx.fillText("Press space to start", canvas.width/2, canvas.height/2 + 100);
+        ctx.fillText("🏓 PONG", canvas.width/2, canvas.height/2 - 200);
+        ctx.fillText("⬆️ W & I", canvas.width/2 - 300, canvas.height/2 + 50);
+        ctx.fillText("⬇️ S & K", canvas.width/2 + 300, canvas.height/2 + 50);
+
+        ctx.fillText("⏯ ", (canvas.width/2) - 100, (canvas.height * 0.8));
+		const center_x = (canvas.width/2) + 50;
+		const center_y = (canvas.height * 0.72);
+		this.drawSpace(ctx, center_x, center_y);
+
     }
     
     vsScreen(ctx, canvas, game) {
@@ -73,7 +100,7 @@ export class ScreenManager {
         ctx.font = "100px Arial";
         ctx.fillStyle = "white";
         ctx.textAlign = "center";
-        ctx.fillText(game.p1.name + " VS " + game.p2.name, canvas.width/2, canvas.height/2 - 70);
+        ctx.fillText(game.p1.name + " 🕹️ " + game.p2.name, canvas.width/2, canvas.height/2 - 70);
     }
     
     endOfTournamentScreen(ctx, canvas, game) {
@@ -84,8 +111,8 @@ export class ScreenManager {
         ctx.font = "100px Arial";
         ctx.fillStyle = "white";
         ctx.textAlign = "center";
-        ctx.fillText(game.winner_name + " won", canvas.width/2, canvas.height/2 - 70);
-        ctx.fillText("the TOURNAMENT!", canvas.width/2, canvas.height/2 + 100);
+        ctx.fillText("🥇 " + game.winner_name + " 🥇", canvas.width/2, canvas.height/2 - 70);
+        ctx.fillText("🏆", canvas.width/2, canvas.height/2 + 100);
     }
     
     endOfMatchScreen(ctx, canvas, game) {
@@ -96,39 +123,75 @@ export class ScreenManager {
         ctx.font = "100px Arial";
         ctx.fillStyle = "white";
         ctx.textAlign = "center";
-        ctx.fillText(game.winner_name + " won", canvas.width/2, canvas.height/2 - 70);
-        ctx.fillText("the match!", canvas.width/2, canvas.height/2 + 100);
+        ctx.fillText("🏅 " + game.winner_name + " 🏅", canvas.width/2, canvas.height/2 - 70);
+
     }
     
+
+	drawBoxes(ctx, ammount, tile_width, tile_height, size, i, tournament)
+	{
+		let left_index = 0;
+		let right_index = tournament.auxTournament.length / 2;
+		if (right_index * 2 < tournament.auxTournament.length)
+			++right_index;
+
+		for (let k = 0; k < ammount; k++) {
+
+			let pos_left = [(i * tile_width) + tile_width/2, (k * tile_height) + tile_height/2];
+			let pos_right = [((size - i - 1) * tile_width) + tile_width/2, (k * tile_height) + tile_height/2];
+			//Player Boxes
+			let h = tile_width / 4;
+			ctx.lineWidth = 4;
+			ctx.strokeStyle = "white";
+			ctx.strokeRect(pos_left[0] - tile_width/2 + 10, pos_left[1] - h/2, tile_width - 20, h);
+			ctx.strokeRect(pos_right[0] - tile_width/2 + 10, pos_right[1] - h/2, tile_width - 20, h);
+
+			// round 4 is round of 16
+			// round 3 is round of 8
+			// round 2 is round of 4
+			// round 1 is round of 2
+			// i 1 is -> 16
+			// i 2 is -> 8
+			// i 3 is -> 4
+			// i 4 is -> 2
+			if (i == 4 - tournament.round)
+			{
+				let fontSize = (tile_width / 6);
+				let offset = (h / 5);
+
+				ctx.fillStyle = 'white';
+				ctx.font = `${fontSize}px Arial`;
+				ctx.textAlign = "center";
+
+				ctx.fillText(tournament.auxTournament[left_index].obj.name, pos_right[0], pos_right[1] + offset);
+	
+				if (right_index < tournament.auxTournament.length)
+					ctx.fillText(tournament.auxTournament[right_index].obj.name, pos_left[0], pos_left[1] + offset);
+
+				ctx.fillStyle = 'white';
+				++left_index;
+				++right_index;
+			}
+
+		}
+	}
+
     tournamentTreeScreen(ctx, tournament) {
+		if (!canvas)
+			return ;
+
         tournament.phaseChange = false;
-        let depth = tournament.maxDepth;
-        let size = ((2**depth)/2 + 2);
+		// we always print all 16 boxes
+        let depth = 4;
+        let size = 8;
         ctx.fillStyle = 'white';
-    
+
+
         let tile_width = canvas.width / size;
         for (let i = 0; i < size/2; i++) {
             let ammount = 2**(depth - 1 - i);
-            let tile_height = canvas.height / ammount;
-            let h = tile_width * (9/18);
-            for (let k = 0; k < ammount; k++) {
-                let pos_left = [(i * tile_width) + tile_width/2, (k * tile_height) + tile_height/2];
-                let pos_right = [((size - i - 1) * tile_width) + tile_width/2, (k * tile_height) + tile_height/2];
-                //Player Boxes
-                let h = tile_width / 2;
-                ctx.lineWidth = 8;
-                ctx.strokeStyle = "white";
-                ctx.strokeRect(pos_left[0] - tile_width/2 + 10, pos_left[1] - h/2, tile_width - 20, h);
-                ctx.strokeRect(pos_right[0] - tile_width/2 + 10, pos_right[1] - h/2, tile_width - 20, h);
-    
-                //Player Names
-                ctx.fillStyle = 'white';
-                ctx.font = "30px Arial";
-                ctx.fillText("Player name", pos_right[0], pos_right[1] + 15);
-    
-                ctx.fillText("Player name", pos_left[0], pos_left[1] + 15);
-                ctx.fillStyle = 'white';
-            }
+            let tile_height = canvas.height / (ammount);
+			this.drawBoxes(ctx, ammount, tile_width, tile_height, size, i, tournament);
         }
     }
 

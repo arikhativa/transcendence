@@ -20,3 +20,9 @@
 #main-p {
     flex : 1;
 }
+
+#input-error
+{
+	visibility: hidden;
+	color: red;
+}

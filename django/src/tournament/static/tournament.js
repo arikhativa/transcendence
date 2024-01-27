@@ -35,23 +35,36 @@ function removePlayer() {
 
 // Add new Players using button
 function addNewPlayer() {
+    var errElem = document.getElementById('input-error');
+
     var numOfPlayers = players.getElementsByTagName('li').length;
     if (numOfPlayers >= 16) {
-        // console.log("Can not add more players!");
+		errElem.innerText = "Can not add more players!";
+		errElem.style["visibility"] =  "visible";
         return ;
     }
 
     // Get name from text form
     // Get the value from the text input field
     var newPlayerName = document.getElementById('new-player-name').value.trim();
+
     // Username field must not be empty
     if (newPlayerName.trim().length === 0) {
-        // console.log("Username field must not be empty");
+		errElem.innerText = "Username field must not be empty";
+		errElem.style["visibility"] =  "visible";
         return ;
     }
+
+    if (newPlayerName.trim().length > 8) {
+		errElem.innerText = "Username cant be longer then 8";
+		errElem.style["visibility"] =  "visible";
+        return ;
+    }
+
     // Check if Player already in list
-   
     if (playerExists(newPlayerName)) {
+		errElem.innerText = "Player already in tournament";
+		errElem.style["visibility"] =  "visible";
         // console.log("Player already in tournament");
         return ;
     }
@@ -74,6 +87,7 @@ function addNewPlayer() {
     // Append the new item to the list
     players.insertBefore(newPlayer, players.firstElementChild);
     // players.appendChild(newPlayer);
+	errElem.style["visibility"] =  "hidden";
 }
 
 // Get the reference to the button element

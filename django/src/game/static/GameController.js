@@ -43,9 +43,9 @@ export class GameController {
 	}
 
 	checkWinner() {
-		if (this.p1.score == 5)
+		if (this.p1.score == 3)
 			this.last_winner = this.p1;
-		else if (this.p2.score == 5)
+		else if (this.p2.score == 3)
 			this.last_winner = this.p2;
 		if (this.last_winner !== null)
 			this.winner_name = this.last_winner.name;
