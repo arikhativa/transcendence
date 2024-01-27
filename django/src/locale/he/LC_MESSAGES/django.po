@@ -104,7 +104,6 @@ msgid "ERROR"
 msgstr "שְׁגִיאָה"
 
 #: tournament/templates/tournament.html:15
-#, fuzzy
 msgid "New Tournament"
 msgstr "טורניר חדש"
 
@@ -125,7 +124,6 @@ msgid "max players"
 msgstr "מקסימום שחקנים"
 
 #: tournament/templates/tournament.html:48
-#, fuzzy
 msgid "Start Tournament"
 msgstr "התחל טורניר"
 

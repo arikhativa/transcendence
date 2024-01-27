@@ -103,7 +103,6 @@ msgid "ERROR"
 msgstr "ERREUR"
 
 #: tournament/templates/tournament.html:15
-#, fuzzy
 msgid "New Tournament"
 msgstr "Nouveau Tournoi"
 
@@ -124,7 +123,6 @@ msgid "max players"
 msgstr "joueurs max"
 
 #: tournament/templates/tournament.html:48
-#, fuzzy
 msgid "Start Tournament"
 msgstr "Commencer le Tournoi"
 
