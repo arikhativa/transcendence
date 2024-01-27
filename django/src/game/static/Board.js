@@ -64,18 +64,22 @@ export class Board {
             ball.x = this.x;
             ball.y = this.y;
             ball.generateRandomInitAngle();
+            p1.bonus = false;
+            p2.bonus = false;
+            p2.score++;
 			if (this.settings.bonus && this.bonus.playerWithBonus == p2)
             {
                 this.bonus.playerWithBonus = null;
                 p2.bonus = false;
                 p2.score++;
             }
-            p2.score++;
         }
         if (ball.x + ball.w / 2 >= p2.x - p2.w / 2 && !(ball.y > p2.y - p2.h / 2 && ball.y < p2.y + p2.h / 2)) {
             ball.x = this.x;
             ball.y = this.y;
             ball.generateRandomInitAngle();
+            p1.bonus = false;
+            p2.bonus = false;
             p1.score++;
 			if (this.settings.bonus && this.bonus.playerWithBonus == p1)
             {
