@@ -3,10 +3,10 @@ export class Ball {
     constructor(x, y) {
         this.x = x;
         this.y = y;
-        this.w = 30;
-        this.h = 30;
+        this.w = 40;
+        this.h = 40;
 
-        this.speed = 12;
+        this.speed = 16;
         this.color = 'red';
         this.angle = 0;
         this.generateRandomInitAngle();
