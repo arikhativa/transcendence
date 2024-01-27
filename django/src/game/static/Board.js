@@ -69,6 +69,7 @@ export class Board {
 			if (this.settings.bonus && this.bonus.playerWithBonus == p2)
             {
                 this.bonus.playerWithBonus = null;
+                p2.bonus = false;
                 p2.score++;
             }
             p2.score++;
@@ -81,6 +82,7 @@ export class Board {
 			if (this.settings.bonus && this.bonus.playerWithBonus == p1)
             {
                 this.bonus.playerWithBonus = null;
+                p2.bonus = false;
                 p1.score++;
             }
         }
@@ -131,10 +133,14 @@ export class Board {
 			ball.y + ball.h/2 > this.bonus.y - this.bonus.s/2 &&
 			ball.y - ball.h/2 < this.bonus.y + this.bonus.s/2) {
 			this.bonus.active = false;
-			if (ball.hitBy == p1)
+			if (ball.hitBy == p1) {
 				this.bonus.playerWithBonus = p1;
-			else
-				this.bonus.playerWithBonus = p2;
+                p1.bonus = true;
+            }
+			else {
+                this.bonus.playerWithBonus = p2;
+                p2.bonus = true;
+            }
 		}
         // -------------------------------------------------------------------------------------
     }
