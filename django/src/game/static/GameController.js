@@ -35,6 +35,8 @@ export class GameController {
 		this.p2.setColor(this.rightPlayerColor);
 		this.p2.setSpeed(this.rightPlayerSpeed);
 		this.last_winner = null;
+
+		this.board.initModifiers();
 	}
 
     update() {
@@ -54,9 +56,9 @@ export class GameController {
 	}
 
 	checkWinner() {
-		if (this.p1.score == 3)
+		if (this.p1.score >= 3)
 			this.last_winner = this.p1;
-		else if (this.p2.score == 3)
+		else if (this.p2.score >= 3)
 			this.last_winner = this.p2;
 		if (this.last_winner !== null)
 			this.winner_name = this.last_winner.name;

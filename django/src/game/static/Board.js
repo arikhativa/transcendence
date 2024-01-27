@@ -14,11 +14,14 @@ export class Board {
             p2: this.w - this.goal_size
         };
         this.settings = settings;
+        this.initModifiers();
+    }
 
+    initModifiers() {
         if (this.settings.bonus) {
             this.bonus = {
-                x: w/2 + Math.random() * w/4 - w/8,  // Random position in the middle of the board
-                y: h/2 + Math.random() * h/4 - h/8,
+                x: this.w/2 + Math.random() * this.w/3 - this.w/6,  // Random position in the middle of the board
+                y: this.h/2 + Math.random() * this.h/3 - this.h/6,
                 s: 40,  // Size of the bonus square
                 active: true,  // Whether the bonus is active
 				playerWithBonus: null // The player who has the bonus
