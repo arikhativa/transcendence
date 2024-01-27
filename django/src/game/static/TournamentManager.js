@@ -30,7 +30,7 @@ export class Tournament {
     this.currentMatch = {p1: 0, p2: 1};
     this.phaseChange = false;
 
-    this.fillTournament(playerList);
+    this.fillTournamentWithPlayers(playerList);
   }
   
   addPlayer(name) {
@@ -54,8 +54,7 @@ export class Tournament {
     this.auxTournament = this.tournament;
     fillTournament(this.auxTournament, this.maxDepth);
     this.len = this.auxTournament.length;
-
-    this.round = getMaxDepth(this.len);
+	this.round = getMaxDepth(this.len);
   }
 
   restartTournament() {
@@ -170,10 +169,10 @@ export class Tournament {
     }
   }
 
-  fillTournament(players = []) {
-    for (let i = 0; i < players.length; i++) {
-      this.addPlayer(players[i]);
-    }
+  fillTournamentWithPlayers(players = []) {
+	for (let i = 0; i < players.length; i++) {
+		this.addPlayer(players[i]);
+	}
     this.closeTournament();
   }
 }
