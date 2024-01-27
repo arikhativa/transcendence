@@ -7,7 +7,7 @@ export class ScreenManager {
 			VSSCREEN: 2,
 			ENDOFMATCH: 3,
 			ENDOFTOURNAMENT: 4,
-			TOURNAMENTTREE: 5
+			TOURNAMENTTREE: 5,
 		};
 		
         this.currentScreen = this.screens.INTRO;
@@ -126,7 +126,6 @@ export class ScreenManager {
         ctx.fillText("🏅 " + game.winner_name + " 🏅", canvas.width/2, canvas.height/2 - 70);
 
     }
-    
 
 	drawBoxes(ctx, ammount, tile_width, tile_height, size, i, tournament)
 	{
@@ -164,7 +163,7 @@ export class ScreenManager {
 				ctx.textAlign = "center";
 
 				ctx.fillText(tournament.auxTournament[left_index].obj.name, pos_right[0], pos_right[1] + offset);
-	
+
 				if (right_index < tournament.auxTournament.length)
 					ctx.fillText(tournament.auxTournament[right_index].obj.name, pos_left[0], pos_left[1] + offset);
 
@@ -175,21 +174,17 @@ export class ScreenManager {
 
 		}
 	}
-
+    
     tournamentTreeScreen(ctx, tournament) {
-		if (!canvas)
-			return ;
-
         tournament.phaseChange = false;
 		// we always print all 16 boxes
         let depth = 4;
         let size = 8;
         ctx.fillStyle = 'white';
-
-
+    
         let tile_width = canvas.width / size;
         for (let i = 0; i < size/2; i++) {
-            let ammount = 2**(depth - 1 - i);
+			let ammount = 2**(depth - 1 - i);
             let tile_height = canvas.height / (ammount);
 			this.drawBoxes(ctx, ammount, tile_width, tile_height, size, i, tournament);
         }

@@ -11,7 +11,7 @@ let playersList = [];
 if (playersDataString) {
 
     const playersParam = new URLSearchParams(playersDataString).get('players');
-    
+
     playersList = playersParam ? decodeURIComponent(playersParam).split(',') : [];
 	if (playersList.length === 0)
 	{
@@ -28,18 +28,15 @@ else {
 	playersList.push("Player2");
 }
 
-let  tournament = new Tournament(playersList);
-
-
 // Define canvas and a context to draw to
-let canvas = document.getElementById("canvas");
-setCanvasSize();
-let ctx;
+const canvas = document.getElementById("canvas");
+setCanvasSize()
+const ctx = canvas.getContext("2d");
 
-if (canvas)
-{
-	ctx = canvas.getContext("2d");
-}
+//Game SETUP
+let tournament;
+let game;
+let screenManager;
 
 // Game.js
 function setCanvasSize() {
@@ -62,48 +59,50 @@ function handleKeyPress(e, isKeyDown) {
     game.p1.move_listener(e, isKeyDown);
     game.p2.move_listener(e, isKeyDown);
 }
-window.addEventListener('keydown', (e) => {
-    handleKeyPress(e, true);
-});
-window.addEventListener('keyup', (e) => {
-    handleKeyPress(e, false);
-});
-window.addEventListener('keyup', (e) => {
-    if ((e.key !== " " && e.key !== "n" && e.key !== "N") || screenManager.transition)
-        return;
-    if (screenManager.currentScreen == screenManager.screens.GAME) {
-		// 'n' or 'N' will skip the match and chose p1 as winner
-		if (e.key === "n" || e.key === "N")
-		{
-			game.last_winner = game.p1;
-			game.winner_name = game.p1.name;
-			return ;
-		}
-        game.pause = !game.pause;
-        return ;
-    } else if (screenManager.currentScreen == screenManager.screens.INTRO) {
-        screenManager.nextScreen = screenManager.screens.TOURNAMENTTREE;
-    } else if (screenManager.currentScreen == screenManager.screens.VSSCREEN) {
-        screenManager.nextScreen = screenManager.screens.GAME;
-    } else if (screenManager.currentScreen == screenManager.screens.ENDOFMATCH) {
-        if (tournament.phaseChange)
-            screenManager.nextScreen = screenManager.screens.TOURNAMENTTREE
-        else
-            screenManager.nextScreen = screenManager.screens.VSSCREEN;
-    } else if (screenManager.currentScreen == screenManager.screens.TOURNAMENTTREE) {
-        screenManager.nextScreen = screenManager.screens.VSSCREEN;
-    } else if (screenManager.currentScreen == screenManager.screens.ENDOFTOURNAMENT) {
-        //TODO: reset tournament
-    }
-    //TODO: new screens can be added here if you want to switch screens using space
-    screenManager.transition = true;
-});
+
+function setListeners()
+{
+
+window.addEventListener('keydown', (e) => {	
+    handleKeyPress(e, true);	
+});	
+window.addEventListener('keyup', (e) => {	
+    handleKeyPress(e, false);	
+});	
+window.addEventListener('keyup', (e) => {	
+    if ((e.key !== " " && e.key !== "n" && e.key !== "N") || screenManager.transition)	
+        return;	
+    if (screenManager.currentScreen == screenManager.screens.GAME) {	
+		// 'n' or 'N' will skip the match and chose p1 as winner	
+		if (e.key === "n" || e.key === "N")	
+		{	
+			game.last_winner = game.p1;	
+			game.winner_name = game.p1.name;	
+			return ;	
+		}	
+        game.pause = !game.pause;	
+        return ;	
+    } else if (screenManager.currentScreen == screenManager.screens.INTRO) {	
+        screenManager.nextScreen = screenManager.screens.TOURNAMENTTREE;	
+    } else if (screenManager.currentScreen == screenManager.screens.VSSCREEN) {	
+        screenManager.nextScreen = screenManager.screens.GAME;	
+    } else if (screenManager.currentScreen == screenManager.screens.ENDOFMATCH) {	
+        if (tournament.phaseChange)	
+            screenManager.nextScreen = screenManager.screens.TOURNAMENTTREE	
+        else	
+            screenManager.nextScreen = screenManager.screens.VSSCREEN;	
+    } else if (screenManager.currentScreen == screenManager.screens.TOURNAMENTTREE) {	
+        screenManager.nextScreen = screenManager.screens.VSSCREEN;	
+    } else if (screenManager.currentScreen == screenManager.screens.ENDOFTOURNAMENT) {	
+        //TODO: reset tournament	
+    }	
+    //TODO: new screens can be added here if you want to switch screens using space	
+    screenManager.transition = true;	
+});	
 document.addEventListener('keydown', handleKeyPress);
 
-//Game SETUP
-let  game = new GameController(tournament.nextMatch());
+}
 
-let screenManager = new ScreenManager();
 
 function gameLoop() {
     //Clear Canvas
@@ -117,11 +116,43 @@ function gameLoop() {
 		//Show screens
 		screenManager.loop(ctx, canvas, game, tournament);
 	}
-
     //Manage the torunament
     tournament.handler(game, screenManager);
 
     // Request the next frame
     requestAnimationFrame(gameLoop);
 }
-gameLoop();
+
+async function startGame() {
+    const userSettings = await getGameSettings();
+    const gameSettings = {
+        barriers: userSettings.walls,
+        ballSpeed: userSettings.ball_speed,
+        bonus: userSettings.bonus,
+        leftPlayerColor: userSettings.player1_color,
+        rightPlayerColor: userSettings.player2_color,
+        ballColor: userSettings.ball_color,
+    }
+    tournament = new Tournament(playersList);
+    game = new GameController(tournament.nextMatch(), gameSettings);
+    screenManager = new ScreenManager();
+
+	setListeners();
+
+    gameLoop();
+}
+
+if (document.readyState !== 'complete') {
+    window.addEventListener("DOMContentLoaded", (event) => {
+        startGame();
+    });
+}
+else {
+    startGame();
+}
+
+async function getGameSettings() {
+    const response = await fetch('/get_game_settings/');
+    const data = await response.json();
+    return data;
+}

@@ -52,7 +52,7 @@ export class Player {
     }
 
     setLeftPlayer() {
-		if (!canvas)
+        if (!canvas)
 			return ;
 
         this.controls = {
@@ -65,15 +65,21 @@ export class Player {
     }
     
     setRightPlayer() {
-		if (!canvas)
+        if (!canvas)
 			return ;
-
+        
         this.controls = {
-            up: {state: false, keys: "iI"},
-            down: {state: false, keys: "kK"}};
+            up: {state: false, keys: ["i", "I", "ArrowUp"]},
+            down: {state: false, keys: ["k", "K", "ArrowDown"]}};
         this.x = canvas.width - 30;
         this.y = canvas.height/2;
         this.isLeftPlayer = false;
         this.score = 0;
-    } 
+    }
+    setColor(color) {
+        this.color = color;
+    }
+    setSpeed(speed) {
+        this.speed = speed;
+    }
 }
