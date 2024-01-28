@@ -203,15 +203,12 @@ export class Board {
         };
 
         for (let b of this.barriers) {
-            console.log("barrier: " + b.index);
-            console.log(b);
             let xBar = 9, yBar = 5
             let i = b.index;
             let xGrid = Math.floor(i / yBar);
             let yGrid = i % yBar;
             b.barrier.x = xGrid * this.w / xBar;
             b.barrier.y = yGrid * this.h / yBar;
-            console.log(b);
         }
     }
 }
