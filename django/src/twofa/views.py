@@ -94,7 +94,7 @@ def send_email(user, code):
 	msg['To'] = to_addr
 	msg['Subject'] = _('Validate your account')
 
-	message = "Your verification code is: " + code
+	message = _("Your verification code is: ") + code
 	msg.attach(MIMEText(message, 'plain'))
 
 	server = smtplib.SMTP(smtp_server, port)
@@ -132,52 +132,58 @@ def email_setup(request, wrong_code=False):
 @csrf_protect
 def twofa(request, wrong_code=False, expired_jwt=False):
 	token = None
-	if not request.COOKIES.get('jwt_token') \
-		or request.COOKIES.get('jwt_token') == 'None':
-		user = add_user_API(request)
-		token = create_jwt(user)
-		user.validated_2fa = False
-		user.save()
-		expired_jwt = True
-	else:
-		token = request.COOKIES.get('jwt_token')
-		if _jwt_is_expired(token):
+	try:
+		if not request.COOKIES.get('jwt_token') \
+			or request.COOKIES.get('jwt_token') == 'None':
+			user = add_user_API(request)
+			token = create_jwt(user)
+			user.validated_2fa = False
+			user.save()
 			expired_jwt = True
-		user = _user_jwt_cookie(request)
-	if user is None:
+		else:
+			token = request.COOKIES.get('jwt_token')
+			if _jwt_is_expired(token):
+				expired_jwt = True
+			user = _user_jwt_cookie(request)
+		if user is None:
+			return {
+				"error_msg": _("User not found"),
+				"section": "error_page.html",
+			}, None
+		
+		if user.active_2FA and not expired_jwt and user.validated_2fa:
+			return {
+				"username": user.username,
+				"email": user.email,
+				"section": "temporal_loggedin.html",
+			}, token
+		else:
+			if not wrong_code:
+				error_msg = ''
+			else:
+				error_msg = _('Invalid code, try again.')
+			if not (user.active_2FA):
+				if user.qr_2FA and wrong_code:
+					return qr_setup(request, wrong_code)
+				if user.email_2FA and wrong_code:
+					return email_setup(request, wrong_code)
+				return {
+					"section": "2fa_setup.html",
+				}, token
+			else:
+				if user.email_2FA:
+					code = TOTP(user.token_2FA).now()
+					send_email(user, code)
+				return {
+					"form": Form2FA(),
+					"error_msg": error_msg,
+					"section": "twofa.html",
+				}, token
+	except Exception as exc:
 		return {
-			"error_msg": _("User not found"),
+			"error_msg": _("Error: "),
 			"section": "error_page.html",
 		}, None
-	
-	if user.active_2FA and not expired_jwt and user.validated_2fa:
-		return {
-			"username": user.username,
-			"email": user.email,
-			"section": "temporal_loggedin.html",
-		}, token
-	else:
-		if not wrong_code:
-			error_msg = ''
-		else:
-			error_msg = _('Invalid code, try again.')
-		if not (user.active_2FA):
-			if user.qr_2FA and wrong_code:
-				return qr_setup(request, wrong_code)
-			if user.email_2FA and wrong_code:
-				return email_setup(request, wrong_code)
-			return {
-				"section": "2fa_setup.html",
-			}, token
-		else:
-			if user.email_2FA:
-				code = TOTP(user.token_2FA).now()
-				send_email(user, code)
-			return {
-				"form": Form2FA(),
-				"error_msg": error_msg,
-				"section": "twofa.html",
-			}, token
 
 def validate_user(request):
 	try:
@@ -187,7 +193,6 @@ def validate_user(request):
 		payload = jwt.decode(token, settings.SECRET_KEY, algorithms=['HS256'])
 		user = Users.objects.get(username=payload['username'])
 
-		#make sure the jwt is the same as the one in the db
 		if user.active_2FA:
 			return True
 		else:
