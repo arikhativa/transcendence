@@ -17,8 +17,8 @@
             {% csrf_token %}
             <div>
               {{ form }}
+              <p id="qr-setup-error-msg">{% trans "qr_setup_error_msg" %}</p>
             </div>
-			<p id="qr-setup-error-msg">{% trans "qr_setup_error_msg" %}</p>
             <div class="text-center mt-3">
               <button type="submit" class="btn btn-primary">{% trans "Submit" %}</button>
             </div>
