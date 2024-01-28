@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-27 14:39+0000\n"
+"POT-Creation-Date: 2024-01-28 09:15+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: game_settings/templates/game_settings.html:7 navbar/templates/navbar.html:37
+#: game_settings/templates/game_settings.html:7 navbar/templates/navbar.html:38
 msgid "Game Settings"
 msgstr "Paramètres du Jeu"
 
@@ -90,11 +90,11 @@ msgstr "Se connecter"
 msgid "Opponent's Name"
 msgstr "Nom de l'adversaire"
 
-#: navbar/templates/navbar.html:23
+#: navbar/templates/navbar.html:24
 msgid "PLAY"
 msgstr "JOUER"
 
-#: navbar/templates/navbar.html:31
+#: navbar/templates/navbar.html:32
 msgid "Create Tournament"
 msgstr "Créer un tournoi"
 
@@ -195,7 +195,7 @@ msgstr "AUTHENTIFICATEUR À DEUX FACTEURS"
 msgid "Please introduce a valid 2FA code:"
 msgstr "Veuillez introduire un code 2FA valide :"
 
-#: twofa/views.py:75 twofa/views.py:116 twofa/views.py:161
+#: twofa/views.py:75 twofa/views.py:116 twofa/views.py:162
 msgid "Invalid code, try again."
 msgstr "Code invalide, réessayez."
 
@@ -203,14 +203,22 @@ msgstr "Code invalide, réessayez."
 msgid "Validate your account"
 msgstr "Validez votre compte"
 
+#: twofa/views.py:95
+msgid "Your verification code is: "
+msgstr "Votre code de vérification est :"
+
 #: twofa/views.py:118
 msgid "Please enter the code sent to your email:"
 msgstr ""
 "Veuillez saisir le code qui vous a été envoyé par courrier électronique :"
 
-#: twofa/views.py:147
+#: twofa/views.py:148
 msgid "User not found"
 msgstr "Utilisateur non trouvé"
+
+#: twofa/views.py:182
+msgid "Error: "
+msgstr "Erreur: "
 
 #~ msgid "Clic here"
 #~ msgstr "Cliquez ici"

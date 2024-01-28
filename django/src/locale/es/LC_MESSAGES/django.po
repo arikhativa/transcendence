@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-27 14:39+0000\n"
+"POT-Creation-Date: 2024-01-28 09:14+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: game_settings/templates/game_settings.html:7 navbar/templates/navbar.html:37
+#: game_settings/templates/game_settings.html:7 navbar/templates/navbar.html:38
 msgid "Game Settings"
 msgstr "Configuración del Juego"
 
@@ -76,7 +76,7 @@ msgstr "Desconexion"
 
 #: main/templates/main.html:9
 msgid "Welcome to our Transcendence"
-msgstr "Bienvenido a nuestra Transcendencia"
+msgstr "Bienvenido a nuestro Transcendence"
 
 #: main/templates/main.html:12
 msgid "In order to feel the experience you should first log in"
@@ -90,11 +90,11 @@ msgstr "Iniciar sesión"
 msgid "Opponent's Name"
 msgstr "Nombre del rival"
 
-#: navbar/templates/navbar.html:23
+#: navbar/templates/navbar.html:24
 msgid "PLAY"
 msgstr "JUGAR"
 
-#: navbar/templates/navbar.html:31
+#: navbar/templates/navbar.html:32
 msgid "Create Tournament"
 msgstr "Crear Torneo"
 
@@ -159,8 +159,6 @@ msgstr ""
 "recibirás en tu correo"
 
 #: twofa/templates/email_setup.html:8
-#, fuzzy
-#| msgid "Login"
 msgid "First Login"
 msgstr "Iniciar Sesión"
 
@@ -172,7 +170,7 @@ msgstr "Enviar"
 
 #: twofa/templates/qr_setup.html:12
 msgid "Two-Factor Authentication Setup"
-msgstr "Bienvenido a la configuración de Two-Factor"
+msgstr "Configuración de Two-Factor"
 
 #: twofa/templates/qr_setup.html:13
 msgid "Scan the QR code with Google Authenticator app to set up 2FA:"
@@ -197,7 +195,7 @@ msgstr "Verificador de dos factores"
 msgid "Please introduce a valid 2FA code:"
 msgstr "Por favor introduce un código 2FA valido:"
 
-#: twofa/views.py:75 twofa/views.py:116 twofa/views.py:161
+#: twofa/views.py:75 twofa/views.py:116 twofa/views.py:162
 msgid "Invalid code, try again."
 msgstr "Codigo invalido, intenta de nuevo."
 
@@ -205,13 +203,21 @@ msgstr "Codigo invalido, intenta de nuevo."
 msgid "Validate your account"
 msgstr "Valida tu cuenta"
 
+#: twofa/views.py:95
+msgid "Your verification code is: "
+msgstr "Tu codigo de verificacion es: "
+
 #: twofa/views.py:118
 msgid "Please enter the code sent to your email:"
 msgstr "Introduzca el código enviado a su correo electrónico:"
 
-#: twofa/views.py:147
+#: twofa/views.py:148
 msgid "User not found"
 msgstr "Usuario no encontrado"
+
+#: twofa/views.py:182
+msgid "Error: "
+msgstr "Error: "
 
 #~ msgid "Clic here"
 #~ msgstr "Pulsa aquí"
