@@ -45,7 +45,7 @@ export class Board {
                     h: 80  // Fixed height for barriers
                 };
                 if (Math.random() < 0.25)
-                    this.barriers.push(barrier);
+                    this.barriers.push({barrier: barrier, index: i});
             }
         }
     }
@@ -111,9 +111,9 @@ export class Board {
 
         // Barriers collision
         if (this.settings.barriers) {
-            for (let barrier of this.barriers) {
-                if (ball.nextStep().x + ball.w/2 > barrier.x - barrier.w/2 && ball.nextStep().x - ball.w/2 < barrier.x + barrier.w/2 &&
-                    ball.nextStep().y + ball.h/2 > barrier.y - barrier.h/2 && ball.nextStep().y - ball.h/2 < barrier.y + barrier.h/2) {
+            for (let b of this.barriers) {
+                if (ball.nextStep().x + ball.w/2 > b.barrier.x - b.barrier.w/2 && ball.nextStep().x - ball.w/2 < b.barrier.x + b.barrier.w/2 &&
+                    ball.nextStep().y + ball.h/2 > b.barrier.y - b.barrier.h/2 && ball.nextStep().y - ball.h/2 < b.barrier.y + b.barrier.h/2) {
                     ball.angle = 0;
                     let min = 0, max = 0;
                     if (ball.dir.x < 0) //LEFT
@@ -170,8 +170,8 @@ export class Board {
         // Draw barriers
         if (this.settings.barriers) {
             ctx.fillStyle = '#ff4dc4';
-            for (let barrier of this.barriers) {
-                drawRectRounded(ctx, barrier.x, barrier.y, barrier.w, barrier.h, 3)
+            for (let b of this.barriers) {
+                drawRectRounded(ctx, b.barrier.x, b.barrier.y, b.barrier.w, b.barrier.h, 3)
             }
         }
 
@@ -201,5 +201,17 @@ export class Board {
             p1: this.goal_size,
             p2: this.w - this.goal_size
         };
+
+        for (let b of this.barriers) {
+            console.log("barrier: " + b.index);
+            console.log(b);
+            let xBar = 9, yBar = 5
+            let i = b.index;
+            let xGrid = Math.floor(i / yBar);
+            let yGrid = i % yBar;
+            b.barrier.x = xGrid * this.w / xBar;
+            b.barrier.y = yGrid * this.h / yBar;
+            console.log(b);
+        }
     }
 }
