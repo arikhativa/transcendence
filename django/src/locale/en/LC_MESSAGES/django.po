@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-28 11:54+0000\n"
+"POT-Creation-Date: 2024-01-28 14:32+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,51 +18,66 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: game_settings/templates/game_settings.html:7 navbar/templates/navbar.html:38
+#: game_settings/templates/game_settings.html:8 navbar/templates/navbar.html:38
 msgid "Game Settings"
 msgstr ""
 
-#: game_settings/templates/game_settings.html:15
+#: game_settings/templates/game_settings.html:16
 msgid "2X Bonus"
 msgstr "2X Bonus"
 
-#: game_settings/templates/game_settings.html:19
+#: game_settings/templates/game_settings.html:20
 msgid "Walls"
 msgstr "Walls"
 
-#: game_settings/templates/game_settings.html:23
+#: game_settings/templates/game_settings.html:24
 msgid "Player 1 color selector:"
 msgstr "Player 1 color selector:"
 
-#: game_settings/templates/game_settings.html:35
+#: game_settings/templates/game_settings.html:36
 msgid "Player 2 color selector:"
 msgstr "Player 2 color selector:"
 
-#: game_settings/templates/game_settings.html:47
+#: game_settings/templates/game_settings.html:48
 msgid "Ball color selector:"
 msgstr "Ball color selector:"
 
-#: game_settings/templates/game_settings.html:59
+#: game_settings/templates/game_settings.html:60
 msgid "Ball Speed:"
 msgstr "Ball Speed:"
 
-#: game_settings/templates/game_settings.html:63
+#: game_settings/templates/game_settings.html:64
+msgid "Settings saved"
+msgstr ""
+
+#: game_settings/templates/game_settings.html:65
 msgid "Save"
 msgstr "Save"
 
-#: game_settings/views.py:18
+#: game_settings/templates/game_settings_error.html:8
+#: spa/templates/error_page.html:8
+msgid "ERROR"
+msgstr "ERROR"
+
+#: game_settings/templates/game_settings_error.html:13
+#, fuzzy
+#| msgid "Invalid code, try again."
+msgid "Invalid form data."
+msgstr "Invalid code, try again."
+
+#: game_settings/views.py:49
 msgid "white"
 msgstr "white"
 
-#: game_settings/views.py:19
+#: game_settings/views.py:50
 msgid "red"
 msgstr "red"
 
-#: game_settings/views.py:20
+#: game_settings/views.py:51
 msgid "green"
 msgstr "green"
 
-#: game_settings/views.py:21
+#: game_settings/views.py:52
 msgid "blue"
 msgstr "blue"
 
@@ -97,10 +112,6 @@ msgstr "PLAY"
 #: navbar/templates/navbar.html:32
 msgid "Create Tournament"
 msgstr "Create Tournament"
-
-#: spa/templates/error_page.html:8
-msgid "ERROR"
-msgstr "ERROR"
 
 #: tournament/templates/tournament.html:15
 msgid "New Tournament"
@@ -158,7 +169,7 @@ msgstr ""
 "Use this option if you prefer to log in with a numerical code that you will "
 "receive in your email"
 
-#: twofa/templates/email_setup.html:14
+#: twofa/templates/email_setup.html:15
 msgid "email_setup_error_msg"
 msgstr "Error: Invalid code."
 
@@ -177,7 +188,7 @@ msgstr ""
 "Please scan the QR code below with your Google Authenticator app to set up "
 "2FA:"
 
-#: twofa/templates/qr_setup.html:20
+#: twofa/templates/qr_setup.html:21
 msgid "qr_setup_error_msg"
 msgstr "Error: Invalid code."
 
@@ -193,27 +204,27 @@ msgstr "Please introduce a valid 2FA code:"
 msgid "error_msg"
 msgstr "Error: Invalid code."
 
-#: twofa/views.py:77 twofa/views.py:118 twofa/views.py:164
+#: twofa/views.py:78 twofa/views.py:119 twofa/views.py:166
 msgid "Invalid code, try again."
 msgstr "Invalid code, try again."
 
-#: twofa/views.py:95
+#: twofa/views.py:96
 msgid "Validate your account"
 msgstr "Validate your account"
 
-#: twofa/views.py:97
+#: twofa/views.py:98
 msgid "Your verification code is: "
 msgstr "Your verification code is: "
 
-#: twofa/views.py:120
+#: twofa/views.py:121
 msgid "Please enter the code sent to your email:"
 msgstr "Please enter the code sent to your email:"
 
-#: twofa/views.py:150
+#: twofa/views.py:152
 msgid "User not found"
 msgstr "User not found"
 
-#: twofa/views.py:184
+#: twofa/views.py:186
 msgid "Error: "
 msgstr "Error: "
 
