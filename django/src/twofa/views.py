@@ -313,9 +313,8 @@ def get_email_setup(request):
 
 def get_twofa(request):
 	context, token = twofa(request)
-	context["section"] = ""
 
-	res = render(request, "2fa_setup.html", context)
+	res = render(request, context["section"], context)
 
 	res.set_cookie("jwt_token", token, httponly=True, secure=False)
 
