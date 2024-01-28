@@ -29,7 +29,8 @@ def is_valid_input(form):
 	try:
 		if not 3 <= int(ball_speed) <= 10:
 			return False
-	except ValueError:
+	except Exception as e:
+		logger.info(f"Error: {e}")
 		return False
 	return True
 	
