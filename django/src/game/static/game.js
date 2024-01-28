@@ -113,8 +113,11 @@ window.addEventListener('keyup', (e) => {
 		}	
         game.pause = !game.pause;	
         return ;	
-    } else if (screenManager.currentScreen == screenManager.screens.INTRO) {	
-        screenManager.nextScreen = screenManager.screens.TOURNAMENTTREE;	
+    } else if (screenManager.currentScreen == screenManager.screens.INTRO) {
+        if (playersList.length > 2)
+            screenManager.nextScreen = screenManager.screens.TOURNAMENTTREE;
+        else
+            screenManager.nextScreen = screenManager.screens.VSSCREEN;
     } else if (screenManager.currentScreen == screenManager.screens.VSSCREEN) {	
         screenManager.nextScreen = screenManager.screens.GAME;	
     } else if (screenManager.currentScreen == screenManager.screens.ENDOFMATCH) {	
@@ -124,10 +127,7 @@ window.addEventListener('keyup', (e) => {
             screenManager.nextScreen = screenManager.screens.VSSCREEN;	
     } else if (screenManager.currentScreen == screenManager.screens.TOURNAMENTTREE) {	
         screenManager.nextScreen = screenManager.screens.VSSCREEN;	
-    } else if (screenManager.currentScreen == screenManager.screens.ENDOFTOURNAMENT) {	
-        //TODO: reset tournament	
-    }	
-    //TODO: new screens can be added here if you want to switch screens using space	
+    } else if (screenManager.currentScreen == screenManager.screens.ENDOFTOURNAMENT) {	}	
     screenManager.transition = true;	
 });	
 document.addEventListener('keydown', handleKeyPress);
@@ -137,7 +137,7 @@ document.addEventListener('keydown', handleKeyPress);
 function canvasToSmallErrorScreen(canvas) {
     ctx.fillStyle = 'black';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    let fontSize = (canvas.width / 20);
+    let fontSize = (canvas.width / 15);
     ctx.fillStyle = 'white';
     ctx.textAlign = "center";
     ctx.font = `${fontSize}px Arial`;
