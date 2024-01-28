@@ -119,6 +119,6 @@ export class Player {
         this.speed = speed;
     }
     drawPowered(ctx) {
-        drawBorderRounded(ctx, this.x, this.y, this.w, this.h_visual, 10);
+        drawBorderRounded(ctx, this.x, this.y, this.w, this.h_visual, 20);
     }
 }

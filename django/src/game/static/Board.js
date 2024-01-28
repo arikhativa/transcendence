@@ -139,7 +139,7 @@ export class Board {
 				this.bonus.playerWithBonus = p1;
                 p1.bonus = true;
             }
-			else {
+			if (ball.hitBy == p2) {
                 this.bonus.playerWithBonus = p2;
                 p2.bonus = true;
             }
