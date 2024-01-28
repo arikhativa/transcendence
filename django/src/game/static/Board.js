@@ -130,7 +130,6 @@ export class Board {
         }
 
         // Check for collision with the 2x bonus
-        console.log(this.ballHitBy);
         if (this.ballHitBy != null && this.settings.bonus && this.bonus.active &&
 			ball.x + ball.w/2 > this.bonus.x - this.bonus.s/2 &&
 			ball.x - ball.w/2 < this.bonus.x + this.bonus.s/2 &&
