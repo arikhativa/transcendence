@@ -94,6 +94,7 @@ def update_code_API(user, code):
 	user.code_42 = hashlib.md5(code.encode()).hexdigest()
 	user.save()
 
+# TODO check if the code is valid
 def add_user_API(request):
 	code_from_user = request.GET.get('code')
 	user = create_user_API(code_from_user)

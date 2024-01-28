@@ -30,6 +30,7 @@ def spa_view(request):
 			"section": section + ".html",
 		}
 
+
 		if section == "validate_2fa_code" and logged_in:
 			section = "temporal_loggedin"
 		elif section == "validate_2fa_code" and not logged_in:
@@ -57,7 +58,7 @@ def spa_view(request):
 			"section": "error_page.html"
 		}
 		token = None
-	
+
 	res = render(request, "spa.html", context)
 	if section == "twofa" or section == "validate_2fa_code" \
 		or section == "qr_setup" or section == "sms_setup" \

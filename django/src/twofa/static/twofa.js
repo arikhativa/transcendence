@@ -4,6 +4,8 @@ function submitForm(e) {
 	e.preventDefault();
   
 	var myform = document.getElementById("twofa-form");
+	if (!myform)
+		return ;
   
 	var formData = new FormData(myform);
   
@@ -39,5 +41,5 @@ function submitForm(e) {
   }
 
 var myform = document.getElementById("twofa-form");
-
-myform.addEventListener("submit", submitForm);
+if (myform)
+	myform.addEventListener("submit", submitForm);

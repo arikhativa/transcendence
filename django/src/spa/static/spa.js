@@ -69,16 +69,22 @@ document.addEventListener("DOMContentLoaded", function() {
 
 });
 
-const validSection = ["game", "tournament", "main", "game_settings"];
+const validSection = ["game", "tournament", "main", "game_settings", "email_setup", "qr_setup", "twofa"];
 
 window.addEventListener('popstate', async function(event) {
 	let section = event.target.location.pathname;
-
+	
 	section = section.replace(/^\//, "");
 	section = section.replace(/\/$/, "");
 
 	if (!validSection.includes(section))
 		section = "main";
+
+	if (section == "twofa")
+	{
+		const code = new URLSearchParams(event.target.location.search).get('code');
+		return await showSection(section, {"code": code}, false);
+	}
 
 	const playersParam = new URLSearchParams(event.target.location.search).get('players');
 

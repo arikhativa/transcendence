@@ -17,7 +17,7 @@
         <div class="card-body">
           <h5 class="card-title">{% trans "QR Code" %}</h5>
           <p class="card-text">{% trans "Use this option if you prefer to log in by scanning a QR code in Google Authenticator" %}.</p>
-          <a href="/twofa/qr_setup" class="btn btn-primary">{% trans "QR Code" %}</a>
+          <button class="btn btn-primary spa-btn" value="qr_setup">{% trans "QR Code" %}</a>
         </div>
       </div>
     </div>
@@ -26,7 +26,7 @@
         <div class="card-body">
           <h5 class="card-title">{% trans "Email" %}</h5>
           <p class="card-text">{% trans "Use this option if you prefer to log in with a numerical code that you will receive in your email" %}.</p>
-          <a href="/twofa/email_setup" class="btn btn-primary">{% trans "Email" %}</a>
+          <button class="btn btn-primary spa-btn" value="email_setup">{% trans "Email" %}</a>
         </div>
       </div>
     </div>

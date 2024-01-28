@@ -18,6 +18,8 @@ from email.mime.text import MIMEText
 import os
 from django.http import JsonResponse
 import json
+from django.shortcuts import render
+
 
 
 def create_qr_code(user):
@@ -201,6 +203,8 @@ def validate_user(request):
 		return False
 
 def validate_code(user, user_code):
+	if user_code and len(user_code) != 6:
+		return False
 	try:
 		totp = pyotp.TOTP(user.token_2FA)
 		if not (totp.verify(user_code)):
@@ -284,3 +288,37 @@ def delete_jwt(request):
 	user.validated_2fa = False
 	user.save()
 	return
+
+
+def get_qr_setup(request):
+	context, token = qr_setup(request)
+	context["section"] = ""
+
+	res = render(request, "qr_setup.html", context)
+
+	res.set_cookie("jwt_token", token, httponly=True, secure=False)
+
+	return res
+
+
+def get_email_setup(request):
+	context, token = email_setup(request)
+	context["section"] = ""
+
+	res = render(request, "email_setup.html", context)
+
+	res.set_cookie("jwt_token", token, httponly=True, secure=False)
+
+	return res
+
+def get_twofa(request):
+	context, token = twofa(request)
+	context["section"] = ""
+
+	res = render(request, "2fa_setup.html", context)
+
+	res.set_cookie("jwt_token", token, httponly=True, secure=False)
+
+	return res
+
+
