@@ -1,3 +1,18 @@
+
+#email-box
+{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+#email-setup-twofa-form-con
+{
+	padding-top: 20px;
+	flex: 1;
+}
+
 #email-setup-error-msg
 {
 	visibility: hidden;
