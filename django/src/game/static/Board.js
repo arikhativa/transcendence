@@ -154,6 +154,19 @@ export class Board {
         ctx.lineWidth = 8;
         ctx.strokeStyle = "white";
 
+        //Border
+        ctx.strokeRect(0, 0, this.w, this.h);
+        ctx.fillStyle = 'white';
+        //Midline
+        ctx.fillRect(this.w / 2 - 2, 0, 4, this.h);
+        ctx.lineWidth = 4;
+        //MidSquare
+        ctx.strokeRect(this.w / 2 - 46, this.h / 2 - 46, 92, 92);
+
+        ctx.fillStyle = this.goal_color;
+        ctx.fillRect(0 + 4, 0 + 4, this.goal.p1 - 4, this.h - 8);
+        ctx.fillRect(this.goal.p2, 0 + 4, this.goal_size - 4, this.h - 8);
+
         // Draw barriers
         if (this.settings.barriers) {
             ctx.fillStyle = '#ff4dc4';
@@ -176,20 +189,6 @@ export class Board {
             ctx.textAlign = 'center';
             ctx.fillText('2x', this.bonus.x, this.bonus.y);
         }   
-
-        //Border
-        ctx.strokeRect(0, 0, this.w, this.h);
-        ctx.fillStyle = 'white';
-        //Midline
-        ctx.fillRect(this.w / 2 - 2, 0, 4, this.h);
-        ctx.lineWidth = 4;
-        //MidSquare
-        ctx.strokeRect(this.w / 2 - 46, this.h / 2 - 46, 92, 92);
-
-        ctx.fillStyle = this.goal_color;
-        ctx.fillRect(0 + 4, 0 + 4, this.goal.p1 - 4, this.h - 8);
-        ctx.fillRect(this.goal.p2, 0 + 4, this.goal_size - 4, this.h - 8);
-
     }
 
     onResize(w, h) {
