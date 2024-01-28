@@ -1,3 +1,5 @@
+import { drawRectRounded } from './draw_helpers.js';
+
 export class Board {
     // Constructor method
     constructor(w, h, settings) {
@@ -7,7 +9,7 @@ export class Board {
         this.h = h;
 
         this.goal_size = 45;
-        this.goal_color = '#888888';
+        this.goal_color = '#2e2e2e';
         this.goal =
         {
             p1: this.goal_size,
@@ -18,6 +20,7 @@ export class Board {
     }
 
     initModifiers() {
+        this.ballHitBy = null;
         if (this.settings.bonus) {
             this.bonus = {
                 x: this.w/2 + Math.random() * this.w/3 - this.w/6,  // Random position in the middle of the board
@@ -50,12 +53,10 @@ export class Board {
     update(p1, p2, ball) {
         //Vertical Walls
         if (ball.y - ball.h / 2 <= this.y - this.h / 2) {
-            //Cuanto se ha salido la bola de la pared de arriba
             ball.y = (this.y - this.h / 2) + ball.h;
             ball.dir.y *= -1;
         }
         if (ball.y + ball.h / 2 >= this.y + this.h / 2) {
-            //Cuanto se ha salido la bola de la pared de abajo
             ball.y = (this.y + this.h / 2) - ball.h;
             ball.dir.y *= -1;
         }
@@ -64,21 +65,29 @@ export class Board {
             ball.x = this.x;
             ball.y = this.y;
             ball.generateRandomInitAngle();
+            p1.bonus = false;
+            p2.bonus = false;
+            p2.score++;
+            this.ballHitBy = null;
 			if (this.settings.bonus && this.bonus.playerWithBonus == p2)
             {
                 this.bonus.playerWithBonus = null;
+                p2.bonus = false;
                 p2.score++;
             }
-            p2.score++;
         }
         if (ball.x + ball.w / 2 >= p2.x - p2.w / 2 && !(ball.y > p2.y - p2.h / 2 && ball.y < p2.y + p2.h / 2)) {
             ball.x = this.x;
             ball.y = this.y;
             ball.generateRandomInitAngle();
+            p1.bonus = false;
+            p2.bonus = false;
             p1.score++;
+            this.ballHitBy = null;
 			if (this.settings.bonus && this.bonus.playerWithBonus == p1)
             {
                 this.bonus.playerWithBonus = null;
+                p2.bonus = false;
                 p1.score++;
             }
         }
@@ -89,7 +98,7 @@ export class Board {
             let min = 2 * Math.PI - 3 * Math.PI / 9;
             let max = 2 * Math.PI + 3 * Math.PI / 9;
             ball.randomDeviation(min, max);
-			ball.hitBy = p1;
+			this.ballHitBy = p1;
         }
         // Ball collision with Player2 | RIGHT
         if (ball.nextStep().x + ball.w / 2 >= p2.x - p2.w / 2 && (ball.nextStep().y > p2.y - p2.h / 2 && ball.nextStep().y < p2.y + p2.h / 2)) {
@@ -97,7 +106,7 @@ export class Board {
             let min = Math.PI - 3 * Math.PI / 9
             let max = Math.PI + 3 * Math.PI / 9
             ball.randomDeviation(min, max);
-			ball.hitBy = p2;
+			this.ballHitBy = p2;
         }
 
         // Barriers collision
@@ -107,12 +116,12 @@ export class Board {
                     ball.nextStep().y + ball.h/2 > barrier.y - barrier.h/2 && ball.nextStep().y - ball.h/2 < barrier.y + barrier.h/2) {
                     ball.angle = 0;
                     let min = 0, max = 0;
-                    if (ball.dir.x < 0) //Izquierda
+                    if (ball.dir.x < 0) //LEFT
                     {
                         min = 2 * Math.PI - 3 * Math.PI / 9;
                         max = 2 * Math.PI + 3 * Math.PI / 9;
                     }
-                    else //Derecha
+                    else //RIGHT
                     {
                         min = Math.PI - 3 * Math.PI / 9;
                         max = Math.PI + 3 * Math.PI / 9;
@@ -123,16 +132,20 @@ export class Board {
         }
 
         // Check for collision with the 2x bonus
-        if (ball.hitBy != null && this.settings.bonus && this.bonus.active &&
+        if (this.ballHitBy != null && this.settings.bonus && this.bonus.active &&
 			ball.x + ball.w/2 > this.bonus.x - this.bonus.s/2 &&
 			ball.x - ball.w/2 < this.bonus.x + this.bonus.s/2 &&
 			ball.y + ball.h/2 > this.bonus.y - this.bonus.s/2 &&
 			ball.y - ball.h/2 < this.bonus.y + this.bonus.s/2) {
 			this.bonus.active = false;
-			if (ball.hitBy == p1)
+			if (this.ballHitBy == p1) {
 				this.bonus.playerWithBonus = p1;
-			else
-				this.bonus.playerWithBonus = p2;
+                p1.bonus = true;
+            }
+			if (this.ballHitBy == p2) {
+                this.bonus.playerWithBonus = p2;
+                p2.bonus = true;
+            }
 		}
         // -------------------------------------------------------------------------------------
     }
@@ -140,26 +153,6 @@ export class Board {
     draw(ctx) {
         ctx.lineWidth = 8;
         ctx.strokeStyle = "white";
-
-        // Draw barriers
-        if (this.settings.barriers) {
-            ctx.fillStyle = 'green';
-            for (let barrier of this.barriers) {
-                ctx.fillRect(barrier.x - barrier.w/2, barrier.y - barrier.h/2, barrier.w, barrier.h);
-            }
-        }
-
-		// Draw the 2x bonus
-        if (this.settings.bonus && this.bonus.active) {
-            ctx.fillStyle = 'yellow';
-            ctx.fillRect(this.bonus.x - this.bonus.s/2, this.bonus.y - this.bonus.s/2, this.bonus.s, this.bonus.s);
-
-            ctx.fillStyle = 'black';
-            ctx.font = '30px Arial';
-            ctx.textBaseline = 'middle';
-            ctx.textAlign = 'center';
-            ctx.fillText('2x', this.bonus.x, this.bonus.y);
-        }   
 
         //Border
         ctx.strokeRect(0, 0, this.w, this.h);
@@ -174,6 +167,28 @@ export class Board {
         ctx.fillRect(0 + 4, 0 + 4, this.goal.p1 - 4, this.h - 8);
         ctx.fillRect(this.goal.p2, 0 + 4, this.goal_size - 4, this.h - 8);
 
+        // Draw barriers
+        if (this.settings.barriers) {
+            ctx.fillStyle = '#ff4dc4';
+            for (let barrier of this.barriers) {
+                drawRectRounded(ctx, barrier.x, barrier.y, barrier.w, barrier.h, 3)
+            }
+        }
+
+		// Draw the 2x bonus
+        if (this.settings.bonus && this.bonus.active) {
+            ctx.fillStyle = '#f7d811';
+            ctx.beginPath();
+            ctx.arc(this.bonus.x, this.bonus.y, 0.6 * this.bonus.s, 0, 2 * Math.PI);
+            ctx.fill();
+            ctx.closePath();
+
+            ctx.fillStyle = 'black';
+            ctx.font = '30px Arial';
+            ctx.textBaseline = 'middle';
+            ctx.textAlign = 'center';
+            ctx.fillText('2x', this.bonus.x, this.bonus.y);
+        }   
     }
 
     onResize(w, h) {
