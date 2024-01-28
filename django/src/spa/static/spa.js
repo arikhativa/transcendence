@@ -55,9 +55,9 @@ async function showSection(section, paramObject, shouldPushState) {
         .catch(error => console.debug('Error loading HTML:', error));
 }
 
-document.addEventListener("DOMContentLoaded", function() {
-
-    document.querySelectorAll('.spa-btn').forEach(button => {
+function setAllSPAButtons()
+{
+	document.querySelectorAll('.spa-btn').forEach(button => {
         if (button.value == undefined) {
             // console.error("Error: button.value is undefined");
             return;
@@ -66,25 +66,44 @@ document.addEventListener("DOMContentLoaded", function() {
             return await showSection(this.value, undefined, true)
         }
     })
+}
 
+document.addEventListener("DOMContentLoaded", function() {
+    setAllSPAButtons()
 });
 
-const validSection = ["game", "tournament", "main", "game_settings"];
+const validSection = ["game", "tournament", "main", "game_settings", "email_setup", "qr_setup", "twofa"];
 
+// This is for hisrtory back
 window.addEventListener('popstate', async function(event) {
 	let section = event.target.location.pathname;
-
+	
 	section = section.replace(/^\//, "");
 	section = section.replace(/\/$/, "");
 
 	if (!validSection.includes(section))
 		section = "main";
 
+	if (section == "twofa")
+	{
+		const code = new URLSearchParams(event.target.location.search).get('code');
+		return await showSection(section, {"code": code}, false)
+			.then(() => {
+				setAllSPAButtons();
+			});
+	}
+
 	const playersParam = new URLSearchParams(event.target.location.search).get('players');
 
 	if (playersParam)
-		return await showSection(section, {"players": playersParam}, false);
+		return await showSection(section, {"players": playersParam}, false)
+			.then(() => {
+				setAllSPAButtons();
+			});
 	else
-		return await showSection(section, undefined, false);
+		return await showSection(section, undefined, false)
+		.then(() => {
+			setAllSPAButtons();
+		});
 
    }, false);

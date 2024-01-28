@@ -1,6 +1,7 @@
 {% load i18n %}
 {% load static %}
-<link rel="stylesheet" href="{% static 'twofa.css' %}" />
+<link rel="stylesheet" href="{% static 'qr_setup.css' %}" />
+<script type="module" src="{% static 'qr_setup.js' %}"></script>
 
 <div class="card border border-dark border-5 bg-info" style="max-width: 840px;">
   <div class="row g-0">
@@ -12,12 +13,12 @@
         <h2 class="card-title">{% trans "Two-Factor Authentication Setup" %}</h2>
         <h6 class="card-text">{% trans "Scan the QR code with Google Authenticator app to set up 2FA:" %}</h6>
         <div class="mx-auto py-4">
-          <form id="twofa-form" method="post" action="/validate_2fa_code/">
+          <form id="qr-setup-twofa-form">
             {% csrf_token %}
             <div>
               {{ form }}
-              <p>{{ error_msg }}</p>
             </div>
+            <p id="qr-setup-error-msg">{% trans "qr_setup_error_msg" %}</p>
             <div class="text-center mt-3">
               <button type="submit" class="btn btn-primary">{% trans "Submit" %}</button>
             </div>

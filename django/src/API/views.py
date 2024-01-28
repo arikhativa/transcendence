@@ -49,7 +49,7 @@ def get_token(CODE):
 	
 		return response.json()['access_token']
 	except:
-		raise Exception("Error get_token") 
+		raise Exception("Error get_token")
 
 def create_user_API(code):
 	
@@ -90,11 +90,11 @@ def get_username_email_API(token):
 		raise Exception("Error get_username_email_API")
 	return me['login'], me['email']
 
-
 def update_code_API(user, code):
 	user.code_42 = hashlib.md5(code.encode()).hexdigest()
 	user.save()
 
+# TODO check if the code is valid
 def add_user_API(request):
 	code_from_user = request.GET.get('code')
 	user = create_user_API(code_from_user)

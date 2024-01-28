@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-27 14:39+0000\n"
+"POT-Creation-Date: 2024-01-28 11:54+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,53 +18,53 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: game_settings/templates/game_settings.html:7 navbar/templates/navbar.html:37
+#: game_settings/templates/game_settings.html:7 navbar/templates/navbar.html:38
 msgid "Game Settings"
 msgstr ""
 
 #: game_settings/templates/game_settings.html:15
 msgid "2X Bonus"
-msgstr ""
+msgstr "2X Bonus"
 
 #: game_settings/templates/game_settings.html:19
 msgid "Walls"
-msgstr ""
+msgstr "Walls"
 
 #: game_settings/templates/game_settings.html:23
 msgid "Player 1 color selector:"
-msgstr ""
+msgstr "Player 1 color selector:"
 
 #: game_settings/templates/game_settings.html:35
 msgid "Player 2 color selector:"
-msgstr ""
+msgstr "Player 2 color selector:"
 
 #: game_settings/templates/game_settings.html:47
 msgid "Ball color selector:"
-msgstr ""
+msgstr "Ball color selector:"
 
 #: game_settings/templates/game_settings.html:59
 msgid "Ball Speed:"
-msgstr ""
+msgstr "Ball Speed:"
 
 #: game_settings/templates/game_settings.html:63
 msgid "Save"
-msgstr ""
+msgstr "Save"
 
 #: game_settings/views.py:18
 msgid "white"
-msgstr ""
+msgstr "white"
 
 #: game_settings/views.py:19
 msgid "red"
-msgstr ""
+msgstr "red"
 
 #: game_settings/views.py:20
 msgid "green"
-msgstr ""
+msgstr "green"
 
 #: game_settings/views.py:21
 msgid "blue"
-msgstr ""
+msgstr "blue"
 
 #: header/templates/header.html:43
 msgid "Home"
@@ -83,8 +83,6 @@ msgid "In order to feel the experience you should first log in"
 msgstr "In order to feel the experience you should first log in"
 
 #: main/templates/main.html:13
-#, fuzzy
-#| msgid "Login"
 msgid "Login"
 msgstr "Login"
 
@@ -92,11 +90,11 @@ msgstr "Login"
 msgid "Opponent's Name"
 msgstr "Opponent's Name"
 
-#: navbar/templates/navbar.html:23
+#: navbar/templates/navbar.html:24
 msgid "PLAY"
 msgstr "PLAY"
 
-#: navbar/templates/navbar.html:31
+#: navbar/templates/navbar.html:32
 msgid "Create Tournament"
 msgstr "Create Tournament"
 
@@ -105,34 +103,30 @@ msgid "ERROR"
 msgstr "ERROR"
 
 #: tournament/templates/tournament.html:15
-#, fuzzy
-#| msgid "Create Tournament"
 msgid "New Tournament"
-msgstr "Create Tournament"
+msgstr "New Tournament"
 
 #: tournament/templates/tournament.html:23
 msgid "Username"
-msgstr ""
+msgstr "Username"
 
 #: tournament/templates/tournament.html:25
 msgid "Add"
-msgstr ""
+msgstr "Add"
 
 #: tournament/templates/tournament.html:38
 msgid "Players"
-msgstr ""
+msgstr "Players"
 
 #: tournament/templates/tournament.html:39
 msgid "max players"
-msgstr ""
+msgstr "max players"
 
 #: tournament/templates/tournament.html:48
-#, fuzzy
-#| msgid "Create Tournament"
 msgid "Start Tournament"
-msgstr "Create Tournament"
+msgstr "Start Tournament"
 
-#: twofa/templates/2fa_setup.html:7 twofa/templates/email_setup.html:13
+#: twofa/templates/2fa_setup.html:7
 msgid "Welcome to Two-Factor Authentication Setup"
 msgstr "Welcome to Two-Factor Authentication Setup"
 
@@ -164,64 +158,73 @@ msgstr ""
 "Use this option if you prefer to log in with a numerical code that you will "
 "receive in your email"
 
-#: twofa/templates/email_setup.html:8
-msgid "First Login"
-msgstr "First Login"
+#: twofa/templates/email_setup.html:14
+msgid "email_setup_error_msg"
+msgstr "Error: Invalid code."
 
-#: twofa/templates/email_setup.html:18 twofa/templates/email_setup.html:36
-#: twofa/templates/qr_setup.html:22 twofa/templates/twofa.html:17
-#: twofa/templates/twofa.html:34
+#: twofa/templates/email_setup.html:17 twofa/templates/qr_setup.html:23
+#: twofa/templates/twofa.html:16
 msgid "Submit"
 msgstr "Submit"
 
-#: twofa/templates/qr_setup.html:12
-#, fuzzy
-#| msgid "Welcome to Two-Factor Authentication Setup"
-msgid "Two-Factor Authentication Setup"
-msgstr "Welcome to Two-Factor Authentication Setup"
-
 #: twofa/templates/qr_setup.html:13
-#, fuzzy
-#| msgid ""
-#| "Please scan the QR code below with your Google Authenticator app to set "
-#| "up 2FA:"
+msgid "Two-Factor Authentication Setup"
+msgstr "to Two-Factor Authentication Setup"
+
+#: twofa/templates/qr_setup.html:14
 msgid "Scan the QR code with Google Authenticator app to set up 2FA:"
 msgstr ""
 "Please scan the QR code below with your Google Authenticator app to set up "
 "2FA:"
 
+#: twofa/templates/qr_setup.html:20
+msgid "qr_setup_error_msg"
+msgstr "Error: Invalid code."
+
 #: twofa/templates/temporal_loggedin.html:5
-#: twofa/templates/temporal_loggedin.html:15
 msgid "Welcome"
 msgstr "Welcome"
 
-#: twofa/templates/temporal_loggedin.html:10
-msgid "Hello"
-msgstr "Hello"
-
 #: twofa/templates/twofa.html:8
-msgid "TWO FACTOR AUTHENTICATOR"
-msgstr "TWO FACTOR AUTHENTICATOR"
-
-#: twofa/templates/twofa.html:13 twofa/templates/twofa.html:26
 msgid "Please introduce a valid 2FA code:"
 msgstr "Please introduce a valid 2FA code:"
 
-#: twofa/views.py:75 twofa/views.py:116 twofa/views.py:161
+#: twofa/templates/twofa.html:13
+msgid "error_msg"
+msgstr "Error: Invalid code."
+
+#: twofa/views.py:77 twofa/views.py:118 twofa/views.py:164
 msgid "Invalid code, try again."
 msgstr "Invalid code, try again."
 
-#: twofa/views.py:93
+#: twofa/views.py:95
 msgid "Validate your account"
 msgstr "Validate your account"
 
-#: twofa/views.py:118
+#: twofa/views.py:97
+msgid "Your verification code is: "
+msgstr "Your verification code is: "
+
+#: twofa/views.py:120
 msgid "Please enter the code sent to your email:"
 msgstr "Please enter the code sent to your email:"
 
-#: twofa/views.py:147
+#: twofa/views.py:150
 msgid "User not found"
 msgstr "User not found"
+
+#: twofa/views.py:184
+msgid "Error: "
+msgstr "Error: "
+
+#~ msgid "First Login"
+#~ msgstr "First Login"
+
+#~ msgid "Hello"
+#~ msgstr "Hello"
+
+#~ msgid "TWO FACTOR AUTHENTICATOR"
+#~ msgstr "TWO FACTOR AUTHENTICATOR"
 
 #~ msgid "Clic here"
 #~ msgstr "Clic here"

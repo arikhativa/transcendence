@@ -16,6 +16,10 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import os
+from django.http import JsonResponse
+import json
+from django.shortcuts import render
+
 
 
 def create_qr_code(user):
@@ -92,7 +96,7 @@ def send_email(user, code):
 	msg['To'] = to_addr
 	msg['Subject'] = _('Validate your account')
 
-	message = "Your verification code is: " + code
+	message = _("Your verification code is: ") + code
 	msg.attach(MIMEText(message, 'plain'))
 
 	server = smtplib.SMTP(smtp_server, port)
@@ -117,7 +121,7 @@ def email_setup(request, wrong_code=False):
 	
 	msg = _('Please enter the code sent to your email:')
 	form = Form2FAEmail()
-	url = '/validate_2fa_code/'
+	url = '/post_twofa_code/'
 
 	return {
 		"msg": msg,
@@ -130,52 +134,59 @@ def email_setup(request, wrong_code=False):
 @csrf_protect
 def twofa(request, wrong_code=False, expired_jwt=False):
 	token = None
-	if not request.COOKIES.get('jwt_token') \
-		or request.COOKIES.get('jwt_token') == 'None':
-		user = add_user_API(request)
-		token = create_jwt(user)
-		user.validated_2fa = False
-		user.save()
-		expired_jwt = True
-	else:
-		token = request.COOKIES.get('jwt_token')
-		if _jwt_is_expired(token):
+	language = "en"
+	try:
+		if not request.COOKIES.get('jwt_token') \
+			or request.COOKIES.get('jwt_token') == 'None':
+			user = add_user_API(request)
+			token = create_jwt(user)
+			user.validated_2fa = False
+			user.save()
 			expired_jwt = True
-		user = _user_jwt_cookie(request)
-	if user is None:
+		else:
+			token = request.COOKIES.get('jwt_token')
+			if _jwt_is_expired(token):
+				expired_jwt = True
+			user = _user_jwt_cookie(request)
+		if user is None:
+			return {
+				"error_msg": _("User not found"),
+				"section": "error_page.html",
+			}, None, language
+		
+		if user.active_2FA and not expired_jwt and user.validated_2fa:
+			return {
+				"username": user.username,
+				"email": user.email,
+				"section": "temporal_loggedin.html",
+			}, token, user.language
+		else:
+			if not wrong_code:
+				error_msg = ''
+			else:
+				error_msg = _('Invalid code, try again.')
+			if not (user.active_2FA):
+				if user.qr_2FA and wrong_code:
+					return qr_setup(request, wrong_code)
+				if user.email_2FA and wrong_code:
+					return email_setup(request, wrong_code)
+				return {
+					"section": "2fa_setup.html",
+				}, token,  user.language
+			else:
+				if user.email_2FA:
+					code = TOTP(user.token_2FA).now()
+					send_email(user, code)
+				return {
+					"form": Form2FA(),
+					"error_msg": error_msg,
+					"section": "twofa.html",
+				}, token,  user.language
+	except Exception as exc:
 		return {
-			"error_msg": _("User not found"),
+			"error_msg": _("Error: "),
 			"section": "error_page.html",
-		}, None
-	
-	if user.active_2FA and not expired_jwt and user.validated_2fa:
-		return {
-			"username": user.username,
-			"email": user.email,
-			"section": "temporal_loggedin.html",
-		}, token
-	else:
-		if not wrong_code:
-			error_msg = ''
-		else:
-			error_msg = _('Invalid code, try again.')
-		if not (user.active_2FA):
-			if user.qr_2FA and wrong_code:
-				return qr_setup(request, wrong_code)
-			if user.email_2FA and wrong_code:
-				return email_setup(request, wrong_code)
-			return {
-				"section": "2fa_setup.html",
-			}, token
-		else:
-			if user.email_2FA:
-				code = TOTP(user.token_2FA).now()
-				send_email(user, code)
-			return {
-				"form": Form2FA(),
-				"error_msg": error_msg,
-				"section": "twofa.html",
-			}, token
+		}, None, language
 
 def validate_user(request):
 	try:
@@ -185,7 +196,6 @@ def validate_user(request):
 		payload = jwt.decode(token, settings.SECRET_KEY, algorithms=['HS256'])
 		user = Users.objects.get(username=payload['username'])
 
-		#make sure the jwt is the same as the one in the db
 		if user.active_2FA:
 			return True
 		else:
@@ -194,6 +204,8 @@ def validate_user(request):
 		return False
 
 def validate_code(user, user_code):
+	if user_code and len(user_code) != 6:
+		return False
 	try:
 		totp = pyotp.TOTP(user.token_2FA)
 		if not (totp.verify(user_code)):
@@ -203,8 +215,49 @@ def validate_code(user, user_code):
 	except Exception as exc:
 		return False
 
+
+def is_twofa_valid(user, code):
+	is_valid = validate_code(user, code)
+	return is_valid
+
+
+def twofa_valid_flow(request, user):
+	user.active_2FA = True
+	user.validated_2fa = True
+
+	if _jwt_is_expired(request.COOKIES.get('jwt_token')):
+		user.jwt = create_jwt(user)
+	user.save()
+
+	data = {"isValid": True, "username": user.username}
+	response_body = json.dumps(data)
+
+	res = HttpResponse(response_body, content_type='application/json', status=200)
+
+	res.set_cookie("jwt_token", user.jwt, httponly=True, secure=False)
+
+	return res
+
+
 @csrf_protect
-def validate_2fa(request):
+def post_twofa_code(request):
+	if request.method == "POST":
+		user = _user_jwt_cookie(request)
+		code = request.POST.get('code')
+
+		if is_twofa_valid(user, code):
+			return twofa_valid_flow(request, user)
+
+	res = {
+		"isValid": False,
+		"username": "",
+	}
+
+	return JsonResponse(res)
+
+
+@csrf_protect
+def get_validate_2fa(request):
 	user = _user_jwt_cookie(request)
 	user_code = request.POST.get('code')
 	is_valid = validate_code(user, user_code)
@@ -236,3 +289,36 @@ def delete_jwt(request):
 	user.validated_2fa = False
 	user.save()
 	return
+
+
+def get_qr_setup(request):
+	context, token = qr_setup(request)
+	context["section"] = ""
+
+	res = render(request, "qr_setup.html", context)
+
+	res.set_cookie("jwt_token", token, httponly=True, secure=False)
+
+	return res
+
+
+def get_email_setup(request):
+	context, token = email_setup(request)
+	context["section"] = ""
+
+	res = render(request, "email_setup.html", context)
+
+	res.set_cookie("jwt_token", token, httponly=True, secure=False)
+
+	return res
+
+def get_twofa(request):
+	context, token = twofa(request)
+
+	res = render(request, context["section"], context)
+
+	res.set_cookie("jwt_token", token, httponly=True, secure=False)
+
+	return res
+
+

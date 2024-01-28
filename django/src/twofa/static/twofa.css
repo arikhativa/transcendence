@@ -32,3 +32,11 @@ img, form {
     max-width: 300px;
     margin: auto;
 }
+
+
+#twofa-error-msg
+{
+	visibility: hidden;
+	color: rgb(255, 0, 0);
+    white-space: nowrap;
+}
