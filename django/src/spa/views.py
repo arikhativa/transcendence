@@ -2,7 +2,7 @@ from django.shortcuts import render
 from API.views import authenticate_42
 from django.utils import translation
 from django.conf import settings
-from twofa.views import twofa, qr_setup, email_setup, delete_jwt, _jwt_is_expired, _user_jwt_cookie
+from twofa.views import twofa, qr_setup, email_setup, delete_jwt, _jwt_is_expired, _user_jwt_cookie, get_validate_2fa
 from game.views import game_setup
 from game_settings.views import game_settings, get_game_settings
 import logging
