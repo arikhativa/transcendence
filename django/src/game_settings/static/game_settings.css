@@ -30,3 +30,9 @@
     font-weight: bold;
     margin-bottom: 0.5rem;
 }
+
+#success-message
+{
+    display: None;
+	color: rgb(136, 255, 0);
+}

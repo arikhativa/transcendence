@@ -57,7 +57,8 @@ export class ScreenManager {
         ctx.fillStyle = 'black';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         
-        ctx.font = "100px Arial";
+        let fontSize = (canvas.width / 10);
+		ctx.font = `${fontSize}px Arial`;
         ctx.fillStyle = "white";
         ctx.textAlign = "center";
         ctx.fillText(translateGameText("SPACE_TO_START"), canvas.width/2, canvas.height/2);
@@ -72,7 +73,8 @@ export class ScreenManager {
         ctx.fillStyle = 'black';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         
-        ctx.font = "100px Arial";
+        let fontSize = (canvas.width / 10);
+		ctx.font = `${fontSize}px Arial`;
         ctx.fillStyle = "white";
         ctx.textAlign = "center";
         ctx.fillText(game.p1.name + " 🕹️ " + game.p2.name, canvas.width/2, canvas.height/2 - 70);
@@ -83,7 +85,8 @@ export class ScreenManager {
         ctx.fillStyle = 'black';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         
-        ctx.font = "100px Arial";
+        let fontSize = (canvas.width / 15);
+		ctx.font = `${fontSize}px Arial`;
         ctx.fillStyle = "white";
         ctx.textAlign = "center";
         ctx.fillText("🥇" + game.winner_name + translateGameText('WON_TOURNAMENT'), canvas.width/2, canvas.height/2 - 70);
@@ -95,7 +98,8 @@ export class ScreenManager {
         ctx.fillStyle = 'black';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         
-        ctx.font = "100px Arial";
+        let fontSize = (canvas.width / 10);
+		ctx.font = `${fontSize}px Arial`;
         ctx.fillStyle = "white";
         ctx.textAlign = "center";
         ctx.fillText("🥇" + game.winner_name + translateGameText('WON_MATCH'), canvas.width/2, canvas.height/2 - 70);

@@ -35,7 +35,6 @@ export class Tournament {
   
   addPlayer(name) {
     if (this.isClosed) {
-      //console.log("Closed, can't add more players!");
       return ;
     }
     let newPlayer = {obj: new Player(name), depth: 0};
@@ -45,7 +44,6 @@ export class Tournament {
   
   closeTournament() {
     if (this.isClosed) {
-      //console.log("Tournament already closed!");
       return ;
     }
     this.isClosed = true;
@@ -64,16 +62,13 @@ export class Tournament {
     this.auxTournament = this.tournament;
     fillTournament(this.auxTournament, this.maxDepth);
     this.len = this.auxTournament.length;
-    //console.log(this.tournament);
   }
   
   lastMatchWinner(winner) {
     if (this.lastMatchIsFinished === true) {
-      //console.log("Start the next match first");
       return ;
     }
     if (this.lastPhaseIsFinished === true) {
-      //console.log("Start a new phase first");
       return null;
     }
     this.lastMatchIsFinished = true;
@@ -85,7 +80,6 @@ export class Tournament {
     this.currentMatch.p1 += 2;
     this.currentMatch.p2 += 2;
     if (this.currentMatch.p2 > this.len) {
-      //console.log("End of the current phase.");
       this.lastPhaseIsFinished = true;
       return null;
     }
@@ -93,11 +87,9 @@ export class Tournament {
   
   nextMatch() {
     if (this.lastMatchIsFinished === false) {
-      //console.log("End the current match first");
       return null;
     }
     if (this.lastPhaseIsFinished === true) {
-      //console.log("Start a new phase first");
       return null;
     }
     this.lastMatchIsFinished = false;
@@ -116,7 +108,6 @@ export class Tournament {
   
   nextPhase() {
     if (this.lastPhaseIsFinished === false) {
-      //console.log("End the current phase first");
       return null;
     }
     this.lastMatchIsFinished = true;
@@ -134,14 +125,8 @@ export class Tournament {
   }
   
   endTournament() {
-    //console.log("The tournament has ended and the winner is:", this.auxTournament[0].name);
     this.isFinished = true;
-    //console.log(this.auxTournament);
     return this.auxTournament[0].obj;
-  }
-  
-  list() {
-    console.log(this.auxTournament);
   }
 
   handler(game, screenManager) {

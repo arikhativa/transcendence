@@ -23,6 +23,7 @@ export function translateGameText(textToTranslate) {
 			'PLAYER_ALREADY': 'Player already in tournament',
 			'MAX_CHAR': 'Username cant be longer then 8',
 			'USERNAME_EMPTY': 'Username field must not be empty',
+			'SMALL_CANVAS': 'Canvas is too small!',
 		},
 		'es': {
 			'SPACE_TO_START': 'Presiona espacio para comenzar!',
@@ -32,6 +33,7 @@ export function translateGameText(textToTranslate) {
 			'PLAYER_ALREADY': 'Jugador ya en torneo',
 			'MAX_CHAR': 'El nombre de usuario no puede ser mayor que 8',
 			'USERNAME_EMPTY': 'El campo de nombre de usuario no debe estar vacío',
+			'SMALL_CANVAS': 'El canvas es demasiado pequeño!',
 		},
 		'fr': {
 			'SPACE_TO_START': 'Appuyez sur espace pour commencer!',
@@ -41,6 +43,7 @@ export function translateGameText(textToTranslate) {
 			'PLAYER_ALREADY': 'Joueur déjà en tournoi',
 			'MAX_CHAR': "Le nom d'utilisateur ne peut pas dépasser 8",
 			'USERNAME_EMPTY': "Le champ du nom d'utilisateur ne doit pas être vide",
+			'SMALL_CANVAS': 'Le canvas est trop petit!',
 		},
 		'he': {
 			'SPACE_TO_START': 'לחץ על רווח כדי להתחיל!',
@@ -50,6 +53,7 @@ export function translateGameText(textToTranslate) {
 			'PLAYER_ALREADY': 'שחקן כבר בטורניר',
 			'MAX_CHAR': 'שם המשתמש לא יכול להיות ארוך מ-8',
 			'USERNAME_EMPTY': 'שדה שם משתמש לא יכול להיות ריק',
+			'SMALL_CANVAS': 'הקנבס קטן מדי!',
 		}
 	};
 
