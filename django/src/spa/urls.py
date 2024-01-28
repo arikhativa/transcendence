@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from twofa import views as twofa_views
 
 urlpatterns = [
     # these are to load section only
@@ -9,6 +10,7 @@ urlpatterns = [
     path("section/main/", views.main_view, name="main"),
     path("section/validate_2fa_code/", views.validate_2fa_code, name="validate_2fa_code"),
     path("section/logout/", views.logout_view, name="logout"),
+    path("section/welcome_view/", views.welcome_view, name="welcome_view"),
     # these are to ALL of the page
     path("", views.spa_view, name="spa"),
     path("main/", views.spa_view, name="main"),
@@ -21,6 +23,8 @@ urlpatterns = [
     path("twofa/qr_setup", views.spa_view, name="qr_setup"),
     path("twofa/email_setup", views.spa_view, name="email_setup"),
     path("validate_2fa_code/", views.spa_view, name="validate_2fa_code"),
+    path("welcome_view/", views.spa_view, name="welcome_view"),
+    path("post_twofa_code/", twofa_views.post_twofa_code, name="post_twofa_code"),
     path('set-language/<str:language_code>/', views.set_language, name='set_language'),
     path("<path:catchall>", views.spa_view_catchall, name="spa"),
 ]
