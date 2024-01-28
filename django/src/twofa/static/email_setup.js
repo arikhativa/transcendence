@@ -18,7 +18,6 @@ function submitEmailSetupForm(e) {
 		return response.json();
 	  })
 	  .then((resp) => {
-		console.log(resp);
 		let errElem = document.getElementById("email-setup-error-msg");
 
 		if (resp.isValid)
@@ -34,7 +33,6 @@ function submitEmailSetupForm(e) {
 	  })
 	  .catch((error) => {
 		// Handle error
-		console.log("error ", error);
 	  });
   }
 
