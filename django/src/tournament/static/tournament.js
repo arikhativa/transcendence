@@ -1,3 +1,5 @@
+import { translateGameText } from './gameTranslations.js';
+
 var players = document.getElementById('tournament-players');
 
 async function getTournamentPlayers() {
@@ -47,20 +49,20 @@ function addNewPlayer() {
 
     // Username field must not be empty
     if (newPlayerName.trim().length === 0) {
-		errElem.innerText = "Username field must not be empty";
+		errElem.innerText = translateGameText('USERNAME_EMPTY');
 		errElem.style["visibility"] =  "visible";
         return ;
     }
 
     if (newPlayerName.trim().length > 8) {
-		errElem.innerText = "Username cant be longer then 8";
+		errElem.innerText = translateGameText('MAX_CHAR');
 		errElem.style["visibility"] =  "visible";
         return ;
     }
 
     // Check if Player already in list
     if (playerExists(newPlayerName)) {
-		errElem.innerText = "Player already in tournament";
+        errElem.innerText = translateGameText('PLAYER_ALREADY');
 		errElem.style["visibility"] =  "visible";
         return ;
     }
