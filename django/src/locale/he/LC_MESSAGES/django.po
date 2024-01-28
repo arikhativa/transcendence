@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-28 11:54+0000\n"
+"POT-Creation-Date: 2024-01-28 14:32+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,51 +19,66 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % "
 "1 == 0) ? 1: (n % 10 == 0 && n % 1 == 0 && n > 10) ? 2 : 3;\n"
 
-#: game_settings/templates/game_settings.html:7 navbar/templates/navbar.html:38
+#: game_settings/templates/game_settings.html:8 navbar/templates/navbar.html:38
 msgid "Game Settings"
 msgstr "הגדרות משחק"
 
-#: game_settings/templates/game_settings.html:15
+#: game_settings/templates/game_settings.html:16
 msgid "2X Bonus"
 msgstr "בונוס 2X"
 
-#: game_settings/templates/game_settings.html:19
+#: game_settings/templates/game_settings.html:20
 msgid "Walls"
 msgstr "קירות"
 
-#: game_settings/templates/game_settings.html:23
+#: game_settings/templates/game_settings.html:24
 msgid "Player 1 color selector:"
 msgstr "בחירת צבע שחקן 1:"
 
-#: game_settings/templates/game_settings.html:35
+#: game_settings/templates/game_settings.html:36
 msgid "Player 2 color selector:"
 msgstr "בחירת צבע שחקן 2:"
 
-#: game_settings/templates/game_settings.html:47
+#: game_settings/templates/game_settings.html:48
 msgid "Ball color selector:"
 msgstr "בחירת צבע כדור:"
 
-#: game_settings/templates/game_settings.html:59
+#: game_settings/templates/game_settings.html:60
 msgid "Ball Speed:"
 msgstr "מהירות כדור:"
 
-#: game_settings/templates/game_settings.html:63
+#: game_settings/templates/game_settings.html:64
+msgid "Settings saved"
+msgstr "הגדרות שמורות"
+
+#: game_settings/templates/game_settings.html:65
 msgid "Save"
 msgstr "שמור"
 
-#: game_settings/views.py:18
+#: game_settings/templates/game_settings_error.html:8
+#: spa/templates/error_page.html:8
+msgid "ERROR"
+msgstr "שְׁגִיאָה"
+
+#: game_settings/templates/game_settings_error.html:13
+#, fuzzy
+#| msgid "Invalid code, try again."
+msgid "Invalid form data."
+msgstr "נא להציג קוד 2FA חוקי:"
+
+#: game_settings/views.py:49
 msgid "white"
 msgstr "לבן"
 
-#: game_settings/views.py:19
+#: game_settings/views.py:50
 msgid "red"
 msgstr "אדום"
 
-#: game_settings/views.py:20
+#: game_settings/views.py:51
 msgid "green"
 msgstr "ירוק"
 
-#: game_settings/views.py:21
+#: game_settings/views.py:52
 msgid "blue"
 msgstr "כחול"
 
@@ -98,10 +113,6 @@ msgstr "לְשַׂחֵק"
 #: navbar/templates/navbar.html:32
 msgid "Create Tournament"
 msgstr "צור טורניר"
-
-#: spa/templates/error_page.html:8
-msgid "ERROR"
-msgstr "שְׁגִיאָה"
 
 #: tournament/templates/tournament.html:15
 msgid "New Tournament"
@@ -159,7 +170,7 @@ msgstr ""
 "השתמש באפשרות זו אם אתה מעדיף להיכנס על ידי סריקת קוד QR ב-Google "
 "Authenticator"
 
-#: twofa/templates/email_setup.html:14
+#: twofa/templates/email_setup.html:15
 msgid "email_setup_error_msg"
 msgstr "שגיאה: קוד לא חוקי."
 
@@ -178,7 +189,7 @@ msgstr ""
 "אנא סרוק את קוד ה-QR למטה עם אפליקציית Google Authenticator שלך כדי להגדיר "
 "2FA:"
 
-#: twofa/templates/qr_setup.html:20
+#: twofa/templates/qr_setup.html:21
 msgid "qr_setup_error_msg"
 msgstr "שגיאה: קוד לא חוקי."
 
@@ -194,27 +205,27 @@ msgstr "נא להציג קוד 2FA חוקי:"
 msgid "error_msg"
 msgstr "שגיאה: קוד לא חוקי."
 
-#: twofa/views.py:77 twofa/views.py:118 twofa/views.py:164
+#: twofa/views.py:78 twofa/views.py:119 twofa/views.py:166
 msgid "Invalid code, try again."
 msgstr "נא להציג קוד 2FA חוקי:"
 
-#: twofa/views.py:95
+#: twofa/views.py:96
 msgid "Validate your account"
 msgstr "אמת את חשבונך"
 
-#: twofa/views.py:97
+#: twofa/views.py:98
 msgid "Your verification code is: "
 msgstr "קוד האימות שלך הוא:"
 
-#: twofa/views.py:120
+#: twofa/views.py:121
 msgid "Please enter the code sent to your email:"
 msgstr "נא להזין את הקוד שנשלח למייל שלך:"
 
-#: twofa/views.py:150
+#: twofa/views.py:152
 msgid "User not found"
 msgstr "המשתמש לא נמצא"
 
-#: twofa/views.py:184
+#: twofa/views.py:186
 msgid "Error: "
 msgstr "שְׁגִיאָה:"
 

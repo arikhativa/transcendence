@@ -1,7 +1,39 @@
 from twofa.views import _user_jwt_cookie
 from django.views.decorators.csrf import csrf_protect
 from django.utils.translation import gettext as _
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
+import json
+import logging
+
+logger = logging.getLogger(__name__)
+
+def is_valid_input(form):
+	bonus = form.get('bonus')
+	walls = form.get('walls')
+	player1_color = form.get('player1')
+	player2_color = form.get('player2')
+	ball_color = form.get('ballColor')
+	ball_speed = form.get('ballSpeed')
+
+	# Validate the form data
+	if not all([player1_color, player2_color, ball_color, ball_speed]):
+		return False
+	if bonus not in ['on', None] or walls not in ['on', None]:
+		return False
+	if not isinstance(player1_color, str) or player1_color.lower() not in ['white', 'red', 'green', 'blue']:
+		return False
+	if not isinstance(player2_color, str) or player2_color.lower() not in ['white', 'red', 'green', 'blue']:
+		return False
+	if not isinstance(ball_color, str) or ball_color.lower() not in ['white', 'red', 'green', 'blue']:
+		return False
+	try:
+		if not 3 <= int(ball_speed) <= 10:
+			return False
+	except Exception as e:
+		logger.info(f"Error: {e}")
+		return False
+	return True
+	
 
 @csrf_protect
 def game_settings(request):
@@ -22,9 +54,6 @@ def game_settings(request):
 	}
 
 	if user is not None:
-		if request.method == 'POST':
-			save_game_settings(request, user)
-
 		player1_color = user.player_1_color
 		player2_color = user.player_2_color
 		ball_color = user.ball_color
@@ -66,6 +95,8 @@ def save_game_settings(request, user):
 		user.ball_color = request.POST.get('ballColor')
 		user.ball_speed = request.POST.get('ballSpeed')
 		user.save()
+		return True
+	return False
 
 def get_game_settings(request):
 	user = _user_jwt_cookie(request)
@@ -87,5 +118,25 @@ def get_game_settings(request):
 		user_settings["ball_speed"] = user.ball_speed
 	
 	return JsonResponse(user_settings)
+
+@csrf_protect
+def post_game_settings(request):
+	user = _user_jwt_cookie(request)
+	if user is not None:
+		if (request.method == "POST"):
+			if is_valid_input(request.POST):
+				if (save_game_settings(request, user)):
+					data = {
+						"isValid": True
+					}
+					response_body = json.dumps(data)
+					res = HttpResponse(response_body, content_type='application/json', status=200)
+					return res
+
+	res = {
+		"isValid": False
+	}
+	return JsonResponse(res)
+
 	
 	

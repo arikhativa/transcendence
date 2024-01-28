@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from game_settings import views as game_settings_views
 from twofa import views as twofa_views
 
 urlpatterns = [
@@ -26,6 +27,7 @@ urlpatterns = [
     path("qr_setup/", views.spa_view, name="qr_setup"),
     path("email_setup/", views.spa_view, name="email_setup"),
     path("validate_2fa_code/", views.spa_view, name="validate_2fa_code"),
+    path("post_game_settings/", game_settings_views.post_game_settings, name="post_game_settings"),
     path("welcome_view/", views.spa_view, name="welcome_view"),
     path("post_twofa_code/", twofa_views.post_twofa_code, name="post_twofa_code"),
     path('set-language/<str:language_code>/', views.set_language, name='set_language'),
