@@ -31,6 +31,7 @@ def spa_view(request):
 			"section": section + ".html",
 		}
 
+
 		if section == "validate_2fa_code" and logged_in:
 			section = "temporal_loggedin"
 		elif section == "validate_2fa_code" and not logged_in:

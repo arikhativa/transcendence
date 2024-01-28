@@ -4,6 +4,8 @@ function submitForm(e) {
 	e.preventDefault();
   
 	var myform = document.getElementById("twofa-form");
+	if (!myform)
+		return ;
   
 	var formData = new FormData(myform);
   
@@ -18,7 +20,6 @@ function submitForm(e) {
 		return response.json();
 	  })
 	  .then((resp) => {
-		console.log(resp);
 		let errElem = document.getElementById("twofa-error-msg");
 
 		if (resp.isValid)
@@ -39,5 +40,5 @@ function submitForm(e) {
   }
 
 var myform = document.getElementById("twofa-form");
-
-myform.addEventListener("submit", submitForm);
+if (myform)
+	myform.addEventListener("submit", submitForm);

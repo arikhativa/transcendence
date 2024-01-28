@@ -18,7 +18,6 @@ function submitQRSetupForm(e) {
 		return response.json();
 	  })
 	  .then((resp) => {
-		console.log(resp);
 		let errElem = document.getElementById("qr-setup-error-msg");
 
 		if (resp.isValid)
