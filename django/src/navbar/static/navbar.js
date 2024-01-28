@@ -10,7 +10,6 @@ async function readOppInput() {
 		{
 			if (errElem)
 			{
-			// TODO maybe translate
 				errElem.innerText = translateGameText('OPPONENT_LONG');
 				errElem.style["visibility"] =  "visible";
 			}
