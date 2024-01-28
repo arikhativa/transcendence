@@ -1,3 +1,5 @@
+import { drawRectRounded, drawBorderRounded } from './draw_helpers.js';
+
 export class Player {
     // Constructor method
     constructor(name) {
@@ -15,6 +17,7 @@ export class Player {
         };
         this.dir = 0;
         this.score = 0;
+        this.bonus = false;
     }
 
     update(board) {
@@ -40,7 +43,9 @@ export class Player {
         }
 
         ctx.fillStyle = this.color;
-        ctx.fillRect(this.x - this.w / 2, this.y - this.h_visual / 2, this.w, this.h_visual);
+        drawRectRounded(ctx, this.x, this.y, this.w, this.h_visual, 10);
+        if (this.bonus)
+            drawBorderRounded(ctx, this.x, this.y, this.w, this.h_visual, 10);
     }
 
     move_listener(e, isKeyDown) {
@@ -95,9 +100,25 @@ export class Player {
         }
     }
     setColor(color) {
-        this.color = color;
+        switch (color) {
+            case "green":
+                this.color = '#a7f711';
+                break;
+            case "red":
+                this.color = '#f71135';
+                break;
+            case "blue":
+                this.color = '#1193f7';
+                break;
+            default:
+                this.color = 'white';
+                break;
+        }
     }
     setSpeed(speed) {
         this.speed = speed;
+    }
+    drawPowered(ctx) {
+        drawBorderRounded(ctx, this.x, this.y, this.w, this.h_visual, 20);
     }
 }
