@@ -59,7 +59,9 @@ def spa_view(request):
 		token = None
 	
 	res = render(request, "spa.html", context)
-	if logged_in and token:
+	if section == "twofa" or section == "validate_2fa_code" \
+		or section == "qr_setup" or section == "sms_setup" \
+		or section == "email_setup" or section == "temporal_loggedin" :
 		res.set_cookie("jwt_token", token, httponly=True, secure=False)
 	return res
 
