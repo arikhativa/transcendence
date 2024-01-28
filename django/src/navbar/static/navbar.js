@@ -1,4 +1,4 @@
-
+import { translateGameText } from './gameTranslations.js';
 
 async function readOppInput() {
     var errElem = document.getElementById('opponent-input-error');
@@ -11,7 +11,7 @@ async function readOppInput() {
 			if (errElem)
 			{
 			// TODO maybe translate
-				errElem.innerText = "Opponent name too long. max 8 charectars";
+				errElem.innerText = translateGameText('OPPONENT_LONG');
 				errElem.style["visibility"] =  "visible";
 			}
 			return ;

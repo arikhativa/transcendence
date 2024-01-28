@@ -24,6 +24,7 @@ export function translateGameText(textToTranslate) {
 			'MAX_CHAR': 'Username cant be longer then 8',
 			'USERNAME_EMPTY': 'Username field must not be empty',
 			'SMALL_CANVAS': 'Canvas is too small!',
+			'OPPONENT_LONG': 'Opponent name too long. max 8 charectar',
 		},
 		'es': {
 			'SPACE_TO_START': 'Presiona espacio para comenzar!',
@@ -34,6 +35,7 @@ export function translateGameText(textToTranslate) {
 			'MAX_CHAR': 'El nombre de usuario no puede ser mayor que 8',
 			'USERNAME_EMPTY': 'El campo de nombre de usuario no debe estar vacío',
 			'SMALL_CANVAS': 'El canvas es demasiado pequeño!',
+			'OPPONENT_LONG': 'Nombre de oponente demasiado largo. max 8 caracteres',
 		},
 		'fr': {
 			'SPACE_TO_START': 'Appuyez sur espace pour commencer!',
@@ -44,6 +46,7 @@ export function translateGameText(textToTranslate) {
 			'MAX_CHAR': "Le nom d'utilisateur ne peut pas dépasser 8",
 			'USERNAME_EMPTY': "Le champ du nom d'utilisateur ne doit pas être vide",
 			'SMALL_CANVAS': 'Le canvas est trop petit!',
+			'OPPONENT_LONG': 'Nom d\'adversaire trop long. max 8 caractères',
 		},
 		'he': {
 			'SPACE_TO_START': 'לחץ על רווח כדי להתחיל!',
@@ -54,6 +57,7 @@ export function translateGameText(textToTranslate) {
 			'MAX_CHAR': 'שם המשתמש לא יכול להיות ארוך מ-8',
 			'USERNAME_EMPTY': 'שדה שם משתמש לא יכול להיות ריק',
 			'SMALL_CANVAS': 'הקנבס קטן מדי!',
+			'OPPONENT_LONG': 'שם היריב ארוך מדי. מקסימום 8 תווים',
 		}
 	};
 
