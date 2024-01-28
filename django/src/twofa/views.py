@@ -16,6 +16,8 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import os
+from django.http import JsonResponse
+import json
 
 
 def create_qr_code(user):
@@ -117,7 +119,7 @@ def email_setup(request, wrong_code=False):
 	
 	msg = _('Please enter the code sent to your email:')
 	form = Form2FAEmail()
-	url = '/validate_2fa_code/'
+	url = '/post_twofa_code/'
 
 	return {
 		"msg": msg,
@@ -208,8 +210,49 @@ def validate_code(user, user_code):
 	except Exception as exc:
 		return False
 
+
+def is_twofa_valid(user, code):
+	is_valid = validate_code(user, code)
+	return is_valid
+
+
+def twofa_valid_flow(request, user):
+	user.active_2FA = True
+	user.validated_2fa = True
+
+	if _jwt_is_expired(request.COOKIES.get('jwt_token')):
+		user.jwt = create_jwt(user)
+	user.save()
+
+	data = {"isValid": True, "username": user.username}
+	response_body = json.dumps(data)
+
+	res = HttpResponse(response_body, content_type='application/json', status=200)
+
+	res.set_cookie("jwt_token", user.jwt, httponly=True, secure=False)
+
+	return res
+
+
 @csrf_protect
-def validate_2fa(request):
+def post_twofa_code(request):
+	if request.method == "POST":
+		user = _user_jwt_cookie(request)
+		code = request.POST.get('code')
+
+		if is_twofa_valid(user, code):
+			return twofa_valid_flow(request, user)
+
+	res = {
+		"isValid": False,
+		"username": "",
+	}
+
+	return JsonResponse(res)
+
+
+@csrf_protect
+def get_validate_2fa(request):
 	user = _user_jwt_cookie(request)
 	user_code = request.POST.get('code')
 	is_valid = validate_code(user, user_code)

@@ -4,7 +4,7 @@ from twofa.views import validate_user
 def auth(get_response):
 
     def middleware(request):
-        MATCH = ["/", "/metrics", "/API/authenticate_42", "/validate_2fa_code/", "/set-language/fr/", "/set-language/en/", 
+        MATCH = ["/", "/metrics", "/API/authenticate_42", "/validate_2fa_code/" , "/post_twofa_code/", "/set-language/fr/", "/set-language/en/", 
                  "/set-language/es/", "/set-language/he/", "/logout"]
         START_WITH = ["/twofa"]
 
