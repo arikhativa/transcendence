@@ -33,7 +33,6 @@ function submitQRSetupForm(e) {
 	  })
 	  .catch((error) => {
 		// Handle error
-		console.log("error ", error);
 	  });
   }
 
