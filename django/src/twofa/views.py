@@ -231,7 +231,7 @@ def twofa_valid_flow(request, user):
 
 @csrf_protect
 def post_twofa_code(request):
-	if request.method == 'POST':
+	if request.method == "POST":
 		user = _user_jwt_cookie(request)
 		code = request.POST.get('code')
 
