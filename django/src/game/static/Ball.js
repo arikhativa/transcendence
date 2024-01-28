@@ -12,7 +12,6 @@ export class Ball {
         this.setColor(ballColor);
         this.angle = 0;
         this.generateRandomInitAngle();
-        this.hitBy = null;
     }
   
     update() {

@@ -20,6 +20,7 @@ export class Board {
     }
 
     initModifiers() {
+        this.ballHitBy = false;
         if (this.settings.bonus) {
             this.bonus = {
                 x: this.w/2 + Math.random() * this.w/3 - this.w/6,  // Random position in the middle of the board
@@ -95,7 +96,7 @@ export class Board {
             let min = 2 * Math.PI - 3 * Math.PI / 9;
             let max = 2 * Math.PI + 3 * Math.PI / 9;
             ball.randomDeviation(min, max);
-			ball.hitBy = p1;
+			this.ballHitBy = p1;
         }
         // Ball collision with Player2 | RIGHT
         if (ball.nextStep().x + ball.w / 2 >= p2.x - p2.w / 2 && (ball.nextStep().y > p2.y - p2.h / 2 && ball.nextStep().y < p2.y + p2.h / 2)) {
@@ -103,7 +104,7 @@ export class Board {
             let min = Math.PI - 3 * Math.PI / 9
             let max = Math.PI + 3 * Math.PI / 9
             ball.randomDeviation(min, max);
-			ball.hitBy = p2;
+			this.ballHitBy = p2;
         }
 
         // Barriers collision
@@ -129,17 +130,17 @@ export class Board {
         }
 
         // Check for collision with the 2x bonus
-        if (ball.hitBy != null && this.settings.bonus && this.bonus.active &&
+        if (this.ballHitBy != null && this.settings.bonus && this.bonus.active &&
 			ball.x + ball.w/2 > this.bonus.x - this.bonus.s/2 &&
 			ball.x - ball.w/2 < this.bonus.x + this.bonus.s/2 &&
 			ball.y + ball.h/2 > this.bonus.y - this.bonus.s/2 &&
 			ball.y - ball.h/2 < this.bonus.y + this.bonus.s/2) {
 			this.bonus.active = false;
-			if (ball.hitBy == p1) {
+			if (this.ballHitBy == p1) {
 				this.bonus.playerWithBonus = p1;
                 p1.bonus = true;
             }
-			if (ball.hitBy == p2) {
+			if (this.ballHitBy == p2) {
                 this.bonus.playerWithBonus = p2;
                 p2.bonus = true;
             }
