@@ -9,7 +9,8 @@
 
 #email-setup-twofa-form-con
 {
-	flex: 1
+	padding-top: 20px;
+	flex: 1;
 }
 
 #email-setup-error-msg
