@@ -12,6 +12,7 @@ logger = logging.getLogger(__name__)
 
 def spa_view(request):
 	try:
+		language = "en"
 		section = request.resolver_match.url_name
 		logged_in, user = is_logged_in(request)
 
@@ -36,7 +37,7 @@ def spa_view(request):
 		elif section == "validate_2fa_code" and not logged_in:
 			context, token = get_validate_2fa(request)
 		elif section == "twofa":
-			context, token = twofa(request)
+			context, token, language = twofa(request)
 		elif section == "qr_setup":
 			context, token = qr_setup(request)
 		elif section == "email_setup":
@@ -58,12 +59,18 @@ def spa_view(request):
 			"section": "error_page.html"
 		}
 		token = None
+		language = "en"
+
+	if section == "twofa":
+		translation.activate(language)
 
 	res = render(request, "spa.html", context)
 	if section == "twofa" or section == "validate_2fa_code" \
 		or section == "qr_setup" or section == "sms_setup" \
 		or section == "email_setup" or section == "temporal_loggedin" :
 		res.set_cookie("jwt_token", token, httponly=True, secure=False)
+	if section == "twofa":
+		res.set_cookie("django_language", language)
 	return res
 
 def is_logged_in(request):
@@ -131,6 +138,10 @@ def set_language(request, language_code):
 		translation.activate(language_code)
 		renderizado = spa_view(request)
 		renderizado.set_cookie(settings.LANGUAGE_COOKIE_NAME, language_code)
+		if is_logged_in(request)[0]:
+			logged_in, user = is_logged_in(request)
+			user.language = language_code
+			user.save()
 		return renderizado
 	else:
 		return spa_view(request)

@@ -134,6 +134,7 @@ def email_setup(request, wrong_code=False):
 @csrf_protect
 def twofa(request, wrong_code=False, expired_jwt=False):
 	token = None
+	language = "en"
 	try:
 		if not request.COOKIES.get('jwt_token') \
 			or request.COOKIES.get('jwt_token') == 'None':
@@ -151,14 +152,14 @@ def twofa(request, wrong_code=False, expired_jwt=False):
 			return {
 				"error_msg": _("User not found"),
 				"section": "error_page.html",
-			}, None
+			}, None, language
 		
 		if user.active_2FA and not expired_jwt and user.validated_2fa:
 			return {
 				"username": user.username,
 				"email": user.email,
 				"section": "temporal_loggedin.html",
-			}, token
+			}, token, user.language
 		else:
 			if not wrong_code:
 				error_msg = ''
@@ -171,7 +172,7 @@ def twofa(request, wrong_code=False, expired_jwt=False):
 					return email_setup(request, wrong_code)
 				return {
 					"section": "2fa_setup.html",
-				}, token
+				}, token,  user.language
 			else:
 				if user.email_2FA:
 					code = TOTP(user.token_2FA).now()
@@ -180,12 +181,12 @@ def twofa(request, wrong_code=False, expired_jwt=False):
 					"form": Form2FA(),
 					"error_msg": error_msg,
 					"section": "twofa.html",
-				}, token
+				}, token,  user.language
 	except Exception as exc:
 		return {
 			"error_msg": _("Error: "),
 			"section": "error_page.html",
-		}, None
+		}, None, language
 
 def validate_user(request):
 	try:

@@ -18,4 +18,6 @@ class Users(models.Model):
     ball_speed = models.IntegerField(default=3)
     wins = models.IntegerField()
     losses = models.IntegerField()
+    language =  models.CharField(max_length=2, null=True, default='en')
+
 
