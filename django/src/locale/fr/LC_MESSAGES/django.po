@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-28 23:21+0000\n"
+"POT-Creation-Date: 2024-01-28 23:57+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -162,14 +162,15 @@ msgstr ""
 "Utilisez cette option si vous préférez vous connecter à l'aide d'un code "
 "numérique que vous recevrez par courrier électronique."
 
-#: twofa/templates/email_setup.html:18 twofa/templates/qr_setup.html:23
+#: twofa/templates/email_setup.html:18 twofa/templates/qr_setup.html:22
+#: twofa/templates/twofa.html:15
+msgid "Error: Invalid code."
+msgstr "Erreur: Code invalide."
+
+#: twofa/templates/email_setup.html:19 twofa/templates/qr_setup.html:23
 #: twofa/templates/twofa.html:16
 msgid "Submit"
 msgstr "Soumettre"
-
-#: twofa/templates/email_setup.html:20
-msgid "email_setup_error_msg"
-msgstr "Erreur : code invalide."
 
 #: twofa/templates/qr_setup.html:13
 msgid "Two-Factor Authentication Setup"
@@ -181,10 +182,6 @@ msgstr ""
 "Veuillez scanner le code QR ci-dessous avec votre application Google "
 "Authenticator pour configurer 2FA :"
 
-#: twofa/templates/qr_setup.html:21
-msgid "qr_setup_error_msg"
-msgstr "Erreur : code invalide."
-
 #: twofa/templates/temporal_loggedin.html:5
 msgid "Welcome"
 msgstr "Bienvenue"
@@ -192,10 +189,6 @@ msgstr "Bienvenue"
 #: twofa/templates/twofa.html:8
 msgid "Please introduce a valid 2FA code:"
 msgstr "Veuillez introduire un code 2FA valide :"
-
-#: twofa/templates/twofa.html:13
-msgid "error_msg"
-msgstr "Erreur : code invalide."
 
 #: twofa/views.py:78 twofa/views.py:119 twofa/views.py:166
 msgid "Invalid code, try again."
@@ -221,6 +214,15 @@ msgstr "Utilisateur non trouvé"
 #: twofa/views.py:186
 msgid "Error: "
 msgstr "Erreur: "
+
+#~ msgid "email_setup_error_msg"
+#~ msgstr "Erreur : code invalide."
+
+#~ msgid "qr_setup_error_msg"
+#~ msgstr "Erreur : code invalide."
+
+#~ msgid "error_msg"
+#~ msgstr "Erreur : code invalide."
 
 #, fuzzy
 #~| msgid "Invalid code, try again."

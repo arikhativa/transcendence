@@ -10,9 +10,9 @@
       {% csrf_token %}
       <div>
         {{ form }}
-        <p id="twofa-error-msg">{% trans "error_msg" %}</p>
       </div>
       <div class="text-center mt-3">
+        <p id="twofa-error-msg">{% trans "Error: Invalid code." %}</p>
         <button class="btn btn-primary" type="submit">{% trans "Submit" %}</button>
       </div>
     </form>

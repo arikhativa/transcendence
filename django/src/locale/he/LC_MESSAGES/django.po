@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-28 23:21+0000\n"
+"POT-Creation-Date: 2024-01-28 23:57+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -163,14 +163,15 @@ msgstr ""
 "השתמש באפשרות זו אם אתה מעדיף להיכנס על ידי סריקת קוד QR ב-Google "
 "Authenticator"
 
-#: twofa/templates/email_setup.html:18 twofa/templates/qr_setup.html:23
+#: twofa/templates/email_setup.html:18 twofa/templates/qr_setup.html:22
+#: twofa/templates/twofa.html:15
+msgid "Error: Invalid code."
+msgstr "שגיאה: קוד לא חוקי."
+
+#: twofa/templates/email_setup.html:19 twofa/templates/qr_setup.html:23
 #: twofa/templates/twofa.html:16
 msgid "Submit"
 msgstr "שלח"
-
-#: twofa/templates/email_setup.html:20
-msgid "email_setup_error_msg"
-msgstr "שגיאה: קוד לא חוקי."
 
 #: twofa/templates/qr_setup.html:13
 msgid "Two-Factor Authentication Setup"
@@ -182,10 +183,6 @@ msgstr ""
 "אנא סרוק את קוד ה-QR למטה עם אפליקציית Google Authenticator שלך כדי להגדיר "
 "2FA:"
 
-#: twofa/templates/qr_setup.html:21
-msgid "qr_setup_error_msg"
-msgstr "שגיאה: קוד לא חוקי."
-
 #: twofa/templates/temporal_loggedin.html:5
 msgid "Welcome"
 msgstr "ברוך הבא"
@@ -193,10 +190,6 @@ msgstr "ברוך הבא"
 #: twofa/templates/twofa.html:8
 msgid "Please introduce a valid 2FA code:"
 msgstr "נא להציג קוד 2FA חוקי:"
-
-#: twofa/templates/twofa.html:13
-msgid "error_msg"
-msgstr "שגיאה: קוד לא חוקי."
 
 #: twofa/views.py:78 twofa/views.py:119 twofa/views.py:166
 msgid "Invalid code, try again."
@@ -221,6 +214,15 @@ msgstr "המשתמש לא נמצא"
 #: twofa/views.py:186
 msgid "Error: "
 msgstr "שְׁגִיאָה:"
+
+#~ msgid "email_setup_error_msg"
+#~ msgstr "שגיאה: קוד לא חוקי."
+
+#~ msgid "qr_setup_error_msg"
+#~ msgstr "שגיאה: קוד לא חוקי."
+
+#~ msgid "error_msg"
+#~ msgstr "שגיאה: קוד לא חוקי."
 
 #, fuzzy
 #~| msgid "Invalid code, try again."

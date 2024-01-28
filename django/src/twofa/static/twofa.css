@@ -36,7 +36,7 @@ img, form {
 
 #twofa-error-msg
 {
-	visibility: hidden;
+	display: None;
 	color: rgb(255, 0, 0);
     white-space: nowrap;
 }

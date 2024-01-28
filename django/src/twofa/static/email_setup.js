@@ -22,13 +22,13 @@ function submitEmailSetupForm(e) {
 
 		if (resp.isValid)
 		{
-			errElem.style["visibility"] = "hidden";
+			errElem.style.display = "None";
 
 			return showSection("welcome_view", {}, true)
 		}
 		else 
 		{
-			errElem.style["visibility"] = "visible";
+			errElem.style.display = "block";
 		}
 	  })
 	  .catch((error) => {
