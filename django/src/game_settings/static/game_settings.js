@@ -17,7 +17,6 @@ function submitForm(e) {
 		return response.json();
 	  })
 	  .then((resp) => {
-		console.log(resp);
 		let successMsg = document.getElementById("success-message");
 
 		if (resp.isValid)
