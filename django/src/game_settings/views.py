@@ -1,7 +1,11 @@
 from twofa.views import _user_jwt_cookie
 from django.views.decorators.csrf import csrf_protect
 from django.utils.translation import gettext as _
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
+import json
+import logging
+
+logger = logging.getLogger(__name__)
 
 def is_valid_input(form):
 	bonus = form.get('bonus')
@@ -49,14 +53,6 @@ def game_settings(request):
 	}
 
 	if user is not None:
-		if request.method == 'POST':
-			if is_valid_input(request.POST):
-				save_game_settings(request, user)
-			else:
-				return {
-					"section": "game_settings_error.html",
-				}
-
 		player1_color = user.player_1_color
 		player2_color = user.player_2_color
 		ball_color = user.ball_color
@@ -98,6 +94,8 @@ def save_game_settings(request, user):
 		user.ball_color = request.POST.get('ballColor')
 		user.ball_speed = request.POST.get('ballSpeed')
 		user.save()
+		return True
+	return False
 
 def get_game_settings(request):
 	user = _user_jwt_cookie(request)
@@ -119,5 +117,25 @@ def get_game_settings(request):
 		user_settings["ball_speed"] = user.ball_speed
 	
 	return JsonResponse(user_settings)
+
+@csrf_protect
+def post_game_settings(request):
+	user = _user_jwt_cookie(request)
+	if user is not None:
+		if (request.method == "POST"):
+			if is_valid_input(request.POST):
+				if (save_game_settings(request, user)):
+					data = {
+						"isValid": True
+					}
+					response_body = json.dumps(data)
+					res = HttpResponse(response_body, content_type='application/json', status=200)
+					return res
+
+	res = {
+		"isValid": False
+	}
+	return JsonResponse(res)
+
 	
 	
