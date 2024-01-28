@@ -57,7 +57,7 @@ export class ScreenManager {
         ctx.fillStyle = 'black';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         
-        let fontSize = (canvas.width / 10);
+        let fontSize = (canvas.width / 20);
 		ctx.font = `${fontSize}px Arial`;
         ctx.fillStyle = "white";
         ctx.textAlign = "center";
@@ -73,11 +73,11 @@ export class ScreenManager {
         ctx.fillStyle = 'black';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         
-        let fontSize = (canvas.width / 10);
+        let fontSize = (canvas.width / 13);
 		ctx.font = `${fontSize}px Arial`;
         ctx.fillStyle = "white";
         ctx.textAlign = "center";
-        ctx.fillText(game.p1.name + " 🕹️ " + game.p2.name, canvas.width/2, canvas.height/2 - 70);
+        ctx.fillText(game.p1.name + " 🕹️ " + game.p2.name, canvas.width/2, canvas.height/2);
     }
     
     endOfTournamentScreen(ctx, canvas, game) {
@@ -85,11 +85,11 @@ export class ScreenManager {
         ctx.fillStyle = 'black';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         
-        let fontSize = (canvas.width / 15);
+        let fontSize = (canvas.width / 20);
 		ctx.font = `${fontSize}px Arial`;
         ctx.fillStyle = "white";
         ctx.textAlign = "center";
-        ctx.fillText("🥇" + game.winner_name + translateGameText('WON_TOURNAMENT'), canvas.width/2, canvas.height/2 - 70);
+        ctx.fillText("🥇" + game.winner_name + translateGameText('WON_TOURNAMENT'), canvas.width/2, canvas.height/2);
         ctx.fillText("🏆", canvas.width/2, canvas.height/2 + 100);
     }
     
@@ -98,11 +98,11 @@ export class ScreenManager {
         ctx.fillStyle = 'black';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         
-        let fontSize = (canvas.width / 10);
+        let fontSize = (canvas.width / 20);
 		ctx.font = `${fontSize}px Arial`;
         ctx.fillStyle = "white";
         ctx.textAlign = "center";
-        ctx.fillText("🥇" + game.winner_name + translateGameText('WON_MATCH'), canvas.width/2, canvas.height/2 - 70);
+        ctx.fillText("🥇" + game.winner_name + translateGameText('WON_MATCH'), canvas.width/2, canvas.height/2);
 
     }
 

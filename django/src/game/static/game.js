@@ -137,7 +137,7 @@ document.addEventListener('keydown', handleKeyPress);
 function canvasToSmallErrorScreen(canvas) {
     ctx.fillStyle = 'black';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    let fontSize = (canvas.width / 10);
+    let fontSize = (canvas.width / 20);
     ctx.fillStyle = 'white';
     ctx.textAlign = "center";
     ctx.font = `${fontSize}px Arial`;
@@ -151,7 +151,7 @@ function gameLoop() {
 
 	if (canvas)
 	{
-        if (canvas.width < canvas.height)
+        if (canvas.width < 800)
             canvasToSmallErrorScreen(canvas);
         else {
             ctx.fillRect(0, 0, canvas.width, canvas.height);
