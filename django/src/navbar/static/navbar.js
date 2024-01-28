@@ -9,11 +9,7 @@ async function readOppInput() {
 		if (elem.value.length > 8)
 		{
 			if (errElem)
-			{
-			// TODO maybe translate
-				errElem.innerText = "Opponent name too long. max 8 charectars";
 				errElem.style["visibility"] =  "visible";
-			}
 			return ;
 		}
 		if (errElem)
