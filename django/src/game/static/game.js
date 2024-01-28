@@ -1,6 +1,7 @@
 import { GameController } from './GameController.js';
 import { ScreenManager } from './ScreenManager.js';
 import { Tournament } from './TournamentManager.js';
+import { translateGameText } from './gameTranslations.js'
 
 const usernameDataElement = document.getElementById('username-data');
 const usernameDataString = usernameDataElement ? usernameDataElement.dataset.username : null;
@@ -133,8 +134,16 @@ document.addEventListener('keydown', handleKeyPress);
 
 }
 
+function canvasToSmallErrorScreen(canvas) {
+    ctx.fillStyle = 'black';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    let fontSize = (canvas.width / 10);
+    ctx.fillStyle = 'white';
+    ctx.textAlign = "center";
+    ctx.font = `${fontSize}px Arial`;
+    ctx.fillText(translateGameText("SMALL_CANVAS"), canvas.width/2, canvas.height/2);
+}
 
-let frames = 0;
 function gameLoop() {
     //Clear Canvas
     ctx.fillStyle = 'black';
@@ -142,13 +151,16 @@ function gameLoop() {
 
 	if (canvas)
 	{
-    	ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-		//Show screens
-		screenManager.loop(ctx, canvas, game, tournament);
+        if (canvas.width < canvas.height)
+            canvasToSmallErrorScreen(canvas);
+        else {
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            //Show screens
+            screenManager.loop(ctx, canvas, game, tournament);
+            //Manage the torunament
+            tournament.handler(game, screenManager);
+        }
 	}
-    //Manage the torunament
-    tournament.handler(game, screenManager);
 
     // Request the next frame
     requestAnimationFrame(gameLoop);
