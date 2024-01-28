@@ -20,9 +20,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 import django_prometheus
 
-# TODO maybe remove admin
 urlpatterns = [
-    path("admin/", admin.site.urls),
     path("", include("django_prometheus.urls")),
     path("", include("spa.urls")),
 
