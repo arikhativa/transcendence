@@ -11,8 +11,8 @@
       {% csrf_token %}
       <div>
         {{ form }}
-        <p id="email-setup-error-msg">{% trans "email_setup_error_msg" %}</p>
       </div>
+      <p id="email-setup-error-msg">{% trans "email_setup_error_msg" %}</p>
       <div class="text-center mt-3">
         <button class="btn btn-primary" type="submit">{% trans "Submit" %}</button>
       </div>

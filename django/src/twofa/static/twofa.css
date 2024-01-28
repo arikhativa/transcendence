@@ -38,4 +38,5 @@ img, form {
 {
 	visibility: hidden;
 	color: rgb(255, 0, 0);
+    white-space: nowrap;
 }
