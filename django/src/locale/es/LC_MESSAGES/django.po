@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-28 09:14+0000\n"
+"POT-Creation-Date: 2024-01-28 11:54+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -126,7 +126,7 @@ msgstr "máximo número de jugadores"
 msgid "Start Tournament"
 msgstr "Empezar Torneo"
 
-#: twofa/templates/2fa_setup.html:7 twofa/templates/email_setup.html:13
+#: twofa/templates/2fa_setup.html:7
 msgid "Welcome to Two-Factor Authentication Setup"
 msgstr "Bienvenido a la configuración de Two-Factor"
 
@@ -158,66 +158,73 @@ msgstr ""
 "Utiliza esta opción si prefieres iniciar sesión con un código numérico que "
 "recibirás en tu correo"
 
-#: twofa/templates/email_setup.html:8
-msgid "First Login"
-msgstr "Iniciar Sesión"
+#: twofa/templates/email_setup.html:14
+msgid "email_setup_error_msg"
+msgstr "Error: Código inválido."
 
-#: twofa/templates/email_setup.html:18 twofa/templates/email_setup.html:36
-#: twofa/templates/qr_setup.html:22 twofa/templates/twofa.html:17
-#: twofa/templates/twofa.html:34
+#: twofa/templates/email_setup.html:17 twofa/templates/qr_setup.html:23
+#: twofa/templates/twofa.html:16
 msgid "Submit"
 msgstr "Enviar"
 
-#: twofa/templates/qr_setup.html:12
+#: twofa/templates/qr_setup.html:13
 msgid "Two-Factor Authentication Setup"
 msgstr "Configuración de Two-Factor"
 
-#: twofa/templates/qr_setup.html:13
+#: twofa/templates/qr_setup.html:14
 msgid "Scan the QR code with Google Authenticator app to set up 2FA:"
 msgstr ""
 "Escanea el código QR con la aplicación Google Authenticator para configurar "
 "2FA:"
 
+#: twofa/templates/qr_setup.html:20
+msgid "qr_setup_error_msg"
+msgstr "Error: Código inválido."
+
 #: twofa/templates/temporal_loggedin.html:5
-#: twofa/templates/temporal_loggedin.html:15
 msgid "Welcome"
 msgstr "Bienvenido"
 
-#: twofa/templates/temporal_loggedin.html:10
-msgid "Hello"
-msgstr "Hola"
-
 #: twofa/templates/twofa.html:8
-msgid "TWO FACTOR AUTHENTICATOR"
-msgstr "Verificador de dos factores"
-
-#: twofa/templates/twofa.html:13 twofa/templates/twofa.html:26
 msgid "Please introduce a valid 2FA code:"
 msgstr "Por favor introduce un código 2FA valido:"
 
-#: twofa/views.py:75 twofa/views.py:116 twofa/views.py:162
+#: twofa/templates/twofa.html:13
+msgid "error_msg"
+msgstr "Error: Código inválido."
+
+#: twofa/views.py:77 twofa/views.py:118 twofa/views.py:164
 msgid "Invalid code, try again."
 msgstr "Codigo invalido, intenta de nuevo."
 
-#: twofa/views.py:93
+#: twofa/views.py:95
 msgid "Validate your account"
 msgstr "Valida tu cuenta"
 
-#: twofa/views.py:95
+#: twofa/views.py:97
 msgid "Your verification code is: "
 msgstr "Tu codigo de verificacion es: "
 
-#: twofa/views.py:118
+#: twofa/views.py:120
 msgid "Please enter the code sent to your email:"
 msgstr "Introduzca el código enviado a su correo electrónico:"
 
-#: twofa/views.py:148
+#: twofa/views.py:150
 msgid "User not found"
 msgstr "Usuario no encontrado"
 
-#: twofa/views.py:182
+#: twofa/views.py:184
 msgid "Error: "
 msgstr "Error: "
+
+#~ msgid "First Login"
+#~ msgstr "Iniciar Sesión"
+
+#~ msgid "Hello"
+#~ msgstr "Hola"
+
+#~ msgid "TWO FACTOR AUTHENTICATOR"
+#~ msgstr "Verificador de dos factores"
 
 #~ msgid "Clic here"
 #~ msgstr "Pulsa aquí"
