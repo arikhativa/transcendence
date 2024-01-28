@@ -68,6 +68,7 @@ export class Board {
             p1.bonus = false;
             p2.bonus = false;
             p2.score++;
+            this.ballHitBy = null;
 			if (this.settings.bonus && this.bonus.playerWithBonus == p2)
             {
                 this.bonus.playerWithBonus = null;
@@ -82,6 +83,7 @@ export class Board {
             p1.bonus = false;
             p2.bonus = false;
             p1.score++;
+            this.ballHitBy = null;
 			if (this.settings.bonus && this.bonus.playerWithBonus == p1)
             {
                 this.bonus.playerWithBonus = null;
