@@ -4,18 +4,19 @@
 <script type="module" src="{% static 'email_setup.js' %}"></script>
 
 <div class="card text-center border border-dark border-5 bg-info">
-  <div class="card-body">
+  <div id="email-box" class="card-body">
     <h5 class="card-title">{{ msg }}</h5>
-
-    <form id="email-setup-twofa-form" method="post" action="{{ url }}">
-      {% csrf_token %}
-      <div>
-        {{ form }}
-      </div>
-      <p id="email-setup-error-msg">{% trans "email_setup_error_msg" %}</p>
-      <div class="text-center mt-3">
-        <button class="btn btn-primary" type="submit">{% trans "Submit" %}</button>
-      </div>
-    </form>
+	<div id="email-setup-twofa-form-con">
+		<form id="email-setup-twofa-form">
+		{% csrf_token %}
+		<div>
+			{{ form }}
+		</div>
+		</form>
+	</div>
+	<div class="text-center mt-3">
+		<button class="btn btn-primary" type="submit">{% trans "Submit" %}</button>
+	</div>
+	<p id="email-setup-error-msg">{% trans "email_setup_error_msg" %}</p>
   </div>
 </div>
