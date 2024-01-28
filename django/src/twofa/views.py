@@ -21,7 +21,6 @@ import json
 from django.shortcuts import render
 
 
-
 def create_qr_code(user):
 	uri = TOTP(user.token_2FA).provisioning_uri(name=user.username, issuer_name="Pong App")
 	qr_img = qrcode.make(uri)
@@ -313,7 +312,7 @@ def get_email_setup(request):
 	return res
 
 def get_twofa(request):
-	context, token = twofa(request)
+	context, token, lang = twofa(request)
 
 	res = render(request, context["section"], context)
 
