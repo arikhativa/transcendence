@@ -70,7 +70,6 @@ export class Ball {
         switch (color) {
             case "green":
                 this.color = '#a8ff66';
-                console.log("asd" + this.color);
                 break;
             case "red":
                 this.color = '#ff6666';
