@@ -19,7 +19,7 @@
 	white-space: nowrap;
 }
 
-#twofa-form {
+#qr-setup-twofa-form {
     width: 100%;
     max-width: 300px;
     margin: auto;

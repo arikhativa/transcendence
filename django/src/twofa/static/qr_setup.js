@@ -38,5 +38,6 @@ function submitQRSetupForm(e) {
 
 var myform = document.getElementById("qr-setup-twofa-form");
 
-myform.addEventListener("submit", submitQRSetupForm);
+if (myform)
+	myform.addEventListener("submit", submitQRSetupForm);
 
