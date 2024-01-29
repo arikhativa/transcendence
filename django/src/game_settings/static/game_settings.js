@@ -10,7 +10,6 @@ function submitForm(e) {
 	  body: formData,
 	})
 	  .then((response) => {
-		console.log(response)
 		if (!response.ok) {
 		  throw new Error("network returns error");
 		}
