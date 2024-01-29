@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-28 14:32+0000\n"
+"POT-Creation-Date: 2024-01-28 23:21+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -55,30 +55,19 @@ msgstr "הגדרות שמורות"
 msgid "Save"
 msgstr "שמור"
 
-#: game_settings/templates/game_settings_error.html:8
-#: spa/templates/error_page.html:8
-msgid "ERROR"
-msgstr "שְׁגִיאָה"
-
-#: game_settings/templates/game_settings_error.html:13
-#, fuzzy
-#| msgid "Invalid code, try again."
-msgid "Invalid form data."
-msgstr "נא להציג קוד 2FA חוקי:"
-
-#: game_settings/views.py:49
+#: game_settings/views.py:50
 msgid "white"
 msgstr "לבן"
 
-#: game_settings/views.py:50
+#: game_settings/views.py:51
 msgid "red"
 msgstr "אדום"
 
-#: game_settings/views.py:51
+#: game_settings/views.py:52
 msgid "green"
 msgstr "ירוק"
 
-#: game_settings/views.py:52
+#: game_settings/views.py:53
 msgid "blue"
 msgstr "כחול"
 
@@ -113,6 +102,10 @@ msgstr "לְשַׂחֵק"
 #: navbar/templates/navbar.html:32
 msgid "Create Tournament"
 msgstr "צור טורניר"
+
+#: spa/templates/error_page.html:8
+msgid "ERROR"
+msgstr "שְׁגִיאָה"
 
 #: tournament/templates/tournament.html:15
 msgid "New Tournament"
@@ -170,14 +163,14 @@ msgstr ""
 "השתמש באפשרות זו אם אתה מעדיף להיכנס על ידי סריקת קוד QR ב-Google "
 "Authenticator"
 
-#: twofa/templates/email_setup.html:15
-msgid "email_setup_error_msg"
-msgstr "שגיאה: קוד לא חוקי."
-
-#: twofa/templates/email_setup.html:17 twofa/templates/qr_setup.html:23
+#: twofa/templates/email_setup.html:18 twofa/templates/qr_setup.html:23
 #: twofa/templates/twofa.html:16
 msgid "Submit"
 msgstr "שלח"
+
+#: twofa/templates/email_setup.html:20
+msgid "email_setup_error_msg"
+msgstr "שגיאה: קוד לא חוקי."
 
 #: twofa/templates/qr_setup.html:13
 msgid "Two-Factor Authentication Setup"
@@ -228,6 +221,11 @@ msgstr "המשתמש לא נמצא"
 #: twofa/views.py:186
 msgid "Error: "
 msgstr "שְׁגִיאָה:"
+
+#, fuzzy
+#~| msgid "Invalid code, try again."
+#~ msgid "Invalid form data."
+#~ msgstr "נא להציג קוד 2FA חוקי:"
 
 #~ msgid "First Login"
 #~ msgstr "כניסה ראשונה"

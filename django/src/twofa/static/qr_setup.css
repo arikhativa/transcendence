@@ -1,6 +1,40 @@
+#main {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    background-color: rgb(230, 173, 222);
+    top: 10em;
+    left: 10em;
+    width: 100%;
+    height: 100%;
+    z-index: 10000;
+}
+
 #qr-setup-error-msg
 {
 	visibility: hidden;
 	color: rgb(255, 0, 0);
 	white-space: nowrap;
+}
+
+#twofa-form {
+    width: 100%;
+    max-width: 300px;
+    margin: auto;
+}
+
+#main-title {
+    align-items: center;
+}
+
+#main-p {
+    flex : 1;
+}
+
+img, form {
+    width: 100%;
+    max-width: 25%;
+    height: auto;
 }

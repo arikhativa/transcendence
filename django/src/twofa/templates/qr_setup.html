@@ -13,7 +13,7 @@
         <h2 class="card-title">{% trans "Two-Factor Authentication Setup" %}</h2>
         <h6 class="card-text">{% trans "Scan the QR code with Google Authenticator app to set up 2FA:" %}</h6>
         <div class="mx-auto py-4">
-          <form id="qr-setup-twofa-form">
+          <form id="twofa-form">
             {% csrf_token %}
             <div>
               {{ form }}
