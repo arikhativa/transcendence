@@ -39,7 +39,7 @@ function wait_for_elasticsearch {
 	local output
 
 	# retry for max 300s (60*5s)
-	for _ in $(seq 1 60); do
+	for _ in $(seq 1 100); do
 		local -i exit_code=0
 		output="$(curl "${args[@]}")" || exit_code=$?
 
@@ -323,7 +323,7 @@ function wait_for_kibana {
 	local -i result=1
 	local output
 
-	for _ in $(seq 1 60); do
+	for _ in $(seq 1 100); do
 		local -i exit_code=0
 		output="$(curl "${args[@]}")" || exit_code=$?
 
@@ -377,7 +377,7 @@ function create_kibana_objects {
 }
 
 # Grafana
-
+# Poll the 'Grafana' service until it responds with HTTP code 200.
 function wait_for_grafana {
 	local -a args=( '-s' '-D-' '-m15' '-w' '%{http_code}'
 		"http://${GRAFANA_HOST}:${GRAFANA_PORT}/api/health"
@@ -386,13 +386,24 @@ function wait_for_grafana {
 	local -i result=1
 	local output
 
-	output="$(curl "${args[@]}")"
-	if [[ "${output: -3}" -eq 200 ]]; then
-		result=0
-	fi
+	for _ in $(seq 1 100); do
+		local -i exit_code=0
+		output="$(curl "${args[@]}")" || exit_code=$?
 
-	if ((result)); then
-		echo -e "\n${output::-3}\n"
+		if ((exit_code)); then
+			result=$exit_code
+		fi
+
+		if [[ "${output: -3}" -eq 200 ]]; then
+			result=0
+			break
+		fi
+
+		sleep 5
+	done
+
+	if ((result)) && [[ "${output: -3}" -ne 000 ]]; then
+		echo -e "\n${output::-3}"
 	fi
 
 	return $result
