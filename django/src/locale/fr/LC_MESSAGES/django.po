@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-28 14:32+0000\n"
+"POT-Creation-Date: 2024-01-28 23:21+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -54,30 +54,19 @@ msgstr "Paramètres sauvegardés"
 msgid "Save"
 msgstr "Sauvegarder"
 
-#: game_settings/templates/game_settings_error.html:8
-#: spa/templates/error_page.html:8
-msgid "ERROR"
-msgstr "ERREUR"
-
-#: game_settings/templates/game_settings_error.html:13
-#, fuzzy
-#| msgid "Invalid code, try again."
-msgid "Invalid form data."
-msgstr "Code invalide, réessayez."
-
-#: game_settings/views.py:49
+#: game_settings/views.py:50
 msgid "white"
 msgstr "blanc"
 
-#: game_settings/views.py:50
+#: game_settings/views.py:51
 msgid "red"
 msgstr "rouge"
 
-#: game_settings/views.py:51
+#: game_settings/views.py:52
 msgid "green"
 msgstr "vert"
 
-#: game_settings/views.py:52
+#: game_settings/views.py:53
 msgid "blue"
 msgstr "bleu"
 
@@ -112,6 +101,10 @@ msgstr "JOUER"
 #: navbar/templates/navbar.html:32
 msgid "Create Tournament"
 msgstr "Créer un tournoi"
+
+#: spa/templates/error_page.html:8
+msgid "ERROR"
+msgstr "ERREUR"
 
 #: tournament/templates/tournament.html:15
 msgid "New Tournament"
@@ -169,14 +162,14 @@ msgstr ""
 "Utilisez cette option si vous préférez vous connecter à l'aide d'un code "
 "numérique que vous recevrez par courrier électronique."
 
-#: twofa/templates/email_setup.html:15
-msgid "email_setup_error_msg"
-msgstr "Erreur : code invalide."
-
-#: twofa/templates/email_setup.html:17 twofa/templates/qr_setup.html:23
+#: twofa/templates/email_setup.html:18 twofa/templates/qr_setup.html:23
 #: twofa/templates/twofa.html:16
 msgid "Submit"
 msgstr "Soumettre"
+
+#: twofa/templates/email_setup.html:20
+msgid "email_setup_error_msg"
+msgstr "Erreur : code invalide."
 
 #: twofa/templates/qr_setup.html:13
 msgid "Two-Factor Authentication Setup"
@@ -228,6 +221,11 @@ msgstr "Utilisateur non trouvé"
 #: twofa/views.py:186
 msgid "Error: "
 msgstr "Erreur: "
+
+#, fuzzy
+#~| msgid "Invalid code, try again."
+#~ msgid "Invalid form data."
+#~ msgstr "Code invalide, réessayez."
 
 #~ msgid "First Login"
 #~ msgstr "Première connexion"

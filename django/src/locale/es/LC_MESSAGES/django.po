@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-28 14:32+0000\n"
+"POT-Creation-Date: 2024-01-28 23:21+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -54,30 +54,19 @@ msgstr "Ajustes guardados"
 msgid "Save"
 msgstr "Guardar"
 
-#: game_settings/templates/game_settings_error.html:8
-#: spa/templates/error_page.html:8
-msgid "ERROR"
-msgstr "ERROR"
-
-#: game_settings/templates/game_settings_error.html:13
-#, fuzzy
-#| msgid "Invalid code, try again."
-msgid "Invalid form data."
-msgstr "Codigo invalido, intenta de nuevo."
-
-#: game_settings/views.py:49
+#: game_settings/views.py:50
 msgid "white"
 msgstr "blanco"
 
-#: game_settings/views.py:50
+#: game_settings/views.py:51
 msgid "red"
 msgstr "rojo"
 
-#: game_settings/views.py:51
+#: game_settings/views.py:52
 msgid "green"
 msgstr "verde"
 
-#: game_settings/views.py:52
+#: game_settings/views.py:53
 msgid "blue"
 msgstr "azul"
 
@@ -112,6 +101,10 @@ msgstr "JUGAR"
 #: navbar/templates/navbar.html:32
 msgid "Create Tournament"
 msgstr "Crear Torneo"
+
+#: spa/templates/error_page.html:8
+msgid "ERROR"
+msgstr "ERROR"
 
 #: tournament/templates/tournament.html:15
 msgid "New Tournament"
@@ -169,14 +162,14 @@ msgstr ""
 "Utiliza esta opción si prefieres iniciar sesión con un código numérico que "
 "recibirás en tu correo"
 
-#: twofa/templates/email_setup.html:15
-msgid "email_setup_error_msg"
-msgstr "Error: Código inválido."
-
-#: twofa/templates/email_setup.html:17 twofa/templates/qr_setup.html:23
+#: twofa/templates/email_setup.html:18 twofa/templates/qr_setup.html:23
 #: twofa/templates/twofa.html:16
 msgid "Submit"
 msgstr "Enviar"
+
+#: twofa/templates/email_setup.html:20
+msgid "email_setup_error_msg"
+msgstr "Error: Código inválido."
 
 #: twofa/templates/qr_setup.html:13
 msgid "Two-Factor Authentication Setup"
@@ -227,6 +220,11 @@ msgstr "Usuario no encontrado"
 #: twofa/views.py:186
 msgid "Error: "
 msgstr "Error: "
+
+#, fuzzy
+#~| msgid "Invalid code, try again."
+#~ msgid "Invalid form data."
+#~ msgstr "Codigo invalido, intenta de nuevo."
 
 #~ msgid "First Login"
 #~ msgstr "Iniciar Sesión"

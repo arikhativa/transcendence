@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-28 14:32+0000\n"
+"POT-Creation-Date: 2024-01-28 23:21+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -54,30 +54,19 @@ msgstr ""
 msgid "Save"
 msgstr "Save"
 
-#: game_settings/templates/game_settings_error.html:8
-#: spa/templates/error_page.html:8
-msgid "ERROR"
-msgstr "ERROR"
-
-#: game_settings/templates/game_settings_error.html:13
-#, fuzzy
-#| msgid "Invalid code, try again."
-msgid "Invalid form data."
-msgstr "Invalid code, try again."
-
-#: game_settings/views.py:49
+#: game_settings/views.py:50
 msgid "white"
 msgstr "white"
 
-#: game_settings/views.py:50
+#: game_settings/views.py:51
 msgid "red"
 msgstr "red"
 
-#: game_settings/views.py:51
+#: game_settings/views.py:52
 msgid "green"
 msgstr "green"
 
-#: game_settings/views.py:52
+#: game_settings/views.py:53
 msgid "blue"
 msgstr "blue"
 
@@ -112,6 +101,10 @@ msgstr "PLAY"
 #: navbar/templates/navbar.html:32
 msgid "Create Tournament"
 msgstr "Create Tournament"
+
+#: spa/templates/error_page.html:8
+msgid "ERROR"
+msgstr "ERROR"
 
 #: tournament/templates/tournament.html:15
 msgid "New Tournament"
@@ -169,18 +162,18 @@ msgstr ""
 "Use this option if you prefer to log in with a numerical code that you will "
 "receive in your email"
 
-#: twofa/templates/email_setup.html:15
-msgid "email_setup_error_msg"
-msgstr "Error: Invalid code."
-
-#: twofa/templates/email_setup.html:17 twofa/templates/qr_setup.html:23
+#: twofa/templates/email_setup.html:18 twofa/templates/qr_setup.html:23
 #: twofa/templates/twofa.html:16
 msgid "Submit"
 msgstr "Submit"
 
+#: twofa/templates/email_setup.html:20
+msgid "email_setup_error_msg"
+msgstr "Error: Invalid code."
+
 #: twofa/templates/qr_setup.html:13
 msgid "Two-Factor Authentication Setup"
-msgstr "to Two-Factor Authentication Setup"
+msgstr "Two-Factor Authentication Setup"
 
 #: twofa/templates/qr_setup.html:14
 msgid "Scan the QR code with Google Authenticator app to set up 2FA:"
@@ -227,6 +220,11 @@ msgstr "User not found"
 #: twofa/views.py:186
 msgid "Error: "
 msgstr "Error: "
+
+#, fuzzy
+#~| msgid "Invalid code, try again."
+#~ msgid "Invalid form data."
+#~ msgstr "Invalid code, try again."
 
 #~ msgid "First Login"
 #~ msgstr "First Login"

@@ -9,37 +9,37 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: ./.docker-volume-mnt/postgres_data
+      device: ${HOME}/data/postgres_data
       o: bind
   prometheus_data:
     driver: local
     driver_opts:
       type: none
-      device: ./.docker-volume-mnt/prometheus_data
+      device: ${HOME}/data/prometheus_data
       o: bind
   grafana-data:
     driver: local
     driver_opts:
       type: none
-      device: ./.docker-volume-mnt/grafana_data
+      device: ${HOME}/data/grafana_data
       o: bind
   elastic-data:
     driver: local
     driver_opts:
       type: none
-      device: ./.docker-volume-mnt/elastic_data
+      device: ${HOME}/data/elastic_data
       o: bind
   common-log-data:
     driver: local
     driver_opts:
       type: none
-      device: ./.docker-volume-mnt/commonlog_data
+      device: ${HOME}/data/commonlog_data
       o: bind
   nginx-logs-data:
     driver: local
     driver_opts:
       type: none
-      device: ./.docker-volume-mnt/nginx-logs-data
+      device: ${HOME}/data/nginx-logs-data
       o: bind
 
 
@@ -72,7 +72,6 @@ services:
     env_file:
       - .env
     volumes:
-      - ./django/src:/home/
       - common-log-data:/var/log/django/
 
 # DB
@@ -196,19 +195,3 @@ services:
       - transcendence
     env_file:
       - .env
-
-
-# TODO remove
-  adminer:
-    container_name: adminer
-    image: adminer:latest
-    restart: "unless-stopped"
-    depends_on:
-      - postgres
-    networks:
-      - transcendence
-    ports:
-      - 9001:8080
-    environment:
-      - ADMINER_DEFAULT_SERVER=postgres
-
