@@ -59,7 +59,6 @@ function setAllSPAButtons()
 {
 	document.querySelectorAll('.spa-btn').forEach(button => {
         if (button.value == undefined) {
-            // console.error("Error: button.value is undefined");
             return;
         }
         button.onclick = async function() {
