@@ -9,12 +9,12 @@ ifeq ($(unameOut), Darwin)
 	DC := docker-compose -f $(DC_FILE_DEV)
 endif
 
-COMMON_VOLUME := .docker-volume-mnt/commonlog_data
-ELASTIC_VOLUME := .docker-volume-mnt/elastic_data
-POSTGRES_VOLUME := .docker-volume-mnt/postgres_data
-GRAFANA_VOLUME := .docker-volume-mnt/grafana_data
-PROMETHEUS_VOLUME := .docker-volume-mnt/prometheus_data
-NGINX_VOLUME := .docker-volume-mnt/nginx-logs-data
+COMMON_VOLUME := ${HOME}/data/commonlog_data
+ELASTIC_VOLUME := ${HOME}/data/elastic_data
+POSTGRES_VOLUME := ${HOME}/data/postgres_data
+GRAFANA_VOLUME := ${HOME}/data/grafana_data
+PROMETHEUS_VOLUME := ${HOME}/data/prometheus_data
+NGINX_VOLUME := ${HOME}/data/nginx-logs-data
 VOLUMES := $(COMMON_VOLUME) $(ELASTIC_VOLUME) $(POSTGRES_VOLUME) $(GRAFANA_VOLUME) $(PROMETHEUS_VOLUME) $(NGINX_VOLUME)
 
 .PHONY: all clean fclean re restart
@@ -24,6 +24,9 @@ all: $(VOLUMES)
 
 basic: $(VOLUMES) 
 	$(DC) up -d --build nginx django postgres
+
+
+volumes: $(VOLUMES)
 
 elk: $(VOLUMES) 
 	$(DC) up -d --build nginx django postgres elasticsearch logstash kibana setup
