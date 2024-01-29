@@ -1,5 +1,6 @@
 from django.shortcuts import render, HttpResponse, redirect
 
+from django.conf import settings
 from django.http import HttpResponseRedirect
 from requests_oauthlib import OAuth2Session
 import os
@@ -51,7 +52,7 @@ def get_token(CODE):
 	except:
 		raise Exception("Error get_token")
 
-def create_user_API(code):
+def create_user_API(code, language='en'):
 	
 	if Users.objects.filter(code_42=hashlib.md5(code.encode()).hexdigest()).exists():
 		user = Users.objects.get(code_42=hashlib.md5(code.encode()).hexdigest())
@@ -74,7 +75,8 @@ def create_user_API(code):
 		code_42 = hashlib.md5(code.encode()).hexdigest(),
 		token_2FA=pyotp.random_base32(),
 		wins=0,
-		losses=0
+		losses=0,
+		language=language
 		)
 	new_user.save()
 	return new_user
@@ -96,7 +98,11 @@ def update_code_API(user, code):
 
 def add_user_API(request):
 	code_from_user = request.GET.get('code')
-	user = create_user_API(code_from_user)
+	if request.COOKIES.get(settings.LANGUAGE_COOKIE_NAME):
+		language = request.COOKIES.get(settings.LANGUAGE_COOKIE_NAME)
+	else:
+		language = 'en'
+	user = create_user_API(code_from_user, language)
 
 	return user
 

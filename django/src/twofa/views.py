@@ -134,6 +134,9 @@ def email_setup(request, wrong_code=False):
 def twofa(request, wrong_code=False, expired_jwt=False):
 	token = None
 	language = "en"
+	if request.COOKIES.get(settings.LANGUAGE_COOKIE_NAME):
+		language = request.COOKIES.get(settings.LANGUAGE_COOKIE_NAME)
+		
 	try:
 		if not request.COOKIES.get('jwt_token') \
 			or request.COOKIES.get('jwt_token') == 'None':
@@ -166,9 +169,9 @@ def twofa(request, wrong_code=False, expired_jwt=False):
 				error_msg = _('Invalid code, try again.')
 			if not (user.active_2FA):
 				if user.qr_2FA and wrong_code:
-					return qr_setup(request, wrong_code)
+					return qr_setup(request, wrong_code), token,  user.language
 				if user.email_2FA and wrong_code:
-					return email_setup(request, wrong_code)
+					return email_setup(request, wrong_code), token,  user.language
 				return {
 					"section": "2fa_setup.html",
 				}, token,  user.language
